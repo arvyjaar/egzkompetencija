@@ -1,8 +1,9 @@
 <?php
 
-use App\Point;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
 
 class PointsTableSeeder extends Seeder
 {
@@ -16,37 +17,37 @@ class PointsTableSeeder extends Seeder
         $points = [
             [
                 'value'         => '0',
-                'description'   => 'Nevertinta',
+                'title'         => 'Nevertinta',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'         => '1',
-                'description'   => 'Nepriimtina',
+                'title'         => 'Nepriimtina',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'         => '2',
-                'description'   => 'Reikia tobulinti',
+                'title'         => 'Reikia tobulinti',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'         => '3',
-                'description'   => 'Patenkinamai',
+                'title'         => 'Patenkinamai',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'         => '4',
-                'description'   => 'Gerai',
+                'title'         => 'Gerai',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'value'         => '5',
-                'description'   => 'Puikiai',
+                'title'         => 'Puikiai (pavyzdys)',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
 
         ];
 
-        Point::insert($points);    
+        DB::table('points')->insert($points);
     }
 }

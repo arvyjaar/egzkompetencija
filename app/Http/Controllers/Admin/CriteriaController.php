@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Criterion;
+use App\Critcategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCriterionRequest;
 use App\Http\Requests\StoreCriterionRequest;
@@ -23,13 +24,13 @@ class CriteriaController extends Controller
     {
         abort_unless(\Gate::allows('criterion_create'), 403);
 
-        return view('admin.criteria.create');
+        $critcategories = Critcategory::all()->pluck('title', 'id');
+        return view('admin.criteria.create', compact('critcategories'));
     }
 
     public function store(StoreCriterionRequest $request)
     {
         abort_unless(\Gate::allows('criterion_create'), 403);
-
         $criterion = Criterion::create($request->all());
 
         return redirect()->route('admin.criteria.index');
@@ -39,7 +40,8 @@ class CriteriaController extends Controller
     {
         abort_unless(\Gate::allows('criterion_edit'), 403);
 
-        return view('admin.criteria.edit', compact('criterion'));
+        $critcategories = Critcategory::all()->pluck('title', 'id');
+        return view('admin.criteria.edit', compact('criterion', 'critcategories'));
     }
 
     public function update(UpdateCriterionRequest $request, Criterion $criterion)

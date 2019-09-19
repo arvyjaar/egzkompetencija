@@ -23,4 +23,12 @@ class Critcategory extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    // Relation should always be loaded (eager loading)
+    protected $with = ['criteria'];
+
+    public function criteria()
+    {
+        return $this->hasMany('App\Criterion');
+    }
 }

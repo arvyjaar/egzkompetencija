@@ -15,16 +15,12 @@ class StoreMonitoringReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'observer'          => [
-                'required',
-            ],
-            'user_id'           => [
+            'examiner_id'           => [
                 'required',
                 'integer',
             ],
-            'branch'            => [
-                'min:2',
-                'max:2',
+            'branch_id'            => [
+                'integer',
                 'required',
             ],
             'exam_date'         => [

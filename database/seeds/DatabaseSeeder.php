@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             PointsTableSeeder::class,
             BranchesTableSeeder::class,
             CritcategorySeeder::class,
+            CriteriaSeeder::class,
         ]);
     }
 }

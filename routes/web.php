@@ -25,10 +25,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('monitoring-reports', 'MonitoringReportController');
 
-    Route::delete('points/destroy', 'PointController@massDestroy')->name('points.massDestroy');
-
-    Route::resource('points', 'PointController');
-
     Route::delete('criteria/destroy', 'CriteriaController@massDestroy')->name('criteria.massDestroy');
 
     Route::resource('criteria', 'CriteriaController');

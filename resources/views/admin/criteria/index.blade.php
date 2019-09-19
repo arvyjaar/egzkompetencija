@@ -26,6 +26,9 @@
                             {{ trans('cruds.criterion.fields.title') }}
                         </th>
                         <th>
+                            {{ trans('cruds.criterion.fields.category') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -38,6 +41,9 @@
                             </td>
                             <td>
                                 {{ $criterion->title ?? '' }}
+                            </td>
+                            <td>
+                                {{ $criterion->critcategory->title ?? '' }}
                             </td>
                             <td>
                                 @can('criterion_show')

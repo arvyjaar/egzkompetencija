@@ -10,7 +10,7 @@ class CreatePointsTable extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('description');
+            $table->string('title');
             $table->integer('value');
             $table->timestamps();
             $table->softDeletes();

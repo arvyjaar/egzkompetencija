@@ -25,11 +25,11 @@ class Evaluation extends Model
 
     public function monitoringreports()
     {
-        return $this->belongsToMany(MonitoringReport::class);
+        return $this->belongsTo(MonitoringReport::class);
     }
 
     public function criterias()
     {
-        return $this->belongsToMany(Criterion::class);
+        return $this->belongsTo(Criterion::class);
     }
 }

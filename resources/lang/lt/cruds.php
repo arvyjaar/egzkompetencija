@@ -125,13 +125,12 @@ return [
     ],
     'criterion'        => [
         'title'          => 'Darbo aspektai',
-        'title_singular' => 'Darbo aspektai',
+        'title_singular' => 'Darbo aspektas',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'title'             => 'Pavadinimas',
+            'title'             => 'Title',
             'title_helper'      => '',
-            'category'          => 'Kategorija',
             'created_at'        => 'Created at',
             'created_at_helper' => '',
             'updated_at'        => 'Updated at',
@@ -140,13 +139,25 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
-    'critcategory'  => [
-        'title'             => 'Kategorijos',
-        'title_singular'    => 'Kategorija',
-        'fields'        => [
-            'title'         => 'Pavadinimas',
-            'category'      => 'Kategorija',
-        ]
+    'evaluation'       => [
+        'title'          => 'Įvertinimai ataskaitoje',
+        'title_singular' => 'Įvertinimai ataskaitoje',
+        'fields'         => [
+            'id'                      => 'ID',
+            'id_helper'               => '',
+            'monitoringreport'        => 'Stebėjimo ataskaita',
+            'monitoringreport_helper' => '',
+            'criteria'                => 'Stebėjimo aspektas',
+            'criteria_helper'         => '',
+            'point'                   => 'Įvertinimas',
+            'point_helper'            => '',
+            'created_at'              => 'Created at',
+            'created_at_helper'       => '',
+            'updated_at'              => 'Updated at',
+            'updated_at_helper'       => '',
+            'deleted_at'              => 'Deleted at',
+            'deleted_at_helper'       => '',
+        ],
     ],
     'competency'       => [
         'title'          => 'Kompetencija',

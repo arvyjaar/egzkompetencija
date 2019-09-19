@@ -31,7 +31,7 @@ class CritcategorySeeder extends Seeder
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
             ],
             [
-                'title'         => 'Ataskaitos pildymas',
+                'title'         => 'Egzamino ataskaitos pildymas',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
             ],
         ];

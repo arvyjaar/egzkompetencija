@@ -19,12 +19,13 @@ class Criterion extends Model
 
     protected $fillable = [
         'title',
+        'critcategory_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function category() {
-        return $this->belongsTo('App\CriterionCategory');
+    public function critcategory() {
+        return $this->belongsTo('App\Critcategory', 'critcategory_id');
     }
 }

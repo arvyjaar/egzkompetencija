@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Point;
+use App\User;
+use App\Branch;
+use App\Critcategory;
+use App\MonitoringReport;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyMonitoringReportRequest;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreMonitoringReportRequest;
 use App\Http\Requests\UpdateMonitoringReportRequest;
-use App\MonitoringReport;
-use App\User;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MassDestroyMonitoringReportRequest;
+
 
 class MonitoringReportController extends Controller
 {
@@ -24,9 +31,9 @@ class MonitoringReportController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'monitoring_report_show';
-                $editGate      = 'monitoring_report_edit';
-                $deleteGate    = 'monitoring_report_delete';
+                $viewGate = 'monitoring_report_show';
+                $editGate = 'monitoring_report_edit';
+                $deleteGate = 'monitoring_report_delete';
                 $crudRoutePart = 'monitoring-reports';
 
                 return view('partials.datatablesActions', compact(
@@ -73,16 +80,30 @@ class MonitoringReportController extends Controller
     {
         abort_unless(\Gate::allows('monitoring_report_create'), 403);
 
-        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
+        $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
+        $points = Point::all();
+        $critcategories = Critcategory::all();
 
-        return view('admin.monitoringReports.create', compact('users'));
+        return view('admin.monitoringReports.create', compact('users', 'branches', 'points', 'critcategories'));
     }
 
     public function store(StoreMonitoringReportRequest $request)
     {
         abort_unless(\Gate::allows('monitoring_report_create'), 403);
 
-        $monitoringReport = MonitoringReport::create($request->all());
+        $request->request->add(['observer_id' => Auth::user()->id]);
+        $report = MonitoringReport::create($request->all());
+        $evaluation = [];
+        foreach ($request->point as $key => $value) {
+            array_push($evaluation, [
+                'monitoringreport_id' => $report->id, // Inserted report id
+                'criterion_id' => $key,
+                'point_id' => $value,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+        DB::table('monitoringreport_criterion_point_pivot')->insert($evaluation);
 
         return redirect()->route('admin.monitoring-reports.index');
     }

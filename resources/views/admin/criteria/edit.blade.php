@@ -22,6 +22,19 @@
                     {{ trans('cruds.criterion.fields.title_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('critcategory_id') ? 'has-error' : '' }}">
+                <label for="critcategory_id">{{ trans('cruds.criterion.fields.category') }}*</label>
+                <select name="critcategory_id" id="critcategory_id" class="form-control select2" required>
+                    @foreach($critcategories as $id => $critcategory)
+                        <option value="{{ $id }}" {{ old('critcategory_id', $criterion->critcategory_id) == $id ? 'selected' : '' }} > {{ $critcategory }} </option>
+                    @endforeach
+                </select>
+                @if($errors->has('critcategory_id'))
+                    <p class="help-block">
+                        {{ $errors->first('critcategory_id') }}
+                    </p>
+                @endif
+            </div>
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>

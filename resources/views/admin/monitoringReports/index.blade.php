@@ -27,9 +27,9 @@
                     <th>
                         {{ trans('cruds.monitoringReport.fields.user') }}
                     </th>
-                    <th>
+                    <!--<th>
                         {{ trans('cruds.user.fields.email') }}
-                    </th>
+                    </th> -->
                     <th>
                         {{ trans('cruds.monitoringReport.fields.branch') }}
                     </th>
@@ -107,7 +107,7 @@
       { data: 'placeholder', name: 'placeholder' },
       { data: 'observer', name: 'observer' },
 { data: 'user.user', name: 'user.name' },
-{ data: 'user.email', name: 'user.email' },
+//{ data: 'user.email', name: 'user.email' },
 { data: 'branch', name: 'branch' },
 { data: 'exam_date', name: 'exam_date' },
 { data: 'category', name: 'category' },

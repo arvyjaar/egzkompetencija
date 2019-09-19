@@ -96,18 +96,6 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('point_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.points.index") }}" class="nav-link {{ request()->is('admin/points') || request()->is('admin/points/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-cogs">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.point.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
                             @can('criterion_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.criteria.index") }}" class="nav-link {{ request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : '' }}">
@@ -116,18 +104,6 @@
                                         </i>
                                         <p>
                                             <span>{{ trans('cruds.criterion.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('evaluation_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.evaluations.index") }}" class="nav-link {{ request()->is('admin/evaluations') || request()->is('admin/evaluations/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-cogs">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.evaluation.title') }}</span>
                                         </p>
                                     </a>
                                 </li>

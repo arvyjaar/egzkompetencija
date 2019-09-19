@@ -19,6 +19,9 @@ class StoreCriterionRequest extends FormRequest
                 'required',
                 'unique:criteria',
             ],
+            'critcategory_id' => [
+                'required'
+            ]
         ];
     }
 }

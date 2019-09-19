@@ -17,6 +17,8 @@ class MonitoringReport extends Model
         'VID' => 'Vaizdo įrašas',
     ];
 
+    const CATEGORIES = ['', 'B', 'A1', 'A2', 'A', 'C', 'CE', 'D', 'BE', 'B96', 'C1', 'D1', 'B1'];
+
     protected $dates = [
         'exam_date',
         'created_at',
@@ -27,8 +29,8 @@ class MonitoringReport extends Model
     ];
 
     protected $fillable = [
-        'branch',
-        'user_id',
+        'branch_id',
+        'examiner_id',
         'observer_id',
         'category',
         'exam_date',
