@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotesTable extends Migration
+class CreateCompetenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
+        Schema::create('competencies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('monitoringreport_id')->nullable();
-            $table->foreign('monitoringreport_id', 'fk_note_monitoringreport')->references('id')->on('monitoring_reports');
-            $table->unsignedInteger('critcategory_id')->nullable();
-            $table->foreign('critcategory_id', 'fk_note_critcategory')->references('id')->on('critcategories');
+            $table->foreign('monitoringreport_id', 'fk_report_report_000')->references('id')->on('monitoring_reports');
+            $table->unsignedInteger('category_id')->nullable();
+            $table->foreign('category_id', 'fk_report_criterion_000')->references('id')->on('categories');
+            $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +32,6 @@ class CreateNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists('monitoringreport_criterion_point_pivot');
     }
 }

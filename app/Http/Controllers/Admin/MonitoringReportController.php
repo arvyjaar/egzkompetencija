@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Point;
+use App\Rules\AllPoints;
 use App\User;
 use App\Branch;
-use App\Critcategory;
-use App\MonitoringReport;
+use App\Category;
 use Carbon\Carbon;
+use App\Evaluation;
+use App\Competency;
+use App\MonitoringReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +27,8 @@ class MonitoringReportController extends Controller
     {
         if ($request->ajax()) {
             $query = MonitoringReport::query()->select('*');
-            $query->with(['user']);
+            $query->with(['examiner', 'observer']);
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,26 +49,26 @@ class MonitoringReportController extends Controller
                 ));
             });
             $table->editColumn('observer', function ($row) {
-                return $row->observer ? $row->observer : "";
+                return $row->observer_id ? $row->observer->name : '';
             });
-            $table->editColumn('user.user', function ($row) {
-                return $row->user_id ? (is_string($row->user) ? $row->user : $row->user->name) : '';
+            $table->editColumn('examiner', function ($row) {
+                return $row->examiner_id ? $row->examiner->name : '';
             });
-            $table->editColumn('user.email', function ($row) {
-                return $row->user_id ? (is_string($row->user) ? $row->user : $row->user->email) : '';
-            });
+            //$table->editColumn('user.email', function ($row) {
+            //    return $row->user_id ? (is_string($row->user) ? $row->user : $row->user->email) : '';
+            //});
             $table->editColumn('branch', function ($row) {
-                return $row->branch ? $row->branch : "";
+                return $row->branch_id ? $row->branch->title : "";
             });
 
-            $table->editColumn('category', function ($row) {
-                return $row->category ? $row->category : "";
+            $table->editColumn('drivecategory', function ($row) {
+                return $row->drivecategory ? $row->drivecategory : "";
             });
 
             $table->editColumn('observing_type', function ($row) {
                 return $row->observing_type ? MonitoringReport::OBSERVING_TYPE_RADIO[$row->observing_type] : '';
             });
-            $table->editColumn('technical_notes', function ($row) {
+            $table->editColumn('technical_note', function ($row) {
                 return $row->technical_notes ? $row->technical_notes : "";
             });
 
@@ -83,27 +87,55 @@ class MonitoringReportController extends Controller
         $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
         $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
         $points = Point::all();
-        $critcategories = Critcategory::all();
+        $categories = Category::all();
 
-        return view('admin.monitoringReports.create', compact('users', 'branches', 'points', 'critcategories'));
+        return view('admin.monitoringReports.create', compact('users', 'branches', 'points', 'categories'));
     }
 
     public function store(StoreMonitoringReportRequest $request)
     {
         abort_unless(\Gate::allows('monitoring_report_create'), 403);
 
+        // validating quantity of submitted evaluations (custom validation rule - AllPoints)
+        $request->validate([
+            'point' => ['required', 'array', new AllPoints()],
+        ]);
+
+        // adding observer - logged in user
         $request->request->add(['observer_id' => Auth::user()->id]);
         $report = MonitoringReport::create($request->all());
-        $evaluation = [];
-        foreach ($request->point as $key => $value) {
-            array_push($evaluation, [
-                'monitoringreport_id' => $report->id, // Inserted report id
-                'criterion_id' => $key,
-                'point_id' => $value,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ]);
+
+        // preparing competencies array
+        $competencies = [];
+        foreach ($request->competency_note as $key => $value) {
+            array_push($competencies,
+                [
+                    'monitoringreport_id' => $report->id,
+                    'category_id' => $key,
+                    'note' => $value,
+                ]
+            );
         }
-        DB::table('monitoringreport_criterion_point_pivot')->insert($evaluation);
+        // inserting competencies...
+        foreach ($competencies as $competency_model) {
+            $competency = Competency::create($competency_model);
+
+            // preparing evaluations array
+            $evaluations = []; // must be defined outside the loop, to erase the value of previous iteration !
+            foreach ($request->point as $category_id => $values) {
+                if ($category_id == $competency->category_id) {
+                    foreach ($values as $key => $value) {
+                        array_push($evaluations, [
+                            'competency_id' => $competency->id, // Inserted competency id
+                            'criterion_id' => $key,
+                            'point_id' => $value,
+                        ]);
+                    }
+                }
+            }
+            // ...and inserting related evaluations
+            isset($evaluations) ? $competency->evaluation()->createMany($evaluations) : false;
+        }
 
         return redirect()->route('admin.monitoring-reports.index');
     }
@@ -112,7 +144,7 @@ class MonitoringReportController extends Controller
     {
         abort_unless(\Gate::allows('monitoring_report_edit'), 403);
 
-        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
 
         $monitoringReport->load('user');
 
@@ -132,9 +164,12 @@ class MonitoringReportController extends Controller
     {
         abort_unless(\Gate::allows('monitoring_report_show'), 403);
 
-        $monitoringReport->load('user');
+        $points = Point::all();
+        $monitoringReport->load(['examiner', 'observer', 'branch']);
+        $competencies = Competency::where('monitoringreport_id', $monitoringReport->id)->get();
+        $competencies->load(['evaluation', 'category']);
 
-        return view('admin.monitoringReports.show', compact('monitoringReport'));
+        return view('admin.monitoringReports.show', compact('points', 'monitoringReport', 'competencies'));
     }
 
     public function destroy(MonitoringReport $monitoringReport)

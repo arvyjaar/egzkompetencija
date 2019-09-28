@@ -79,7 +79,7 @@
 
                             </i>
                             <p>
-                                <span>{{ trans('cruds.competency.title') }}</span>
+                                <span>Kompetencija</span>
                                 <i class="right fa fa-fw fa-angle-left"></i>
                             </p>
                         </a>
@@ -91,7 +91,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('cruds.monitoringReport.title') }}</span>
+                                            <span>Stebėjimo ataskaitos</span>
                                         </p>
                                     </a>
                                 </li>
@@ -103,7 +103,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('cruds.criterion.title') }}</span>
+                                            <span>Darbo aspektai</span>
                                         </p>
                                     </a>
                                 </li>
@@ -118,7 +118,7 @@
 
                             </i>
                             <p>
-                                <span>{{ trans('cruds.tool.title') }}</span>
+                                <span>Darbo įrankiai</span>
                             </p>
                         </a>
                     </li>

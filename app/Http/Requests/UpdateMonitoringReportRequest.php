@@ -31,7 +31,7 @@ class UpdateMonitoringReportRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
             ],
-            'category'          => [
+            'drivecategory'          => [
                 'min:1',
                 'max:3',
                 'required',

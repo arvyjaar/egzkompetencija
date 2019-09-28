@@ -199,6 +199,7 @@
 });
 
     </script>
+
     @yield('scripts')
     <script>
         /*!

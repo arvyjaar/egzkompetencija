@@ -1,10 +1,10 @@
 <?php
 
-use App\Critcategory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class CritcategorySeeder extends Seeder
+class CategoriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -36,6 +36,6 @@ class CritcategorySeeder extends Seeder
             ],
         ];
 
-        Critcategory::insert($categories);
+        DB::table('categories')->insert($categories);
     }
 }

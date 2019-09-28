@@ -28,7 +28,7 @@
                     <div class="col-4">
                         <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
                             <label for="examiner_id">Egzaminuotojas (-a)*</label>
-                            <select name="examiner_id" id="examiner_id" class="form-control select2" required>
+                            <select name="examiner_id" id="examiner_id" class="form-control select2" >
                                 @foreach($users as $id => $user)
                                     <option value="{{ $id }}" {{ (isset($monitoringReport) && $monitoringReport->user ? $monitoringReport->user->id : old('examiner_id')) == $id ? 'selected' : '' }}>{{ $user }}</option>
                                 @endforeach
@@ -49,10 +49,11 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
-                            <label for="category">Kategorija*</label>
-                            <select type="text" id="category" name="category" class="form-control select2" required>
-                                @foreach(App\MonitoringReport::CATEGORIES as $category)
-                                    <option value="{{ $category }}" {{ (isset($monitoringReport) && $monitoringReport->category ? $monitoringReport->category : old('category')) == $category ? 'selected' : '' }}>{{ $category }}</option>
+                            <label for="drivecategory">Kategorija*</label>
+                            <select type="text" id="drivecategory" name="drivecategory" class="form-control select2"
+                                    required>
+                                @foreach(App\MonitoringReport::CATEGORIES as $drivecategory)
+                                    <option value="{{ $drivecategory }}" {{ (isset($monitoringReport) && $monitoringReport->drivecategory ? $monitoringReport->drivecategory : old('drivecategory')) == $drivecategory ? 'selected' : '' }}>{{ $drivecategory }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('category'))
@@ -77,8 +78,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group {{ $errors->has('observing_date') ? 'has-error' : '' }}">
-                            <label for="observing_date">Stebėjimo data*
-                                *</label>
+                            <label for="observing_date">Stebėjimo data*</label>
                             <input type="text" id="observing_date" name="observing_date" class="form-control date"
                                    value="{{ old('observing_date', isset($monitoringReport) ? $monitoringReport->observing_date : '') }}"
                                    required>
@@ -98,7 +98,8 @@
                                 &nbsp; {{ $label }} &nbsp;
                                 <input type="radio" id="observing_type_{{ $key }}" name="observing_type"
                                        value="{{ $key }}"
-                                       {{ old('observing_type', 1) === (string)$key ? 'checked' : '' }} required>
+                                       {{ old('observing_type', 1) === (string)$key ? 'checked' : '' }}
+                                       required>
                             @endforeach
                             @if($errors->has('observing_type'))
                                 <p class="help-block">
@@ -111,64 +112,100 @@
                 <div class="">
                     <label>Vertinimas:</label>
                     <p>
-                    @foreach($points as $point)
-                        {{ $point->value == 0 ? 'N' : $point->value }} - {{ $point->title }};
-                    @endforeach
+                        @foreach($points as $point)
+                            {{ $point->value == 0 ? 'N' : $point->value }} - {{ $point->title }};
+                        @endforeach
                     </p>
                     <hr>
                 </div>
 
-                @foreach($critcategories as $critcategory)
+                @foreach($categories as $category)
                     <div class="row">
                         <div class="col-12">
-                            <strong>{{ $critcategory->title }}</strong>
-                        </div>
-                     </div>
-                    @foreach($critcategory->criteria as $criteria)
-                    <div class="row">
-                        <div class="col-7">
-                            <p>{{ $criteria->title }}</p>
-                        </div>
-                        <div class="col-5">
-                            @foreach($points as $point)
-                                &nbsp; {{ $point->value == 0 ? 'N' : $point->value }} &nbsp;
-                                <input type="radio" id="point_{{ $point->id }}" name="point[{{ $criteria->id }}]" value="{{ $point->id }}" >
-                            @endforeach
+                            <strong>{{ $category->title }}</strong>
                         </div>
                     </div>
+                    @foreach($category->criterion as $criterion)
+                        <div class="row">
+                            <div class="col-7">
+                                <p class="criterion" >{{ $criterion->title }}</p>
+                            </div>
+                            <div class="col-5">
+                                @foreach($points as $point)
+                                    <label for="point_{{ $point->id }}"> {{ $point->value == 0 ? 'N' : $point->value }}</label>
+                                    <input type="radio"
+                                           id="point_{{ $point->id }}"
+                                           class="point"
+                                           name="point[{{ $category->id }}][{{ $criterion->id }}]"
+                                           value="{{ $point->id }}" {{ $point->id == old('point.'.$category->id.'.'.$criterion->id) ? ' checked' : '' }}
+                                           required>
+                                    &nbsp;&nbsp;
+                                @endforeach
+                            </div>
+                        </div>
                     @endforeach
+                    <div class="form-group {{ $errors->has('competency_note') ? 'has-error' : '' }}">
+                        <label for="competency_note">Pastabos</label>
+                        <textarea id="competency_note" name="competency_note[{{ $category->id }}]"
+                                  class="form-control">{{ old('competency_note.'.$category->id) }}
+                    </textarea>
+                        @if($errors->has('competency_note'))
+                            <p class="help-block">
+                                {{ $errors->first('competency_note.*') }}
+                            </p>
+                        @endif
+                    </div>
                 @endforeach
 
-                <div class="form-group {{ $errors->has('technical_notes') ? 'has-error' : '' }}">
-                    <label for="technical_notes">Papildomos/bendrosios pastabos</label>
+                <div class="form-group {{ $errors->has('technical_note') ? 'has-error' : '' }}">
+                    <label for="technical_note">Papildomos/bendrosios pastabos</label>
                     <p class="helper-block">
                         Pastabos dėl techninių priemonių, trukdančių efektyviam darbui, nesusijusios su šiuo įvertinimu
                     </p>
-                    <textarea id="technical_notes" name="technical_notes"
-                              class="form-control">{{ old('technical_notes', isset($monitoringReport) ? $monitoringReport->technical_notes : '') }}
+                    <textarea id="technical_note" name="technical_note"
+                              class="form-control">{{ old('technical_note', isset($monitoringReport) ? $monitoringReport->technical_note : '') }}
                     </textarea>
-                    @if($errors->has('technical_notes'))
+                    @if($errors->has('technical_note'))
                         <p class="help-block">
-                            {{ $errors->first('technical_notes') }}
+                            {{ $errors->first('technical_note') }}
+                        </p>
+                    @endif
+                </div>
+                <div class="form-group {{ $errors->has('observer_note') ? 'has-error' : '' }}">
+                    <label for="observer_note">Stebėtojo išvados, pasiūlymai</label>
+                    <textarea id="observer_note" name="observer_note"
+                              class="form-control">{{ old('observer_note', isset($monitoringReport) ? $monitoringReport->observer_note : '') }}</textarea>
+                    @if($errors->has('observer_note'))
+                        <p class="help-block">
+                            {{ $errors->first('observer_note') }}
                         </p>
                     @endif
 
                 </div>
-                <div class="form-group {{ $errors->has('observer_notes') ? 'has-error' : '' }}">
-                    <label for="observer_notes">Stebėtojo išvados, pasiūlymai</label>
-                    <textarea id="observer_notes" name="observer_notes"
-                              class="form-control ckeditor">{{ old('observer_notes', isset($monitoringReport) ? $monitoringReport->observer_notes : '') }}</textarea>
-                    @if($errors->has('observer_notes'))
-                        <p class="help-block">
-                            {{ $errors->first('observer_notes') }}
-                        </p>
-                    @endif
 
-                </div>
+                <p id="count">aaaa</p>
+
                 <div>
                     <input class="btn btn-danger" type="submit" value="Išsaugoti">
                 </div>
             </form>
         </div>
     </div>
+
+@endsection
+@section('scripts')
+    <script>
+        var countChecked = function() {
+            n = $( ".point:checked" ).length;
+            total = $( ".criterion" ).length;
+            if (n < total) {
+                color = 'red'
+            } else {
+                color = 'green'
+            }
+            $( "#count" ).html( "<span style='color:" + color + " '> Įvertinote aspektų: " + n + " iš " + total + "</span>");
+        };
+        countChecked();
+        $( ".point" ).on( "click", countChecked );
+    </script>
 @endsection

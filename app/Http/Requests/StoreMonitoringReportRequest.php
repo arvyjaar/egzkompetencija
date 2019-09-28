@@ -27,7 +27,7 @@ class StoreMonitoringReportRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
             ],
-            'category'          => [
+            'drivecategory'          => [
                 'min:1',
                 'max:3',
                 'required',
@@ -43,6 +43,19 @@ class StoreMonitoringReportRequest extends FormRequest
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return $messages = [
+            'examiner_id.required' => 'Nepasirnktas egzaminuotojas',
+            'branch_id' => 'Nepasirinktas filialas/grupė',
+            'exam_date' => 'Nepasirinkta egzamino data ir laikas',
+            'observing_date' => 'Nepasirinkta stebėjimo data',
+            'drivecategory' => 'Nepasirinkta TP kategorija',
+            'observing_type' => 'Nepasirinktas Egzaminas / Vaizdo įrašas',
+            'point.required' => 'Ne visi darbo aspektai įvertinti balais',
         ];
     }
 }

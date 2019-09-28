@@ -18,18 +18,28 @@ class Evaluation extends Model
     ];
 
     protected $fillable = [
+        'competency_id',
+        'criterion_id',
+        'point_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function monitoringreports()
+    protected $with = ['criterion', 'point'];
+
+    public function criterion()
     {
-        return $this->belongsTo(MonitoringReport::class);
+        return $this->belongsTo('App\Criterion', 'criterion_id');
     }
 
-    public function criterias()
+    public function competency()
     {
-        return $this->belongsTo(Criterion::class);
+        return $this->belongsTo('App\Competency', 'competency_id');
+    }
+
+    public function point()
+    {
+        return $this->belongsTo('App\Point', 'point_id');
     }
 }

@@ -32,23 +32,40 @@ class MonitoringReport extends Model
         'branch_id',
         'examiner_id',
         'observer_id',
-        'category',
+        'drivecategory',
         'exam_date',
         'observing_date',
         'observing_type',
-        'observer_notes',
-        'examiner_notes',
-        'technical_notes',
-        'evpis_notes',
+        'observer_note',
+        'examiner_note',
+        'technical_note',
+        'evpis_note',
         'examiner_reviewed',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function user()
+    //protected $with = ['examiner', 'observer', 'branch'];
+
+    public function examiner()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo('App\User', 'examiner_id');
+    }
+
+    public function observer()
+    {
+        return $this->belongsTo('App\User', 'observer_id');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Branch', 'branch_id');
+    }
+
+    public function competency()
+    {
+        return $this->hasMany('App\Competency', 'monitoringreport_id');
     }
 
     public function getExamDateAttribute($value)

@@ -4,14 +4,14 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.monitoring-reports.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.monitoringReport.title_singular') }}
+                Sukurti stebėjimo ataskaitą
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.monitoringReport.title_singular') }} {{ trans('global.list') }}
+        Stebėjimo ataskaitos
     </div>
 
     <div class="card-body">
@@ -22,34 +22,29 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.observer') }}
+                        Stebėtojas
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.user') }}
+                        Egzaminuotojas
                     </th>
-                    <!--<th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th> -->
+
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.branch') }}
+                        Filialas
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.exam_date') }}
+                        Egzaminas
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.category') }}
+                        Kategorija
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.observing_date') }}
+                        Stebėta
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.observing_type') }}
+                        Tipas
                     </th>
                     <th>
-                        {{ trans('cruds.monitoringReport.fields.technical_notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.monitoringReport.fields.examiner_reviewed') }}
+                        Egzaminuotojas susipažino
                     </th>
                     <th>
                         &nbsp;
@@ -106,14 +101,13 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
       { data: 'observer', name: 'observer' },
-{ data: 'user.user', name: 'user.name' },
+{ data: 'examiner', name: 'examiner' },
 //{ data: 'user.email', name: 'user.email' },
 { data: 'branch', name: 'branch' },
 { data: 'exam_date', name: 'exam_date' },
-{ data: 'category', name: 'category' },
+{ data: 'drivecategory', name: 'drivecategory' },
 { data: 'observing_date', name: 'observing_date' },
 { data: 'observing_type', name: 'observing_type' },
-{ data: 'technical_notes', name: 'technical_notes' },
 { data: 'examiner_reviewed', name: 'examiner_reviewed' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

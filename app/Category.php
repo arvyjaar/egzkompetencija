@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Critcategory extends Model
+class Category extends Model
 {
     use SoftDeletes;
 
-    public $table = 'critcategories';
+    public $table = 'categories';
 
     protected $dates = [
         'created_at',
@@ -25,10 +25,10 @@ class Critcategory extends Model
     ];
 
     // Relation should always be loaded (eager loading)
-    protected $with = ['criteria'];
+    protected $with = ['criterion'];
 
-    public function criteria()
+    public function criterion()
     {
-        return $this->hasMany('App\Criterion');
+        return $this->hasMany('App\Criterion', 'category_id');
     }
 }
