@@ -7,13 +7,10 @@ use App\Rules\AllPoints;
 use App\User;
 use App\Branch;
 use App\Category;
-use Carbon\Carbon;
-use App\Evaluation;
 use App\Competency;
 use App\MonitoringReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreMonitoringReportRequest;
@@ -145,13 +142,14 @@ class MonitoringReportController extends Controller
         abort_unless(\Gate::allows('monitoring_report_edit'), 403);
 
         $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
+        $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
+        $points = Point::all();
+        $categories = Category::all();
 
-        $monitoringReport->load('user');
-
-        return view('admin.monitoringReports.edit', compact('users', 'monitoringReport'));
+        return view('admin.monitoringReports.create', compact('users', 'monitoringReport', 'branches', 'points', 'categories'));
     }
 
-    public function update(UpdateMonitoringReportRequest $request, MonitoringReport $monitoringReport)
+    public function update(StoreMonitoringReportRequest $request, MonitoringReport $monitoringReport)
     {
         abort_unless(\Gate::allows('monitoring_report_edit'), 403);
 

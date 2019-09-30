@@ -26,6 +26,10 @@ class Competency extends Model
         'deleted_at',
     ];
 
+    protected $with = [
+        'evaluation'
+    ];
+
     public function evaluation()
     {
         return $this->hasMany('App\Evaluation', 'competency_id');

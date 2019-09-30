@@ -46,7 +46,7 @@ class MonitoringReport extends Model
         'deleted_at',
     ];
 
-    //protected $with = ['examiner', 'observer', 'branch'];
+    protected $with = ['competency'];
 
     public function examiner()
     {

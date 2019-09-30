@@ -46,6 +46,13 @@
                         <div class="col-4">{{ $evaluation->point->value == 0 ? 'N' : $evaluation->point->value }}</div>
                     </div>
                 @endforeach
+                <div class="row">
+                    <div class="col-12">
+                        <br>
+                        <p><u><i>Pastaba: </i></u>{{ $competency->note }}</p>
+
+                    </div>
+                </div>
                 <hr>
             @endforeach
 
