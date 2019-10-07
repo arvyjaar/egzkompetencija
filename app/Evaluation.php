@@ -33,9 +33,9 @@ class Evaluation extends Model
         return $this->belongsTo('App\Criterion', 'criterion_id');
     }
 
-    public function competency()
+    public function monitoringReport()
     {
-        return $this->belongsTo('App\Competency', 'competency_id');
+        return $this->belongsTo('App\MonitoringReport', 'monitoringreport_id');
     }
 
     public function point()

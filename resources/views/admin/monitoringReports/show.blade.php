@@ -32,14 +32,14 @@
                     <hr>
                 </div>
             </div>
-            @foreach($competencies as $competency)
+            @foreach($results as $result)
 
                 <div class="row">
                     <div class="col-12">
-                        <b>{{ $competency->category->title }}</b>
+                        <b>{{ $result->competency->title }}</b>
                     </div>
                 </div>
-                @foreach($competency->evaluation as $evaluation)
+                @foreach($result->evaluations as $evaluation)
                     <div class="row">
                         <div class="col-8">
                             {{ $evaluation->criterion->title }}</div>
@@ -49,66 +49,55 @@
                 <div class="row">
                     <div class="col-12">
                         <br>
-                        <p><u><i>Pastaba: </i></u>{{ $competency->note }}</p>
-
+                        @if(isset($result->competency_note))
+                            <p><u><i>Pastaba:</i></u> <span
+                                        class="text-info">{{ $result->competency_note->text }}</span></p>
+                        @endif
                     </div>
                 </div>
                 <hr>
             @endforeach
 
-            <table class="table table-bordered table-striped">
-                <tbody>
+            <div class="row">
+                <div class="col-12">
+                    <b>Papildomos/bendrosios pastabos (pastabos dėl techninių priemonių, trukdančių efektyviam
+                        darbui, nesusijusios su šiuo įvertinimu)</b>
+                    <p><span class="text-info">{{ $monitoringReport->technical_note ?? 'nėra' }}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Stebėtojo išvados, pasiūlymai</b>
+                    <p><span class="text-info">{{ $monitoringReport->observer_note ?? 'nėra' }}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Egzaminuotojo atsiliepimas</b>
+                    <p><span class="text-info">{{ $monitoringReport->examiner_note ?? 'nėra'}}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Egzaminuotojas susipažino</b>
+                    @if(isset($monitoringReport->examiner_reviewed))
+                        <p><span class="text-info">{{ $monitoringReport->examiner_reviewed }}</span></p>
+                    @else
+                        <p class="text-danger">nesusipažino</p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Egzaminavimo ir vairuotojo pažymėjimų išdavimo skyriaus pastabos</b>
+                    <p><span class="text-info">{{ $monitoringReport->evpis_notes ?? 'nėra' }}</span></p>
+                </div>
+            </div>
 
-
-                @if(isset($monitoringReport->technical_notes))
-                    <tr>
-                        <th>
-                            Papildomos/bendrosios pastabos (pastabos dėl techninių priemonių, trukdančių efektyviam
-                            darbui, nesusijusios su šiuo įvertinimu)
-                        </th>
-                        <td>
-                            {{ $monitoringReport->technical_note }}
-                        </td>
-                    </tr>
-                @endif
-                <tr>
-                    <th>
-                        Stebėtojo išvados, pasiūlymai
-                    </th>
-                    <td>
-                        {!! $monitoringReport->observer_note !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Egzaminuotojo atsiliepimas
-                    </th>
-                    <td>
-                        {!! $monitoringReport->examiner_note !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Egzaminuotojas susipažino
-                    </th>
-                    <td>
-                        {{ $monitoringReport->examiner_reviewed }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Egzaminavimo ir vairuotojo pažymėjimų išdavimo skyriaus pastabos
-                    </th>
-                    <td>
-                        {!! $monitoringReport->evpis_notes !!}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
             <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
                 Atgal į sąrašą
             </a>
         </div>
     </div>
-    </div>
+
 @endsection

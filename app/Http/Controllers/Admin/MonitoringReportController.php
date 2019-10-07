@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CompetencyNote;
 use App\Point;
 use App\Rules\AllPoints;
 use App\User;
 use App\Branch;
-use App\Category;
 use App\Competency;
+use App\Evaluation;
 use App\MonitoringReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class MonitoringReportController extends Controller
     {
         if ($request->ajax()) {
             $query = MonitoringReport::query()->select('*');
-            $query->with(['examiner', 'observer']);
+            $query->with(['examiner', 'observer', 'branch']);
 
             $table = Datatables::of($query);
 
@@ -84,9 +85,10 @@ class MonitoringReportController extends Controller
         $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
         $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
         $points = Point::all();
-        $categories = Category::all();
+        $competencies = Competency::all();
+        $competencies->load(['criterion']);
 
-        return view('admin.monitoringReports.create', compact('users', 'branches', 'points', 'categories'));
+        return view('admin.monitoringReports.create', compact('users', 'branches', 'points', 'competencies'));
     }
 
     public function store(StoreMonitoringReportRequest $request)
@@ -100,39 +102,33 @@ class MonitoringReportController extends Controller
 
         // adding observer - logged in user
         $request->request->add(['observer_id' => Auth::user()->id]);
-        $report = MonitoringReport::create($request->all());
 
-        // preparing competencies array
-        $competencies = [];
-        foreach ($request->competency_note as $key => $value) {
-            array_push($competencies,
-                [
-                    'monitoringreport_id' => $report->id,
-                    'category_id' => $key,
-                    'note' => $value,
-                ]
-            );
+        $monitoringReport = MonitoringReport::create($request->all());
+
+        // preparing evaluations array...
+        $evaluations = [];
+        foreach ($request->point as $criterion_id => $value) {
+            array_push($evaluations, [
+                    'criterion_id' => $criterion_id,
+                    'point_id' => $value,
+            ]);
         }
-        // inserting competencies...
-        foreach ($competencies as $competency_model) {
-            $competency = Competency::create($competency_model);
+        // ...and inserting related evaluations
+        $monitoringReport->evaluation()->createMany($evaluations);
 
-            // preparing evaluations array
-            $evaluations = []; // must be defined outside the loop, to erase the value of previous iteration !
-            foreach ($request->point as $category_id => $values) {
-                if ($category_id == $competency->category_id) {
-                    foreach ($values as $key => $value) {
-                        array_push($evaluations, [
-                            'competency_id' => $competency->id, // Inserted competency id
-                            'criterion_id' => $key,
-                            'point_id' => $value,
-                        ]);
-                    }
-                }
+        // preparing competency notes array
+        $competency_notes = [];
+        foreach ($request->competency_note as $competency_id => $text) {
+            if (trim($text) !== '') {
+                array_push($competency_notes, [
+                    'competency_id' => $competency_id,
+                    'text' => $text,
+                ]);
             }
-            // ...and inserting related evaluations
-            isset($evaluations) ? $competency->evaluation()->createMany($evaluations) : false;
         }
+        // ...and inserting related competency notes
+        isset($competency_notes) ? $monitoringReport->competencyNote()->createMany($competency_notes) : false;
+
 
         return redirect()->route('admin.monitoring-reports.index');
     }
@@ -144,9 +140,9 @@ class MonitoringReportController extends Controller
         $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
         $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
         $points = Point::all();
-        $categories = Category::all();
+        $results = $monitoringReport->setResults();
 
-        return view('admin.monitoringReports.create', compact('users', 'monitoringReport', 'branches', 'points', 'categories'));
+        return view('admin.monitoringReports.edit', compact('users', 'monitoringReport', 'branches', 'points', 'results'));
     }
 
     public function update(StoreMonitoringReportRequest $request, MonitoringReport $monitoringReport)
@@ -154,8 +150,32 @@ class MonitoringReportController extends Controller
         abort_unless(\Gate::allows('monitoring_report_edit'), 403);
 
         $monitoringReport->update($request->all());
+        $comp_notes = $request->competency_note;
+
+        foreach ($comp_notes as $comp_id => $note) {
+            $comp_note = $monitoringReport->competencyNote()->where('competency_id', $comp_id)->first();
+            if (! isset($comp_note) && $note != '') {
+                $monitoringReport->competencyNote()->create([
+                    'competency_id' => $comp_id,
+                    'text' => $note,
+                ]);
+            } elseif (isset($comp_note) && $note != '') {
+                $comp_note->update(['text' => $note]);
+            } elseif (isset($comp_note) && $note == '') {
+                $comp_note->delete();
+            }
+        }
 
         return redirect()->route('admin.monitoring-reports.index');
+    }
+
+    public function updateSingleEvaluation(Request $request, MonitoringReport $monitoringReport)
+    {
+        abort_unless(\Gate::allows('monitoring_report_edit'), 403);
+
+        $eval = tap(Evaluation::find($request->eval_id))->update(['point_id' => $request->point_id]);
+        $eval->load(['point']); // necessary to get updated model with new relation
+        return response()->json(['success'=>$eval->point->title]);
     }
 
     public function show(MonitoringReport $monitoringReport)
@@ -163,17 +183,17 @@ class MonitoringReportController extends Controller
         abort_unless(\Gate::allows('monitoring_report_show'), 403);
 
         $points = Point::all();
-        $monitoringReport->load(['examiner', 'observer', 'branch']);
-        $competencies = Competency::where('monitoringreport_id', $monitoringReport->id)->get();
-        $competencies->load(['evaluation', 'category']);
+        $results = $monitoringReport->setResults();
 
-        return view('admin.monitoringReports.show', compact('points', 'monitoringReport', 'competencies'));
+        return view('admin.monitoringReports.show', compact('points', 'monitoringReport', 'results'));
     }
 
     public function destroy(MonitoringReport $monitoringReport)
     {
         abort_unless(\Gate::allows('monitoring_report_delete'), 403);
 
+        $monitoringReport->evaluation()->delete();
+        $monitoringReport->competencyNote()->delete();
         $monitoringReport->delete();
 
         return back();
@@ -182,6 +202,8 @@ class MonitoringReportController extends Controller
     public function massDestroy(MassDestroyMonitoringReportRequest $request)
     {
         MonitoringReport::whereIn('id', request('ids'))->delete();
+        Evaluation::whereIn('monitoringreport_id', request('ids'))->delete();
+        CompetencyNote::whereIn('monitoringreport_id', request('ids'))->delete();
 
         return response(null, 204);
     }

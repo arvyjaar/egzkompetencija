@@ -49,7 +49,7 @@ class StoreMonitoringReportRequest extends FormRequest
     public function messages()
     {
         return $messages = [
-            'examiner_id.required' => 'Nepasirnktas egzaminuotojas',
+            'examiner_id.required' => 'Nepasirinktas egzaminuotojas',
             'branch_id' => 'Nepasirinktas filialas/grupė',
             'exam_date' => 'Nepasirinkta egzamino data ir laikas',
             'observing_date' => 'Nepasirinkta stebėjimo data',

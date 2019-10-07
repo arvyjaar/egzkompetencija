@@ -46,8 +46,6 @@ class MonitoringReport extends Model
         'deleted_at',
     ];
 
-    protected $with = ['competency'];
-
     public function examiner()
     {
         return $this->belongsTo('App\User', 'examiner_id');
@@ -63,9 +61,14 @@ class MonitoringReport extends Model
         return $this->belongsTo('App\Branch', 'branch_id');
     }
 
-    public function competency()
+    public function evaluation()
     {
-        return $this->hasMany('App\Competency', 'monitoringreport_id');
+        return $this->hasMany('App\Evaluation', 'monitoringreport_id');
+    }
+
+    public function competencyNote()
+    {
+        return $this->hasMany('App\CompetencyNote', 'monitoringreport_id');
     }
 
     public function getExamDateAttribute($value)
@@ -96,5 +99,29 @@ class MonitoringReport extends Model
     public function setExaminerReviewedAttribute($value)
     {
         $this->attributes['examiner_reviewed'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /*
+     * Get all evaluations, competency notes of this monitoring report and make collection
+     */
+    public function setResults()
+    {
+        $competencies = Competency::all();
+
+        $results = collect();
+        foreach ($competencies as $competency) {
+            $comp_id = $competency->id;
+            $competency_note = $this->competencyNote->first(function($item) use ($comp_id) { return $item->competency_id === $comp_id; });
+            $evaluations = $this->evaluation->filter(function($item) use ($comp_id) { return $item->criterion->competency_id === $comp_id; });
+
+            $item = collect();
+            $item->competency = $competency;
+            $item->competency_note = $competency_note;
+            $item->evaluations = $evaluations;
+
+            $results->push($item);
+        }
+
+        return $results;
     }
 }

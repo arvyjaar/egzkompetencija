@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
             RoleUserTableSeeder::class,
             PointsTableSeeder::class,
             BranchesTableSeeder::class,
-            CategoriesSeeder::class,
+            CompetenciesSeeder::class,
             CriteriaSeeder::class,
         ]);
     }

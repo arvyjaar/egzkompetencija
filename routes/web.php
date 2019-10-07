@@ -25,6 +25,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('monitoring-reports', 'MonitoringReportController');
 
+    Route::put('evaluation/update-evaluation', 'MonitoringReportController@updateSingleEvaluation')->name('monitoring-reports.updateSingleEvaluation');
+
     Route::delete('criteria/destroy', 'CriteriaController@massDestroy')->name('criteria.massDestroy');
 
     Route::resource('criteria', 'CriteriaController');

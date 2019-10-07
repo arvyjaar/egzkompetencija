@@ -25,6 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('is-examiner', function ($user, $monitoringReport) {
+
+            return $user->id === $monitoringReport->examiner_id;
+        });
+
+        Gate::define('is-observer', function ($user, $monitoringReport) {
+
+            return $user->id === $monitoringReport->observer_id;
+        });
     }
 }

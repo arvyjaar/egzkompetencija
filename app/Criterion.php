@@ -19,13 +19,15 @@ class Criterion extends Model
 
     protected $fillable = [
         'title',
-        'critcategory_id',
+        'competency_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function category() {
-        return $this->belongsTo('App\Category', 'category_id');
+    protected $with = ['competency'];
+
+    public function competency() {
+        return $this->belongsTo('App\Competency', 'competency_id');
     }
 }

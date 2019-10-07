@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class CompetencyNote extends Model
 {
     use SoftDeletes;
 
-    public $table = 'categories';
+    public $table = 'competencynotes';
 
     protected $dates = [
         'created_at',
@@ -18,17 +18,12 @@ class Category extends Model
     ];
 
     protected $fillable = [
-        'title',
+        'monitoringreport_id',
+        'competency_id',
+        'text',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    // Relation should always be loaded (eager loading)
-    protected $with = ['criterion'];
-
-    public function criterion()
-    {
-        return $this->hasMany('App\Criterion', 'category_id');
-    }
 }

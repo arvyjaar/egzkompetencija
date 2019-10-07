@@ -11,11 +11,11 @@ class CreateMonitoringReportsTable extends Migration
         Schema::create('monitoring_reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('examiner_id');
-            $table->foreign('examiner_id', 'examiner_fk_173104')->references('id')->on('users');
+            $table->foreign('examiner_id')->references('id')->on('users');
             $table->unsignedInteger('observer_id');
-            $table->foreign('observer_id', 'observer_fk_1731040')->references('id')->on('users');
+            $table->foreign('observer_id')->references('id')->on('users');
             $table->unsignedInteger('branch_id');
-            $table->foreign('branch_id', 'branch_fk_1731040')->references('id')->on('branches');
+            $table->foreign('branch_id')->references('id')->on('branches');
             $table->dateTime('exam_date');
             $table->string('drivecategory');
             $table->date('observing_date');

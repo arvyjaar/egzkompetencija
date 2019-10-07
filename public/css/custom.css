@@ -53,32 +53,14 @@ table.dataTable thead .sorting_desc {
     color: #db3700;
 }
 /* Custom radio buttons */
-input[type='radio']:after {
-    width: 1em;
-    height: 1em;
-    border-radius: 1.5em;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #d1d3d1;
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    border: 1px solid #fff4cb;
+.custom-label {
+    font-weight: 400!important;
+    margin-left: 1em;
 }
-input[type='radio']:checked:after {
-    width: 1em;
-    height: 1em;
-    border-radius: 1.5em;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #ff912f;
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    border: 1px solid #ffd919;
+input[type='radio'] {
+    vertical-align: -8%;
 }
-
-/*.big{ width: 20em; height: 20em; }*/
+input[type='radio'], .custom-label {
+    cursor: pointer;
+}
 /* end Custom radio buttons */

@@ -11,8 +11,8 @@ class CreateCriteriaTable extends Migration
         Schema::create('criteria', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->unsignedInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedInteger('competency_id')->nullable();
+            $table->foreign('competency_id')->references('id')->on('competencies');
             $table->timestamps();
             $table->softDeletes();
         });

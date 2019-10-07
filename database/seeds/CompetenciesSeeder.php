@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class CategoriesSeeder extends Seeder
+class CompetenciesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        $categories = [
+        $competencies = [
             [
                 'title'         => 'Bendravimas',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -36,6 +36,6 @@ class CategoriesSeeder extends Seeder
             ],
         ];
 
-        DB::table('categories')->insert($categories);
+        DB::table('competencies')->insert($competencies);
     }
 }
