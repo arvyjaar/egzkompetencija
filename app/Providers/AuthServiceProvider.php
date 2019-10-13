@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,14 +26,30 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('is-examiner', function ($user, $monitoringReport) {
-
-            return $user->id === $monitoringReport->examiner_id;
+        Gate::define('is_admin', function ($user) {
+            return
+                $user->roles->contains('title', 'Admin');
         });
 
-        Gate::define('is-observer', function ($user, $monitoringReport) {
+        Gate::define('report_edit_delete', function ($user, $monitoringReport) {
+            return
+                ($user->id === $monitoringReport->observer_id) || $user->roles->contains('title', 'EVPIS');
+        });
 
-            return $user->id === $monitoringReport->observer_id;
+        Gate::define('report_show', function ($user, $monitoringReport) {
+            return
+                ($user->id === $monitoringReport->examiner_id)
+                ||
+                ($user->id === $monitoringReport->observer_id)
+                ||
+                $user->roles->contains('title', 'EVPIS');
+        });
+
+        Gate::define('report_comment', function ($user, $monitoringReport) {
+            return
+                ($user->id === $monitoringReport->examiner_id)
+                ||
+                $user->roles->contains('title', 'EVPIS');
         });
     }
 }

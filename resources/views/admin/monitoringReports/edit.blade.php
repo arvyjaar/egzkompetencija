@@ -246,7 +246,6 @@
 
         // confirm evaluation update wit BS modal
         function updateSingleEvaluation(eval) {
-            console.log(eval.dataset);
             $.ajax({
                 headers: {'x-csrf-token': _token},
                 method: 'POST',

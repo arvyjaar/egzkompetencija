@@ -33,9 +33,9 @@ class MonitoringReportController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'monitoring_report_show';
-                $editGate = 'monitoring_report_edit';
-                $deleteGate = 'monitoring_report_delete';
+                $viewGate = 'report_show';
+                $editGate = 'report_edit_delete';
+                $deleteGate = 'report_edit_delete';
                 $crudRoutePart = 'monitoring-reports';
 
                 return view('partials.datatablesActions', compact(
@@ -65,9 +65,6 @@ class MonitoringReportController extends Controller
 
             $table->editColumn('observing_type', function ($row) {
                 return $row->observing_type ? MonitoringReport::OBSERVING_TYPE_RADIO[$row->observing_type] : '';
-            });
-            $table->editColumn('technical_note', function ($row) {
-                return $row->technical_notes ? $row->technical_notes : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'user']);
@@ -135,7 +132,7 @@ class MonitoringReportController extends Controller
 
     public function edit(MonitoringReport $monitoringReport)
     {
-        abort_unless(\Gate::allows('monitoring_report_edit'), 403);
+        abort_unless(\Gate::allows('report_edit_delete', $monitoringReport), 403);
 
         $users = User::all()->pluck('name', 'id')->prepend('Pasirinkite', '');
         $branches = Branch::all()->pluck('title', 'id')->prepend('Pasirinkite', '');
@@ -147,7 +144,7 @@ class MonitoringReportController extends Controller
 
     public function update(StoreMonitoringReportRequest $request, MonitoringReport $monitoringReport)
     {
-        abort_unless(\Gate::allows('monitoring_report_edit'), 403);
+        abort_unless(\Gate::allows('report_edit_delete', $monitoringReport), 403);
 
         $monitoringReport->update($request->all());
         $comp_notes = $request->competency_note;
@@ -171,17 +168,38 @@ class MonitoringReportController extends Controller
 
     public function updateSingleEvaluation(Request $request, MonitoringReport $monitoringReport)
     {
-        abort_unless(\Gate::allows('monitoring_report_edit'), 403);
-
+        if (\Gate::allows('report_edit_delete', $monitoringReport)) {
         $eval = tap(Evaluation::find($request->eval_id))->update(['point_id' => $request->point_id]);
-        $eval->load(['point']); // necessary to get updated model with new relation
+        $eval->load(['point']); // this is necessary to get updated model with new relation
+
         return response()->json(['success'=>$eval->point->title]);
+        }
+        else
+            return response()->json(['success'=>'Nepavyko išsaugoti!']);
     }
 
     public function show(MonitoringReport $monitoringReport)
     {
-        abort_unless(\Gate::allows('monitoring_report_show'), 403);
+        abort_unless(\Gate::allows('report_show', $monitoringReport), 403);
 
+        $points = Point::all();
+        $results = $monitoringReport->setResults();
+
+        return view('admin.monitoringReports.show', compact('points', 'monitoringReport', 'results'));
+    }
+
+    // Saving examiner or EVPIS notes to the monitoring report
+    public function comment(Request $request, MonitoringReport $monitoringReport)
+    {
+        abort_unless(\Gate::allows('report_comment', $monitoringReport), 403);
+
+        if (auth()->user()->id === $monitoringReport->examiner_id) {
+            $updated = tap($monitoringReport)->update(['examiner_note' => $request->comment]);
+        } else {
+            $updated = tap($monitoringReport)->update(['evpis_note' => $request->comment]);
+        }
+
+        $monitoringReport = $updated;
         $points = Point::all();
         $results = $monitoringReport->setResults();
 
@@ -190,7 +208,7 @@ class MonitoringReportController extends Controller
 
     public function destroy(MonitoringReport $monitoringReport)
     {
-        abort_unless(\Gate::allows('monitoring_report_delete'), 403);
+        abort_unless(\Gate::allows('report_edit_delete', $monitoringReport), 403);
 
         $monitoringReport->evaluation()->delete();
         $monitoringReport->competencyNote()->delete();
@@ -201,6 +219,8 @@ class MonitoringReportController extends Controller
 
     public function massDestroy(MassDestroyMonitoringReportRequest $request)
     {
+        abort_unless(\Gate::allows('is_admin'), 403);
+
         MonitoringReport::whereIn('id', request('ids'))->delete();
         Evaluation::whereIn('monitoringreport_id', request('ids'))->delete();
         CompetencyNote::whereIn('monitoringreport_id', request('ids'))->delete();

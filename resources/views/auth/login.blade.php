@@ -56,5 +56,14 @@
         </div>
         <!-- /.login-card-body -->
     </div>
+    <!-- test accounts -->
+    <div style="color: darkred">
+        <u>Test accounts:</u> <br><br>
+        admin@admin.com - Admin <br>
+        examiner@exam.com - Examiner <br>
+        observer@exam.com - Observer <br><br>
+        <u>paswords:</u> "password" for all users
+
+    </div>
 </div>
 @endsection

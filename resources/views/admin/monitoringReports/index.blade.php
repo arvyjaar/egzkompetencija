@@ -58,7 +58,9 @@
 @section('scripts')
     @parent
     <script>
+
         $(function () {
+
             let deleteButtonTrans = 'Ištrinti pažymėtus';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -90,9 +92,9 @@
             };
 
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            @can('monitoring_report_delete')
+            @can('is_admin')
               dtButtons.push(deleteButton)
-                    @endcan
+            @endcan
 
             let dtOverrideGlobals = {
                         buttons: dtButtons,
@@ -112,7 +114,7 @@
                             {data: 'observing_date', name: 'observing_date'},
                             {data: 'observing_type', name: 'observing_type'},
                             {data: 'examiner_reviewed', name: 'examiner_reviewed'},
-                            {data: 'actions', name: '{{ trans('global.actions') }}'}
+                            {data: 'actions', name: 'Veiksmai'}
                         ],
                     };
 
