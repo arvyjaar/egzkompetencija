@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="min-height: 917px;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <span class="brand-text font-weight-light">{{ trans('panel.site_title') }}</span>
+        <span class="brand-text font-weight-light">Kompetencijos vertinimas</span>
     </a>
 
     <!-- Sidebar -->
@@ -17,7 +17,7 @@
                             <i class="fas fa-fw fa-tachometer-alt">
 
                             </i>
-                            <span>{{ trans('global.dashboard') }}</span>
+                            <span>Meniu</span>
                         </p>
                     </a>
                 </li>
@@ -75,11 +75,11 @@
                 @can('competency_access')
                     <li class="nav-item has-treeview {{ request()->is('admin/monitoring-reports*') ? 'menu-open' : '' }} {{ request()->is('admin/points*') ? 'menu-open' : '' }} {{ request()->is('admin/criteria*') ? 'menu-open' : '' }} {{ request()->is('admin/evaluations*') ? 'menu-open' : '' }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="fa-fw fas fa-cogs">
+                            <i class="fa-fw fas fa-star-half-alt">
 
                             </i>
                             <p>
-                                <span>Kompetencija</span>
+                                <span>Vertinimas</span>
                                 <i class="right fa fa-fw fa-angle-left"></i>
                             </p>
                         </a>
@@ -87,7 +87,7 @@
                             @can('monitoring_report_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.monitoring-reports.index") }}" class="nav-link {{ request()->is('admin/monitoring-reports') || request()->is('admin/monitoring-reports/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-cogs">
+                                        <i class="fa-fw fas fa-star-half-alt">
 
                                         </i>
                                         <p>
@@ -99,7 +99,7 @@
                             @can('criterion_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.criteria.index") }}" class="nav-link {{ request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-cogs">
+                                        <i class="fa-fw fas fa-file-alt">
 
                                         </i>
                                         <p>
@@ -118,18 +118,18 @@
 
                             </i>
                             <p>
-                                <span>Darbo įrankiai</span>
+                                <span>Kas nors dar...</span>
                             </p>
                         </a>
                     </li>
                 @endcan
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                        <p>
+                        <p class="text-info">
                             <i class="fas fa-fw fa-sign-out-alt">
 
                             </i>
-                            <span>{{ trans('global.logout') }}</span>
+                            <span>Atsijungti</span>
                         </p>
                     </a>
                 </li>

@@ -10,7 +10,7 @@
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Prisijungti</p>
             @if(\Session::has('message'))
                 <p class="alert alert-info">
                     {{ \Session::get('message') }}
@@ -20,31 +20,34 @@
                 {{ csrf_field() }}
                 <div class="form-group has-feedback">
                     <div class="input-group">
-                        <input type="email" class="form-control" placeholder="{{ trans('global.login_email') }}" name="email">
+                        <input type="email" class="form-control" placeholder="el. paštas" name="email">
                     </div>
                 </div>
                 <div class="form-group has-feedback">
                     <div class="input-group">
-                        <input type="password" class="form-control" placeholder="{{ trans('global.login_password') }}" name="password">
+                        <input type="password" class="form-control" placeholder="Slaptažodis" name="password">
                     </div>
                 </div>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Prisijungti</button>
+                {{--
                 <div class="row">
                     <div class="col-8">
-                        <input type="checkbox" name="remember"> {{ trans('global.remember_me') }}
+                        <input type="checkbox" name="remember"> Prisiminti mane
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('global.login') }}</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Prisijungti</button>
                     </div>
                     <!-- /.col -->
                 </div>
+                --}}
             </form>
 
 
-
+    {{--
             <p class="mb-1">
                 <a class="" href="{{ route('password.request') }}">
-                    {{ trans('global.forgot_password') }}
+                    Pamiršote slaptažodį?
                 </a>
             </p>
             <p class="mb-0">
@@ -53,6 +56,7 @@
             <p class="mb-1">
 
             </p>
+    --}}
         </div>
         <!-- /.login-card-body -->
     </div>

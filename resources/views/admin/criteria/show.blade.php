@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.criterion.title') }}
+        Darbo aspektas
     </div>
 
     <div class="card-body">
@@ -12,7 +12,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.criterion.fields.title') }}
+                            Pavadinimas
                         </th>
                         <td>
                             {{ $criterion->title }}
@@ -20,16 +20,16 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.criterion.fields.category') }}
+                            Kompetencija
                         </th>
                         <td>
-                            {{ $criterion->critcategory->title }}
+                            {{ $criterion->competency->title }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                {{ trans('global.back_to_list') }}
+                Atgal į sąrašą
             </a>
         </div>
     </div>

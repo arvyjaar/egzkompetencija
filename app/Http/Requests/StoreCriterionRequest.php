@@ -17,11 +17,18 @@ class StoreCriterionRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                'unique:criteria',
             ],
-            'critcategory_id' => [
+            'competency_id' => [
                 'required'
             ]
+        ];
+    }
+
+    public function messages()
+    {
+        return $messages = [
+            'title.required' => 'Pavadinimas privalomas',
+            'competency_id.required' => 'Kompetencija privaloma',
         ];
     }
 }

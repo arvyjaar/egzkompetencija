@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Criterion;
-use App\Critcategory;
+use App\Competency;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCriterionRequest;
 use App\Http\Requests\StoreCriterionRequest;
@@ -13,7 +13,7 @@ class CriteriaController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('criterion_access'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $criteria = Criterion::all();
 
@@ -22,15 +22,15 @@ class CriteriaController extends Controller
 
     public function create()
     {
-        abort_unless(\Gate::allows('criterion_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
-        $critcategories = Critcategory::all()->pluck('title', 'id');
-        return view('admin.criteria.create', compact('critcategories'));
+        $competencies = Competency::all()->pluck('title', 'id');
+        return view('admin.criteria.create', compact('competencies'));
     }
 
     public function store(StoreCriterionRequest $request)
     {
-        abort_unless(\Gate::allows('criterion_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
         $criterion = Criterion::create($request->all());
 
         return redirect()->route('admin.criteria.index');
@@ -40,11 +40,11 @@ class CriteriaController extends Controller
     {
         abort_unless(\Gate::allows('criterion_edit'), 403);
 
-        $critcategories = Critcategory::all()->pluck('title', 'id');
-        return view('admin.criteria.edit', compact('criterion', 'critcategories'));
+        $competencies = Competency::all()->pluck('title', 'id');
+        return view('admin.criteria.edit', compact('criterion', 'competencies'));
     }
 
-    public function update(UpdateCriterionRequest $request, Criterion $criterion)
+    public function update(StoreCriterionRequest $request, Criterion $criterion)
     {
         abort_unless(\Gate::allows('criterion_edit'), 403);
 

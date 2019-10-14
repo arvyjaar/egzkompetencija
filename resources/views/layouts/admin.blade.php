@@ -34,21 +34,7 @@
             </ul>
 
             <!-- Right navbar links -->
-            @if(count(config('panel.available_languages', [])) > 1)
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            {{ strtoupper(app()->getLocale()) }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @foreach(config('panel.available_languages') as $langLocale => $langName)
-                                <a class="dropdown-item" href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
-                            @endforeach
-                        </div>
-                    </li>
-                </ul>
-            @endif
-
+            <span>Prisijungęs: <i>{{ auth()->user()->name }}</i></span>
         </nav>
 
         @include('partials.menu')
@@ -78,10 +64,11 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.0-alpha
+                <b>Versija</b> 0.1-alpha
             </div>
-            <strong> &copy;</strong> {{ trans('global.allRightsReserved') }}
+            <strong> &copy;</strong> <a href="https://jaar.lt" target="_blank">JAAR</a>
         </footer>
+
         <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
         </form>

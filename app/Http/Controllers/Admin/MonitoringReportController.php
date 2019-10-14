@@ -11,6 +11,7 @@ use App\Competency;
 use App\Evaluation;
 use App\MonitoringReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -184,6 +185,12 @@ class MonitoringReportController extends Controller
 
         $points = Point::all();
         $results = $monitoringReport->setResults();
+
+        if (auth()->user()->id === $monitoringReport->examiner_id) {
+            $monitoringReport->update([
+                'examiner_reviewed' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        }
 
         return view('admin.monitoringReports.show', compact('points', 'monitoringReport', 'results'));
     }
