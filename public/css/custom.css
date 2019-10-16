@@ -64,3 +64,11 @@ input[type='radio'], .custom-label {
     cursor: pointer;
 }
 /* end Custom radio buttons */
+.square {
+    display: block;
+    background: #eaeaea;
+    width: 2em;
+    padding: 0.1em;
+    border: 1px solid white;
+    border-radius: 0.3em;
+}

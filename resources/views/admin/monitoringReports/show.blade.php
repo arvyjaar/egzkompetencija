@@ -8,7 +8,7 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-3">
+                <div class="col-2">
                     <p><b>Stebėtojas: </b> {{ $monitoringReport->observer->name ?? '' }}</p>
                     <p><b>Stebėjo: </b> {{ $monitoringReport->observing_date }}</p>
                     <p><b>Tipas: </b>{{ App\MonitoringReport::OBSERVING_TYPE_RADIO[$monitoringReport->observing_type] }}
@@ -43,42 +43,53 @@
                     <div class="row">
                         <div class="col-8">
                             {{ $evaluation->criterion->title }}</div>
-                        <div class="col-4">{{ $evaluation->point->value == 0 ? 'N' : $evaluation->point->value }}</div>
+                        <div class="col-4">
+                            <span
+                                    @if(in_array($evaluation->point->value, [1, 2]))
+                                        class="text-center square text-danger"
+                                    @else
+                                        class="text-center square"
+                                    @endif
+                            >
+                                <b>{{ $evaluation->point->value == 0 ? 'N' : $evaluation->point->value }}</b>
+                            </span>
+                        </div>
                     </div>
                 @endforeach
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-8">
                         <br>
                         @if(isset($result->competency_note))
                             <p><u><i>Pastaba:</i></u> <span
                                         class="text-info">{{ $result->competency_note->text }}</span></p>
                         @endif
+                        <hr>
                     </div>
                 </div>
-                <hr>
+
             @endforeach
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <b>Papildomos/bendrosios pastabos (pastabos dėl techninių priemonių, trukdančių efektyviam
                         darbui, nesusijusios su šiuo įvertinimu)</b>
                     <p><span class="text-info">{{ $monitoringReport->technical_note ?? 'nėra' }}</span></p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <b>Stebėtojo išvados, pasiūlymai</b>
                     <p><span class="text-info">{{ $monitoringReport->observer_note ?? 'nėra' }}</span></p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <b>Egzaminuotojo atsiliepimas</b>
                     <p><span class="text-info">{{ $monitoringReport->examiner_note ?? 'nėra'}}</span></p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <b>Egzaminuotojas susipažino</b>
                     @if(isset($monitoringReport->examiner_reviewed))
                         <p><span class="text-info">{{ $monitoringReport->examiner_reviewed }}</span></p>
@@ -88,7 +99,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <b>Egzaminavimo ir vairuotojo pažymėjimų išdavimo skyriaus pastabos</b>
                     <p><span class="text-info">{{ $monitoringReport->evpis_note ?? 'nėra' }}</span></p>
                 </div>
