@@ -14,8 +14,9 @@ class CreateCompetenciesTable extends Migration
     public function up()
     {
         Schema::create('competencies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
+            $table->foreignId('worktype_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

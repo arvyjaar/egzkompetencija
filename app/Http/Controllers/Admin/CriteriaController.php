@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Criterion;
-use App\Competency;
+use App\Models\Criterion;
+use App\Models\Competency;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCriterionRequest;
 use App\Http\Requests\StoreCriterionRequest;
-use App\Http\Requests\UpdateCriterionRequest;
+use App\Models\AssessmentType;
+use Illuminate\Support\Facades\DB;
 
 class CriteriaController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('is_admin'), 403);
+        abort_unless(\Gate::allows('criterion_access'), 403);
 
         $criteria = Criterion::all();
 
@@ -22,15 +23,17 @@ class CriteriaController extends Controller
 
     public function create()
     {
-        abort_unless(\Gate::allows('is_admin'), 403);
+        abort_unless(\Gate::allows('criterion_edit'), 403);
 
-        $competencies = Competency::all()->pluck('title', 'id');
-        return view('admin.criteria.create', compact('competencies'));
+        $competencies = Competency::all();
+        $assessment_types = AssessmentType::all();
+
+        return view('admin.criteria.create', compact('competencies', 'assessment_types'));
     }
 
     public function store(StoreCriterionRequest $request)
     {
-        abort_unless(\Gate::allows('is_admin'), 403);
+        abort_unless(\Gate::allows('criterion_edit'), 403);
         $criterion = Criterion::create($request->all());
 
         return redirect()->route('admin.criteria.index');
@@ -40,8 +43,9 @@ class CriteriaController extends Controller
     {
         abort_unless(\Gate::allows('criterion_edit'), 403);
 
-        $competencies = Competency::all()->pluck('title', 'id');
-        return view('admin.criteria.edit', compact('criterion', 'competencies'));
+        $competencies = Competency::all();
+        $assessment_types = AssessmentType::all();
+        return view('admin.criteria.edit', compact('criterion', 'competencies', 'assessment_types'));
     }
 
     public function update(StoreCriterionRequest $request, Criterion $criterion)

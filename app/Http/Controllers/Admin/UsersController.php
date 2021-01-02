@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Role;
-use App\User;
-use App\Branch;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Branch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;

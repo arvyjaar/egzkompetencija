@@ -52,23 +52,3 @@ table.dataTable thead .sorting_desc {
 .help-block {
     color: #db3700;
 }
-/* Custom radio buttons */
-.custom-label {
-    font-weight: 400!important;
-    margin-left: 1em;
-}
-input[type='radio'] {
-    vertical-align: -8%;
-}
-input[type='radio'], .custom-label {
-    cursor: pointer;
-}
-/* end Custom radio buttons */
-.square {
-    display: block;
-    background: #eaeaea;
-    width: 2em;
-    padding: 0.1em;
-    border: 1px solid white;
-    border-radius: 0.3em;
-}

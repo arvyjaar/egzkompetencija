@@ -14,17 +14,11 @@ class CreateEvaluationsTable extends Migration
     public function up()
     {
         Schema::create('evaluations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('monitoringreport_id')->nullable();
-            $table->foreign('monitoringreport_id')->references('id')->on('monitoring_reports')->onDelete('cascade');
-
-            $table->unsignedInteger('criterion_id')->nullable();
-            $table->foreign('criterion_id')->references('id')->on('criteria');
-
-            $table->unsignedInteger('point_id')->nullable();
-            $table->foreign('point_id')->references('id')->on('points');
-
+            $table->id();
+            $table->foreignId('report_id')->constrained();
+            $table->foreignId('criterion_id')->constrained('criteria');
+            $table->foreignId('assessment_type_id')->constrained('assessment_types'); 
+            $table->string('assessment_value', 2);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,9 +17,9 @@ class BranchesTableSeeder extends Seeder
         
         $titles = ['VL', 'KN', 'KL', 'TR', 'SL', 'TL', 'MZ', 'PN', 'UT', 'RK', 'AL', 'MR'];
         
-        foreach ($titles as $title) {
+        foreach ($titles as $t) {
             $branches[] = [
-                'title'         => $title,
+                'title'         => $t,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
             ];
         };

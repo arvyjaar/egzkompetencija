@@ -1,7 +1,7 @@
 <?php
 
-use App\Permission;
-use App\Role;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class PermissionRoleTableSeeder extends Seeder
@@ -12,13 +12,13 @@ class PermissionRoleTableSeeder extends Seeder
         Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
 
         // Examiner
-        $examiner_permissions = $admin_permissions->filter(function ($permission) {
-            return substr($permission->title, 0, 24) == 'monitoring_report_access' || substr($permission->title, 0, 11) == 'competency_';
+        $employee_permissions = $admin_permissions->filter(function ($permission) {
+            return substr($permission->title, 0, 24) == 'report_access' || substr($permission->title, 0, 11) == 'competency_';
         });
-        Role::findOrFail(2)->permissions()->sync($examiner_permissions);
+        Role::findOrFail(2)->permissions()->sync($employee_permissions);
 
         // EVPIS
-        Role::findOrFail(4)->permissions()->sync($examiner_permissions);
+        Role::findOrFail(4)->permissions()->sync($employee_permissions);
 
         // Observer
         $user_permissions = $admin_permissions->filter(function ($permission) {

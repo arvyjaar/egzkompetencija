@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        Darbo aspektas
+        {{ trans('cruds.criterion.title_singular') }}
     </div>
 
     <div class="card-body">
@@ -12,7 +12,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            Pavadinimas
+                            {{ trans('global.title') }}
                         </th>
                         <td>
                             {{ $criterion->title }}
@@ -20,10 +20,18 @@
                     </tr>
                     <tr>
                         <th>
-                            Kompetencija
+                            {{ trans('cruds.competency.title') }}
                         </th>
                         <td>
-                            {{ $criterion->competency->title }}
+                            {{ $criterion->competency->title }} ({{ $criterion->competency->worktype->title }})
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.assessment_type.title_singular') }}
+                        </th>
+                        <td>
+                            {{ $criterion->assessment->title }}
                         </td>
                     </tr>
                 </tbody>

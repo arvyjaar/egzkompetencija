@@ -1,5 +1,30 @@
 <?php
+Route::get('/admin/ldap', function(){
+    $ldapConn = ldap_connect('ldap.forumsys.com');
+    ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
+    ldap_set_option($ldapConn, LDAP_OPT_REFERRALS, 0);
+    $password='password';
+    $mail = 'riemann@ldap.forumsys.com';
+    if(ldap_bind($ldapConn, 'cn=read-only-admin,dc=example,dc=com', 'password')) {
 
+        $arr = array('dn', 1);
+        $result = ldap_search($ldapConn, 'dc=example,dc=com', "(mail=$mail)", $arr);
+        $entries = ldap_get_entries($ldapConn, $result);
+        echo "<br><hr>";
+        print_r($entries);
+        if ($entries['count'] > 0) {
+            if (ldap_bind($ldapConn, $entries[0]['dn'], $password)) {
+                // user with mail $mail is checked with password $password
+                echo 'user auth success';
+            }else{
+                echo 'user auth failed';
+            }
+        }
+
+    }
+    ldap_close($ldapConn);
+
+});
 Route::redirect('/', '/login');
 
 Route::redirect('/home', '/admin');
@@ -21,23 +46,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('users', 'UsersController');
 
-    Route::delete('monitoring-reports/destroy', 'MonitoringReportController@massDestroy')->name('monitoring-reports.massDestroy');
+    Route::delete('reports/destroy', 'ReportsController@massDestroy')->name('reports.massDestroy');
 
-    Route::resource('monitoring-reports', 'MonitoringReportController');
+    Route::resource('reports', 'ReportsController');
 
-    Route::put('evaluation/update-evaluation/{monitoringReport}', 'MonitoringReportController@updateSingleEvaluation')->name('monitoring-reports.updateSingleEvaluation');
+    Route::put('evaluation/update-evaluation/{report}', 'ReportsController@updateSingleEvaluation')->name('reports.updateSingleEvaluation');
 
-    Route::put('report-comment/{monitoringReport}', 'MonitoringReportController@comment')->name('monitoring-reports.comment');
+    Route::put('report-comment/{report}', 'ReportsController@comment')->name('reports.comment');
 
     Route::delete('criteria/destroy', 'CriteriaController@massDestroy')->name('criteria.massDestroy');
 
     Route::resource('criteria', 'CriteriaController');
 
-    Route::delete('evaluations/destroy', 'EvaluationController@massDestroy')->name('evaluations.massDestroy');
+    Route::delete('evaluations/destroy', 'EvaluationsController@massDestroy')->name('evaluations.massDestroy');
 
-    Route::resource('evaluations', 'EvaluationController');
-
-    Route::delete('tools/destroy', 'ToolController@massDestroy')->name('tools.massDestroy');
-
-    Route::resource('tools', 'ToolController');
+    Route::resource('evaluations', 'EvaluationsController');
 });

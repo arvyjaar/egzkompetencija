@@ -23,15 +23,7 @@
                             {{ trans('cruds.user.fields.branch') }}
                         </th>
                         <td>
-                            {{ $user->branch->title }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.username') }}
-                        </th>
-                        <td>
-                            {{ $user->username }}
+                            {{ $user->branch->title ?? '' }}
                         </td>
                     </tr>
                     <tr>

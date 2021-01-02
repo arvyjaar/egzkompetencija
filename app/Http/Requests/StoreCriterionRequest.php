@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Criterion;
+use App\Models\Criterion;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCriterionRequest extends FormRequest
@@ -19,7 +19,12 @@ class StoreCriterionRequest extends FormRequest
                 'required',
             ],
             'competency_id' => [
-                'required'
+                'required',
+                'integer',
+            ],
+            'assessment_type_id' => [
+                'required',
+                'integer',
             ]
         ];
     }
@@ -29,6 +34,7 @@ class StoreCriterionRequest extends FormRequest
         return $messages = [
             'title.required' => 'Pavadinimas privalomas',
             'competency_id.required' => 'Kompetencija privaloma',
+            'assessment_type_id' => 'Vertinimo skalė privaloma'
         ];
     }
 }

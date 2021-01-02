@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\DrivecategoriesTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -10,12 +11,17 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            BranchesTableSeeder::class,
+            DrivecategoriesTableSeeder::class,
+            ObservingTypesTableSeeder::class,
+            WorktypesTableSeeder::class,
+            FormsTableSeeder::class,
+            AssessmentTypesTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
-            PointsTableSeeder::class,
-            BranchesTableSeeder::class,
-            CompetenciesSeeder::class,
-            CriteriaSeeder::class,
+            CompetenciesTableSeeder::class,
+            CriteriaTableSeeder::class,
+            FormCompetencyPivotTableSeeder::class,
         ]);
     }
 }

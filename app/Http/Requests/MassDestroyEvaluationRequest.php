@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Evaluation;
+use App\Models\Evaluation;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 

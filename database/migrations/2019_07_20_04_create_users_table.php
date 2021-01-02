@@ -9,17 +9,16 @@ class CreateUsersTable extends Migration
     public function up()
     {
             Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('username')->nullable();
-            $table->string('name');
-            $table->string('email');
-            $table->unsignedInteger('branch_id')->nullable();
-            $table->dateTime('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('remember_token')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-            $table->foreign('branch_id')->references('id')->on('branches');
+                $table->id();
+                $table->string('username', 10)->nullable();
+                $table->string('name', 30);
+                $table->string('email');
+                $table->foreignId('branch_id')->constrained();
+                $table->dateTime('email_verified_at')->nullable();
+                $table->string('password');
+                $table->string('remember_token')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
         });
     }
 }

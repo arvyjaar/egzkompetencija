@@ -4,14 +4,14 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.criteria.create") }}">
-                Naujas darbo aspektas
+                {{ trans('global.add')}} {{ trans('cruds.criterion.title_singular')}}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        Darbo aspektų sąrašas
+        {{ trans('cruds.criterion.title') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -20,17 +20,22 @@
                 <thead>
                     <tr>
                         <th width="10">
-
+                            &#9633;
                         </th>
                         <th>
-                            Pavadinimas
+                            {{ trans('cruds.criterion.title_singular') }}
                         </th>
                         <th>
-                            Kompetencija
+                            {{ trans('cruds.competency.title_singular') }}
                         </th>
                         <th>
-                            &nbsp;
+                            {{ trans('cruds.criterion.fields.rating_type') }}
                         </th>
+                        @can('is_admin')
+                        <th>
+                            {{ trans('global.actions') }}
+                        </th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +44,7 @@
                             <td>
 
                             </td>
+                            
                             <td>
                                 {{ $criterion->title ?? '' }}
                             </td>
@@ -46,25 +52,24 @@
                                 {{ $criterion->competency->title ?? '' }}
                             </td>
                             <td>
-                                @can('is_admin')
+                                {{ $criterion->assessment->title ?? '' }}
+                            </td>
+                            @can('is_admin')
+                            <td>
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.criteria.show', $criterion->id) }}">
-                                        Rodyti
+                                        {{ trans('global.show') }}
                                     </a>
-                                @endcan
-                                @can('is_admin')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.criteria.edit', $criterion->id) }}">
-                                        Taisyti
+                                        {{ trans('global.edit') }}
                                     </a>
-                                @endcan
-                                @can('is_admin')
+
                                     <form action="{{ route('admin.criteria.destroy', $criterion->id) }}" method="POST" onsubmit="return confirm('Ar tikrai trinti?');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="Trinti">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
                             </td>
-
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

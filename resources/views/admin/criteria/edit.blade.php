@@ -25,13 +25,32 @@
             <div class="form-group {{ $errors->has('competency_id') ? 'has-error' : '' }}">
                 <label for="competency_id">{{ trans('cruds.criterion.fields.category') }}*</label>
                 <select name="competency_id" id="competency_id" class="form-control select2" required>
-                    @foreach($competencies as $id => $competency)
-                        <option value="{{ $id }}" {{ old('competency_id', $criterion->competency_id) == $id ? 'selected' : '' }} > {{ $competency }} </option>
+                    @foreach($competencies as $competency)
+                        <option value="{{ $competency->id }}" 
+                            {{ old('competency_id', $criterion->competency_id) == $competency->id ? 'selected' : '' }} 
+                            > 
+                            {{ $competency->title }} ({{ $competency->worktype->title }})</option>
                     @endforeach
                 </select>
                 @if($errors->has('competency_id'))
                     <p class="help-block">
                         {{ $errors->first('competency_id') }}
+                    </p>
+                @endif
+            </div>
+            <div class="form-group {{ $errors->has('assessment_type_id') ? 'has-error' : '' }}">
+                <label for="assessment_type">{{ trans('cruds.assessment_type.title') }}*</label>
+                <select name="assessment_type_id" id="assessment_type_id" class="form-control" >
+                    @foreach($assessment_types as $assessment_type)
+                    <option value="{{ $assessment_type->id }}" 
+                        {{ old('assessment_type_id', $criterion->assessment_type_id) == $criterion->assessment_type_id ? 'selected' : ''}} > 
+                        {{ $assessment_type->title }}
+                    </option>
+                    @endforeach
+                </select>
+                @if($errors->has('assessment_type_id'))
+                    <p class="help-block">
+                        {{ $errors->first('assessment_type_id') }}
                     </p>
                 @endif
             </div>

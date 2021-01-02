@@ -1,6 +1,6 @@
 <?php
 
-use App\Permission;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
@@ -94,12 +94,26 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2019-07-21 15:26:45',
             ],
             [
-                'title' => 'monitoring_report_create',
+                'title' => 'report_create',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
             [
-                'title' => 'monitoring_report_access',
+                'title' => 'report_access',
+                'created_at' => '2019-07-21 15:26:45',
+                'updated_at' => '2019-07-21 15:26:45',
+            ],          [
+                'title' => 'report_delete',
+                'created_at' => '2019-07-21 15:26:45',
+                'updated_at' => '2019-07-21 15:26:45',
+            ],
+                        [
+                'title' => 'report_show',
+                'created_at' => '2019-07-21 15:26:45',
+                'updated_at' => '2019-07-21 15:26:45',
+            ],
+            [
+                'title' => 'report_comment',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
@@ -128,31 +142,6 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
-            [
-                'title' => 'tool_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'tool_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'tool_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'tool_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'tool_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ]
         ];
 
         Permission::insert($permissions);

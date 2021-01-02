@@ -9,10 +9,8 @@ class CreatePermissionRolePivotTable extends Migration
     public function up()
     {
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->unsignedInteger('role_id');
-            $table->foreign('role_id', 'role_id_fk_173088')->references('id')->on('roles');
-            $table->unsignedInteger('permission_id');
-            $table->foreign('permission_id', 'permission_id_fk_173088')->references('id')->on('permissions');
+            $table->foreignId('role_id')->constrained();
+            $table->foreignId('permission_id')->constrained();
         });
     }
 }

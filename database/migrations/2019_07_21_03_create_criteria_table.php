@@ -9,10 +9,10 @@ class CreateCriteriaTable extends Migration
     public function up()
     {
         Schema::create('criteria', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
-            $table->unsignedInteger('competency_id')->nullable();
-            $table->foreign('competency_id')->references('id')->on('competencies');
+            $table->foreignId('competency_id')->constrained();
+            $table->foreignId('assessment_type_id')->constrained('assessment_types');
             $table->timestamps();
             $table->softDeletes();
         });

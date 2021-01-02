@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Criterion;
+use App\Models\Criterion;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 

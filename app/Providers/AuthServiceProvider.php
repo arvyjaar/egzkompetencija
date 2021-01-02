@@ -31,25 +31,25 @@ class AuthServiceProvider extends ServiceProvider
                 $user->roles->contains('title', 'Admin');
         });
 
-        Gate::define('report_edit_delete', function ($user, $monitoringReport) {
+        Gate::define('report_edit_delete', function ($user, $report) {
             return
-                ($user->id === $monitoringReport->observer_id) || $user->roles->contains('title', 'EVPIS');
+                ($user->id === $report->observer_id) || $user->roles->contains('title', 'Manager');
         });
 
-        Gate::define('report_show', function ($user, $monitoringReport) {
+        Gate::define('report_show', function ($user, $report) {
             return
-                ($user->id === $monitoringReport->examiner_id)
+                ($user->id === $report->employee_id)
                 ||
-                ($user->id === $monitoringReport->observer_id)
+                ($user->id === $report->observer_id)
                 ||
-                $user->roles->contains('title', 'EVPIS');
+                $user->roles->contains('title', 'Manager');
         });
 
-        Gate::define('report_comment', function ($user, $monitoringReport) {
+        Gate::define('report_comment', function ($user, $report) {
             return
-                ($user->id === $monitoringReport->examiner_id)
+                ($user->id === $report->employee_id)
                 ||
-                $user->roles->contains('title', 'EVPIS');
+                $user->roles->contains('title', 'Manager');
         });
     }
 }

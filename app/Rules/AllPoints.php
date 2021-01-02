@@ -2,8 +2,10 @@
 
 namespace App\Rules;
 
-use App\Criterion;
+use App\Models\Criterion;
+use App\Models\Form;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class AllPoints implements Rule
 {
@@ -27,8 +29,14 @@ class AllPoints implements Rule
      */
     public function passes($attribute, $value)
     {
-        $total_criteria = Criterion::all()->count();
-        $sum = count($value);
+        // Count criteria only included in submited Form (report)
+        $form = Form::find($value->form_id);
+        $competencies = $form->competency->load(['criterion']);
+        $total_criteria = 0;
+        foreach ($competencies as $competency) {
+            $total_criteria += $competency->criterion->count();
+        };
+        $sum = count($value->point);
         return $sum >= $total_criteria;
     }
 
