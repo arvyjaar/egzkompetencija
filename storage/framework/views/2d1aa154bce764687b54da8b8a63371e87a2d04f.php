@@ -47,7 +47,7 @@
             <div class="col-1">
                 <span <?php if(in_array($evaluation->assessment_value, $evaluation->criterion->assessment->bad_values)): ?>
                         class="text-center square text-danger"
-                    <?php elseif($evaluation->assessment_value == 'n'): ?>
+                    <?php elseif(strtolower($evaluation->assessment_value) == 'n'): ?>
                         class="text-center square text-warning"
                     <?php else: ?>
                         class="text-center square"

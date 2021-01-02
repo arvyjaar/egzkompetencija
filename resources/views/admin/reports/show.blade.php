@@ -44,7 +44,7 @@
             <div class="col-1">
                 <span @if(in_array($evaluation->assessment_value, $evaluation->criterion->assessment->bad_values))
                         class="text-center square text-danger"
-                    @elseif ($evaluation->assessment_value == 'n')
+                    @elseif (strtolower($evaluation->assessment_value) == 'n')
                         class="text-center square text-warning"
                     @else
                         class="text-center square"

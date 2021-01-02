@@ -94,7 +94,7 @@ class ReportsController extends Controller
         // ToDo: validate if the Form is still active and all criteria belongs to this form
 
         // validating quantity of submitted evaluations (custom validation rule - AllPoints)
-        $request->validate([ new AllPoints()]);
+        $request->validate(['point' => [ new AllPoints($request->form_id)]]);
 
         // adding observer - logged in user
         $request->request->add(['observer_id' => Auth::user()->id]);
@@ -203,7 +203,7 @@ class ReportsController extends Controller
     public function comment(Request $request, Report $report)
     {
         abort_unless(\Gate::allows('report_comment', $report), 403);
-        // ToDo: restrict comment only to empoyee and manager
+        // ToDo: restrict comment only to employee and manager
         if (auth()->user()->id === $report->employee_id) {
             $updated = tap($report)->update(['employee_note' => $request->comment]);
         } else {
