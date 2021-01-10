@@ -1,9 +1,9 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission_create')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="<?php echo e(route("admin.permissions.create")); ?>">
-                <?php echo e(trans('global.add')); ?> <?php echo e(trans('cruds.permission.title_singular')); ?>
+                <i class="far fa-plus-square">&nbsp;</i> <?php echo e(trans('cruds.permission.title_singular')); ?>
 
             </a>
         </div>
@@ -11,7 +11,7 @@
 <?php endif; ?>
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('cruds.permission.title_singular')); ?> <?php echo e(trans('global.list')); ?>
+        <?php echo e(trans('cruds.permission.title')); ?> - <?php echo e(trans('global.list')); ?>
 
     </div>
 
@@ -27,8 +27,9 @@
                             <?php echo e(trans('cruds.permission.fields.title')); ?>
 
                         </th>
-                        <th>
-                            &nbsp;
+                        <th width="100">
+                            <?php echo e(trans('global.actions')); ?>
+
                         </th>
                     </tr>
                 </thead>
@@ -43,23 +44,23 @@
 
                             </td>
                             <td>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission_show')): ?>
-                                    <a class="btn btn-xs btn-primary" href="<?php echo e(route('admin.permissions.show', $permission->id)); ?>">
-                                        <?php echo e(trans('global.view')); ?>
-
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                    <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.permissions.show', $permission->id)); ?>">
+                                        <i class="far fa-eye"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission_edit')): ?>
-                                    <a class="btn btn-xs btn-info" href="<?php echo e(route('admin.permissions.edit', $permission->id)); ?>">
-                                        <?php echo e(trans('global.edit')); ?>
-
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                    <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.permissions.edit', $permission->id)); ?>">
+                                        <i class="far fa-edit"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission_delete')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                                     <form action="<?php echo e(route('admin.permissions.destroy', $permission->id)); ?>" method="POST" onsubmit="return confirm('<?php echo e(trans('global.areYouSure')); ?>');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="<?php echo e(trans('global.delete')); ?>">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 <?php endif; ?>
                             </td>

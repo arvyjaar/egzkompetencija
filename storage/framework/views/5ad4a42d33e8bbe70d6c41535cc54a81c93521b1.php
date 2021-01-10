@@ -46,7 +46,7 @@
                 <select name="assessment_type_id" id="assessment_type_id" class="form-control" >
                     <?php $__currentLoopData = $assessment_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $assessment_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($assessment_type->id); ?>" 
-                        <?php echo e(old('assessment_type_id', $criterion->assessment_type_id) == $criterion->assessment_type_id ? 'selected' : ''); ?> > 
+                        <?php echo e(old('assessment_type_id', $criterion->assessment_type_id) == $assessment_type->id ? 'selected' : ''); ?> > 
                         <?php echo e($assessment_type->title); ?>
 
                     </option>

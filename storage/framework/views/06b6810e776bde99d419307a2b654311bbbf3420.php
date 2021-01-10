@@ -11,7 +11,7 @@
             <?php echo csrf_field(); ?>
             <div class="form-group <?php echo e($errors->has('name') ? 'has-error' : ''); ?>">
                 <label for="name"><?php echo e(trans('cruds.user.fields.name')); ?>*</label>
-                <input type="text" id="name" name="name" class="form-control" value="<?php echo e(old('name', isset($user) ? $user->name : '')); ?>" required>
+                <input type="text" id="name" name="name" class="form-control" value="<?php echo e(old('name', isset($user) ? $user->name : '')); ?>" >
                 <?php if($errors->has('name')): ?>
                     <p class="help-block">
                         <?php echo e($errors->first('name')); ?>
@@ -22,6 +22,22 @@
                     <?php echo e(trans('cruds.user.fields.name_helper')); ?>
 
                 </p>
+            </div>
+            <div class="form-group <?php echo e($errors->has('branch') ? 'has-error' : ''); ?>">
+                <label for="branch_id"><?php echo e(trans('cruds.user.fields.branch')); ?>*</label>
+                <select name="branch_id" id="branch_id" class="form-control select2" required>
+                    <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($id); ?>" <?php echo e(old('branch_id') == $id ? 'selected' : ''); ?>> <?php echo e($title); ?>
+
+                    </option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <?php if($errors->has('branch_id')): ?>
+                <p class="help-block">
+                    <?php echo e($errors->first('branch_id')); ?>
+
+                </p>
+                <?php endif; ?>
             </div>
             <div class="form-group <?php echo e($errors->has('email') ? 'has-error' : ''); ?>">
                 <label for="email"><?php echo e(trans('cruds.user.fields.email')); ?>*</label>

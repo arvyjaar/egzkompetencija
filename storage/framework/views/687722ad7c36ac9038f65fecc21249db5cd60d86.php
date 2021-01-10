@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('global.show')); ?> <?php echo e(trans('cruds.user.title')); ?>
+        <?php echo e(trans('global.show')); ?>: <?php echo e(trans('cruds.user.title')); ?>
 
     </div>
 
@@ -41,18 +41,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            <?php echo e(trans('cruds.user.fields.email_verified_at')); ?>
-
-                        </th>
-                        <td>
-                            <?php echo e($user->email_verified_at); ?>
-
-                        </td>
                     </tr>
                     <tr>
                         <th>
-                            Roles
+                            <?php echo e(trans('cruds.user.fields.roles')); ?>
+
                         </th>
                         <td>
                             <?php $__currentLoopData = $user->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $roles): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

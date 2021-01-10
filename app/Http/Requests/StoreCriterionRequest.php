@@ -9,7 +9,7 @@ class StoreCriterionRequest extends FormRequest
 {
     public function authorize()
     {
-        return \Gate::allows('criterion_create');
+        return \Gate::allows('criterion_edit');
     }
 
     public function rules()

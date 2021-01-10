@@ -13,7 +13,7 @@ class RolesController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('role_access'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $roles = Role::all();
 
@@ -22,7 +22,7 @@ class RolesController extends Controller
 
     public function create()
     {
-        abort_unless(\Gate::allows('role_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permissions = Permission::all()->pluck('title', 'id');
 
@@ -31,7 +31,7 @@ class RolesController extends Controller
 
     public function store(StoreRoleRequest $request)
     {
-        abort_unless(\Gate::allows('role_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
@@ -41,7 +41,7 @@ class RolesController extends Controller
 
     public function edit(Role $role)
     {
-        abort_unless(\Gate::allows('role_edit'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permissions = Permission::all()->pluck('title', 'id');
 
@@ -52,9 +52,10 @@ class RolesController extends Controller
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        abort_unless(\Gate::allows('role_edit'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $role->update($request->all());
+        
         $role->permissions()->sync($request->input('permissions', []));
 
         return redirect()->route('admin.roles.index');
@@ -62,7 +63,7 @@ class RolesController extends Controller
 
     public function show(Role $role)
     {
-        abort_unless(\Gate::allows('role_show'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $role->load('permissions');
 
@@ -71,7 +72,7 @@ class RolesController extends Controller
 
     public function destroy(Role $role)
     {
-        abort_unless(\Gate::allows('role_delete'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $role->delete();
 
@@ -80,6 +81,8 @@ class RolesController extends Controller
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
+        abort_unless(\Gate::allows('is_admin'), 403);
+
         Role::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);

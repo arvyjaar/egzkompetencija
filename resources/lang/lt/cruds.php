@@ -67,6 +67,10 @@ return [
             'deleted_at_helper'        => '',
         ],
     ],
+    'worktype' => [
+        'title' => 'Veiklos',
+        'title_singular' => 'Veikla',
+    ],
     'report' => [
         'procedure'      => 'Procedūra',
         'video'          => 'Video',
@@ -163,7 +167,11 @@ return [
         ],
     ],
     'competency'       => [
-        'title'          => 'Kompetencija',
+        'title'          => 'Kompetencijos',
         'title_singular' => 'Kompetencija',
+    ],
+    'form'       => [
+        'title'          => 'Formos',
+        'title_singular' => 'Forma',
     ],
 ];

@@ -43,7 +43,7 @@
                 <select name="assessment_type_id" id="assessment_type_id" class="form-control" >
                     @foreach($assessment_types as $assessment_type)
                     <option value="{{ $assessment_type->id }}" 
-                        {{ old('assessment_type_id', $criterion->assessment_type_id) == $criterion->assessment_type_id ? 'selected' : ''}} > 
+                        {{ old('assessment_type_id', $criterion->assessment_type_id) == $assessment_type->id ? 'selected' : ''}} > 
                         {{ $assessment_type->title }}
                     </option>
                     @endforeach

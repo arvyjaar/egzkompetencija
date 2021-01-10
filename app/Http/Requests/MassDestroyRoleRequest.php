@@ -10,7 +10,7 @@ class MassDestroyRoleRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('role_delete'), 403, '403 Forbidden');
+        abort_if(Gate::denies('is_admin'), 403, '403 Forbidden');
 
         return true;
     }

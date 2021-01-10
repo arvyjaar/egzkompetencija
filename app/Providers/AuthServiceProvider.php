@@ -27,13 +27,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('is_admin', function ($user) {
-            return
-                $user->roles->contains('title', 'Admin');
+            return $user->roles->contains('title', 'admin');
         });
 
         Gate::define('report_edit_delete', function ($user, $report) {
             return
-                ($user->id === $report->observer_id) || $user->roles->contains('title', 'Manager');
+                ($user->id === $report->observer_id) || $user->roles->contains('title', 'manager');
         });
 
         Gate::define('report_show', function ($user, $report) {
@@ -42,14 +41,14 @@ class AuthServiceProvider extends ServiceProvider
                 ||
                 ($user->id === $report->observer_id)
                 ||
-                $user->roles->contains('title', 'Manager');
+                $user->roles->contains('title', 'manager');
         });
 
         Gate::define('report_comment', function ($user, $report) {
             return
                 ($user->id === $report->employee_id)
                 ||
-                $user->roles->contains('title', 'Manager');
+                $user->roles->contains('title', 'manager');
         });
     }
 }

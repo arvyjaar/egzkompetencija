@@ -14,82 +14,17 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2019-07-21 15:26:45',
             ],
             [
-                'title' => 'permission_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'permission_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'permission_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'permission_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'permission_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'role_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'role_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'role_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'role_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'role_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'user_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
                 'title' => 'user_edit',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
-            [
-                'title' => 'user_show',
+                        [
+                'title' => 'criterion_edit',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
             [
-                'title' => 'user_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'user_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'competency_access',
+                'title' => 'criterion_access',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],
@@ -102,43 +37,9 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'report_access',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
-            ],          [
-                'title' => 'report_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
             ],
-                        [
+            [
                 'title' => 'report_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'report_comment',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_delete',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_access',
                 'created_at' => '2019-07-21 15:26:45',
                 'updated_at' => '2019-07-21 15:26:45',
             ],

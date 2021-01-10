@@ -27,6 +27,8 @@ class ReportsController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(\Gate::allows('report_access'), 403);
+
         if ($request->ajax()) {
             $query = Report::query()->select('*');
             $query->with(['employee', 'observer']);
@@ -131,7 +133,7 @@ class ReportsController extends Controller
 
     public function edit(Report $report)
     {
-        abort_unless(\Gate::allows('report_create', $report), 403);
+        abort_unless(\Gate::allows('report_edit_delete', $report), 403);
 
         $users = User::all()->pluck('name', 'id')->prepend('---', '');
         
@@ -151,7 +153,7 @@ class ReportsController extends Controller
 
     public function update(UpdateReportRequest $request, Report $report)
     {
-        abort_unless(\Gate::allows('report_create', $report), 403);
+        abort_unless(\Gate::allows('report_edit_delete', $report), 403);
         
         $report->update($request->except('form_id'));
         
@@ -187,7 +189,7 @@ class ReportsController extends Controller
     public function show(Report $report)
     {
         abort_unless(\Gate::allows('report_show', $report), 403);
-
+        // Restricted to employee, observer, manager
         $evaluation_set = $report->evaluationSet();
 
         if (auth()->user()->id === $report->employee_id) {
@@ -203,7 +205,7 @@ class ReportsController extends Controller
     public function comment(Request $request, Report $report)
     {
         abort_unless(\Gate::allows('report_comment', $report), 403);
-        // ToDo: restrict comment only to employee and manager
+        // Restricted to employee and manager
         if (auth()->user()->id === $report->employee_id) {
             $updated = tap($report)->update(['employee_note' => $request->comment]);
         } else {

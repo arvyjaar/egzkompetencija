@@ -3,7 +3,7 @@
 return [
     'settings'                             => 'Nustatymai',
     'actions'                              => 'Veiksmai',
-    'add'                                  => 'Naujas',
+    'add'                                  => 'Sukurti',
     'allRightsReserved'                    => 'All rights reserved.',
     'areYouSure'                           => 'Ar tikrai?',
     'clickHereToVerify'                    => 'Click here to verify',
@@ -81,7 +81,7 @@ return [
     'assigned_user'                        => 'Assigned (user)',
     'attachment'                           => 'Attachment',
     'axis'                                 => 'Axis',
-    'back_to_list'                         => 'Back to list',
+    'back_to_list'                         => 'Atgal į sąrašą',
     'basic_crm'                            => 'Basic CRM',
     'budget'                               => 'Budget',
     'calendar_sources'                     => 'Calendar sources',

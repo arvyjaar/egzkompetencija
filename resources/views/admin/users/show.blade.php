@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.user.title') }}
+        {{ trans('global.show') }}: {{ trans('cruds.user.title') }}
     </div>
 
     <div class="card-body">
@@ -35,16 +35,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
-                        </th>
-                        <td>
-                            {{ $user->email_verified_at }}
-                        </td>
                     </tr>
                     <tr>
                         <th>
-                            Roles
+                            {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <td>
                             @foreach($user->roles as $id => $roles)

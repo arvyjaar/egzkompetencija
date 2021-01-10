@@ -9,7 +9,7 @@ class UpdateRoleRequest extends FormRequest
 {
     public function authorize()
     {
-        return \Gate::allows('role_edit');
+        return \Gate::allows('is_admin');
     }
 
     public function rules()

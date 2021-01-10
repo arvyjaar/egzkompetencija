@@ -12,7 +12,7 @@ class PermissionsController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('permission_access'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permissions = Permission::all();
 
@@ -21,14 +21,14 @@ class PermissionsController extends Controller
 
     public function create()
     {
-        abort_unless(\Gate::allows('permission_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         return view('admin.permissions.create');
     }
 
     public function store(StorePermissionRequest $request)
     {
-        abort_unless(\Gate::allows('permission_create'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permission = Permission::create($request->all());
 
@@ -37,14 +37,14 @@ class PermissionsController extends Controller
 
     public function edit(Permission $permission)
     {
-        abort_unless(\Gate::allows('permission_edit'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         return view('admin.permissions.edit', compact('permission'));
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        abort_unless(\Gate::allows('permission_edit'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permission->update($request->all());
 
@@ -53,14 +53,14 @@ class PermissionsController extends Controller
 
     public function show(Permission $permission)
     {
-        abort_unless(\Gate::allows('permission_show'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         return view('admin.permissions.show', compact('permission'));
     }
 
     public function destroy(Permission $permission)
     {
-        abort_unless(\Gate::allows('permission_delete'), 403);
+        abort_unless(\Gate::allows('is_admin'), 403);
 
         $permission->delete();
 
@@ -69,6 +69,8 @@ class PermissionsController extends Controller
 
     public function massDestroy(MassDestroyPermissionRequest $request)
     {
+        abort_unless(\Gate::allows('is_admin'), 403);
+
         Permission::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);

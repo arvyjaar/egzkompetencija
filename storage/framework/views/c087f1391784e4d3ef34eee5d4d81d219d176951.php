@@ -3,7 +3,8 @@
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="<?php echo e(route("admin.reports.create")); ?>">
-                    Sukurti stebėjimo ataskaitą
+                    <i class="far fa-plus-square">&nbsp;</i> <?php echo e(trans('cruds.report.title_singular')); ?>
+
                 </a>
             </div>
         </div>
@@ -18,7 +19,7 @@
                 <thead>
                 <tr>
                     <th width="10">
-                        &#9633; 
+                        &#10043; 
                     </th>
                     <th>
                         Stebėtojas
@@ -96,7 +97,7 @@
                             {data: 'employee.name', name: 'employee.name'},
                             {data: 'observing_date', name: 'observing_date'},
                             {data: 'employee_reviewed_at', name: 'employee_reviewed_at'},
-                            {data: 'actions', name: 'Veiksmai'}
+                            {data: 'actions', name: 'Veiksmai', orderable: false, searchable: false}
                         ],
                     };
 
@@ -106,4 +107,5 @@
 
     </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/egzkomp.test/resources/views/admin/reports/index.blade.php ENDPATH**/ ?>

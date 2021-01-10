@@ -3,7 +3,7 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="<?php echo e(route("admin.criteria.create")); ?>">
-                <?php echo e(trans('global.add')); ?> <?php echo e(trans('cruds.criterion.title_singular')); ?>
+                <i class="far fa-plus-square">&nbsp;</i> <?php echo e(trans('cruds.criterion.title_singular')); ?>
 
             </a>
         </div>
@@ -21,7 +21,7 @@
                 <thead>
                     <tr>
                         <th width="10">
-                            &#9633;
+                            &#10043;
                         </th>
                         <th>
                             <?php echo e(trans('cruds.criterion.title_singular')); ?>
@@ -64,19 +64,19 @@
                             </td>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                             <td>
-                                    <a class="btn btn-xs btn-primary" href="<?php echo e(route('admin.criteria.show', $criterion->id)); ?>">
-                                        <?php echo e(trans('global.show')); ?>
-
+                                    <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.criteria.show', $criterion->id)); ?>">
+                                        <i class="far fa-eye"></i>
                                     </a>
-                                    <a class="btn btn-xs btn-info" href="<?php echo e(route('admin.criteria.edit', $criterion->id)); ?>">
-                                        <?php echo e(trans('global.edit')); ?>
-
+                                    <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.criteria.edit', $criterion->id)); ?>">
+                                        <i class="far fa-edit"></i>
                                     </a>
 
                                     <form action="<?php echo e(route('admin.criteria.destroy', $criterion->id)); ?>" method="POST" onsubmit="return confirm('Ar tikrai trinti?');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="<?php echo e(trans('global.delete')); ?>">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </form>
                             </td>
                             <?php endif; ?>

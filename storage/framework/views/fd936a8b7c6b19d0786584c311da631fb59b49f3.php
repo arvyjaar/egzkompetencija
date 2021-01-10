@@ -146,7 +146,7 @@
                             name="point[<?php echo e($criterion->id); ?>]" value="<?php echo e($point->value); ?>"
                             <?php echo e((null !== old('point.'.$criterion->id) && old('point.'.$criterion->id) == $point->value) ? 'checked' : ''); ?>
 
-                            
+                            required
                         />
                     </label>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -211,7 +211,7 @@
         total = $(".criterion").length;
         if (n < total) {
             color = "red";
-            $("input[type=submit]").attr("", true);
+            $("input[type=submit]").attr("disabled", true);
         } else {
             color = "green";
             $("input[type=submit]").attr("disabled", false);

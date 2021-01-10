@@ -4,7 +4,7 @@
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route("admin.reports.create") }}">
-                    Sukurti stebėjimo ataskaitą
+                    <i class="far fa-plus-square">&nbsp;</i> {{ trans('cruds.report.title_singular') }}
                 </a>
             </div>
         </div>
@@ -19,7 +19,7 @@
                 <thead>
                 <tr>
                     <th width="10">
-                        &#9633; {{-- square --}}
+                        &#10043; {{-- asterix --}}
                     </th>
                     <th>
                         Stebėtojas
@@ -96,7 +96,7 @@
                             {data: 'employee.name', name: 'employee.name'},
                             {data: 'observing_date', name: 'observing_date'},
                             {data: 'employee_reviewed_at', name: 'employee_reviewed_at'},
-                            {data: 'actions', name: 'Veiksmai'}
+                            {data: 'actions', name: 'Veiksmai', orderable: false, searchable: false}
                         ],
                     };
 

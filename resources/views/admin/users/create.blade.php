@@ -21,6 +21,20 @@
                     {{ trans('cruds.user.fields.name_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('branch') ? 'has-error' : '' }}">
+                <label for="branch_id">{{ trans('cruds.user.fields.branch') }}*</label>
+                <select name="branch_id" id="branch_id" class="form-control select2" required>
+                    @foreach($branches as $id => $title)
+                    <option value="{{ $id }}" {{ old('branch_id') == $id ? 'selected' : ''}}> {{ $title }}
+                    </option>
+                    @endforeach
+                </select>
+                @if($errors->has('branch_id'))
+                <p class="help-block">
+                    {{ $errors->first('branch_id') }}
+                </p>
+                @endif
+            </div>
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 <label for="email">{{ trans('cruds.user.fields.email') }}*</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ old('email', isset($user) ? $user->email : '') }}" required>

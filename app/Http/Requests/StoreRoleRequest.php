@@ -9,7 +9,7 @@ class StoreRoleRequest extends FormRequest
 {
     public function authorize()
     {
-        return \Gate::allows('role_create');
+        return \Gate::allows('is_admin');
     }
 
     public function rules()

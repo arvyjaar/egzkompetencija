@@ -26,7 +26,7 @@
                 <label for="branch_id">{{ trans('cruds.user.fields.branch') }}*</label>
                 <select name="branch_id" id="branch_id" class="form-control select2" required>
                     @foreach($branches as $id => $branch)
-                        <option value="{{ $id }}" {{ old('branch_id', $user->branch) == $id ? 'selected' : ''}} > {{ $branch }} </option>
+                        <option value="{{ $id }}" {{ old('branch_id', $user->branch->id) == $id ? 'selected' : ''}} > {{ $branch }} </option>
                     @endforeach
                 </select>
                 @if($errors->has('branch_id'))
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                 <label for="password">{{ trans('cruds.user.fields.password') }}</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password" class="form-control">
                 @if($errors->has('password'))
                     <p class="help-block">
                         {{ $errors->first('password') }}

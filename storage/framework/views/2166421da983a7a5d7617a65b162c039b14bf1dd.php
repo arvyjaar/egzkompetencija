@@ -28,7 +28,7 @@
                 <label for="branch_id"><?php echo e(trans('cruds.user.fields.branch')); ?>*</label>
                 <select name="branch_id" id="branch_id" class="form-control select2" required>
                     <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $branch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($id); ?>" <?php echo e(old('branch_id', $user->branch) == $id ? 'selected' : ''); ?> > <?php echo e($branch); ?> </option>
+                        <option value="<?php echo e($id); ?>" <?php echo e(old('branch_id', $user->branch->id) == $id ? 'selected' : ''); ?> > <?php echo e($branch); ?> </option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
                 <?php if($errors->has('branch_id')): ?>
@@ -54,7 +54,7 @@
             </div>
             <div class="form-group <?php echo e($errors->has('password') ? 'has-error' : ''); ?>">
                 <label for="password"><?php echo e(trans('cruds.user.fields.password')); ?></label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password" class="form-control">
                 <?php if($errors->has('password')): ?>
                     <p class="help-block">
                         <?php echo e($errors->first('password')); ?>

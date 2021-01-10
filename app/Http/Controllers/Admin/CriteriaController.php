@@ -59,14 +59,14 @@ class CriteriaController extends Controller
 
     public function show(Criterion $criterion)
     {
-        abort_unless(\Gate::allows('criterion_show'), 403);
+        abort_unless(\Gate::allows('criterion_access'), 403);
 
         return view('admin.criteria.show', compact('criterion'));
     }
 
     public function destroy(Criterion $criterion)
     {
-        abort_unless(\Gate::allows('criterion_delete'), 403);
+        abort_unless(\Gate::allows('criterion_edit'), 403);
 
         $criterion->delete();
 
@@ -75,6 +75,8 @@ class CriteriaController extends Controller
 
     public function massDestroy(MassDestroyCriterionRequest $request)
     {
+        abort_unless(\Gate::allows('criterion_edit'), 403);
+
         Criterion::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-@can('criterion_create')
+@can('criterion_edit')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.criteria.create") }}">
-                {{ trans('global.add')}} {{ trans('cruds.criterion.title_singular')}}
+                <i class="far fa-plus-square">&nbsp;</i> {{ trans('cruds.criterion.title_singular')}}
             </a>
         </div>
     </div>
@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th width="10">
-                            &#9633;
+                            &#10043;
                         </th>
                         <th>
                             {{ trans('cruds.criterion.title_singular') }}
@@ -31,11 +31,9 @@
                         <th>
                             {{ trans('cruds.criterion.fields.rating_type') }}
                         </th>
-                        @can('is_admin')
                         <th>
                             {{ trans('global.actions') }}
                         </th>
-                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -54,22 +52,24 @@
                             <td>
                                 {{ $criterion->assessment->title ?? '' }}
                             </td>
-                            @can('is_admin')
                             <td>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.criteria.show', $criterion->id) }}">
-                                        {{ trans('global.show') }}
+                                    <a class="btn btn-sm btn-primary" href="{{ route('admin.criteria.show', $criterion->id) }}">
+                                        <i class="far fa-eye"></i>
                                     </a>
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.criteria.edit', $criterion->id) }}">
-                                        {{ trans('global.edit') }}
+                                    @can('criterion_edit')
+                                    <a class="btn btn-sm btn-info" href="{{ route('admin.criteria.edit', $criterion->id) }}">
+                                        <i class="far fa-edit"></i>
                                     </a>
 
                                     <form action="{{ route('admin.criteria.destroy', $criterion->id) }}" method="POST" onsubmit="return confirm('Ar tikrai trinti?');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </form>
+                                    @endcan
                             </td>
-                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

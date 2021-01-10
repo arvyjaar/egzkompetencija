@@ -1,9 +1,9 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_create')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="<?php echo e(route("admin.roles.create")); ?>">
-                <?php echo e(trans('global.add')); ?> <?php echo e(trans('cruds.role.title_singular')); ?>
+                <i class="far fa-plus-square">&nbsp;</i> <?php echo e(trans('cruds.role.title_singular')); ?>
 
             </a>
         </div>
@@ -31,8 +31,9 @@
                             <?php echo e(trans('cruds.role.fields.permissions')); ?>
 
                         </th>
-                        <th>
-                            &nbsp;
+                        <th width="100">
+                            <?php echo e(trans('global.actions')); ?>
+
                         </th>
                     </tr>
                 </thead>
@@ -52,23 +53,23 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </td>
                             <td>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_show')): ?>
-                                    <a class="btn btn-xs btn-primary" href="<?php echo e(route('admin.roles.show', $role->id)); ?>">
-                                        <?php echo e(trans('global.view')); ?>
-
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                    <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.roles.show', $role->id)); ?>">
+                                        <i class="far fa-eye"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_edit')): ?>
-                                    <a class="btn btn-xs btn-info" href="<?php echo e(route('admin.roles.edit', $role->id)); ?>">
-                                        <?php echo e(trans('global.edit')); ?>
-
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                    <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.roles.edit', $role->id)); ?>">
+                                        <i class="far fa-edit"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_delete')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                                     <form action="<?php echo e(route('admin.roles.destroy', $role->id)); ?>" method="POST" onsubmit="return confirm('<?php echo e(trans('global.areYouSure')); ?>');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="<?php echo e(trans('global.delete')); ?>">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 <?php endif; ?>
                             </td>
@@ -112,7 +113,7 @@
     }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_delete')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
   dtButtons.push(deleteButton)
 <?php endif; ?>
 

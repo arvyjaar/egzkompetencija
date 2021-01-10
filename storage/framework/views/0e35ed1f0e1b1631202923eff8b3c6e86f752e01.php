@@ -21,7 +21,7 @@
                         </p>
                     </a>
                 </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_management_access')): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_edit')): ?>
                 <li
                     class="nav-item has-treeview <?php echo e(request()->is('admin/permissions*') ? 'menu-open' : ''); ?> <?php echo e(request()->is('admin/roles*') ? 'menu-open' : ''); ?> <?php echo e(request()->is('admin/users*') ? 'menu-open' : ''); ?>">
                     <a class="nav-link nav-dropdown-toggle" href="#">
@@ -34,7 +34,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.permissions.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : ''); ?>">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.roles.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : ''); ?>">
@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_edit')): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.users.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : ''); ?>">
@@ -72,9 +72,9 @@
                                 </p>
                             </a>
                         </li>
-                        <?php endif; ?>
                     </ul>
                 </li>
+                <?php endif; ?>
                 <?php endif; ?>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('report_access')): ?>
                 <li class="nav-item">
@@ -87,9 +87,12 @@
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('competency_access')): ?>
-                <li
-                    class="nav-item has-treeview <?php echo e(request()->is('admin/criteria*') ? 'menu-open' : ''); ?> <?php echo e(request()->is('admin/forms*') ? 'menu-open' : ''); ?>">
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                <li class="nav-item has-treeview 
+                        <?php echo e(request()->is('admin/criteria*') ? 'menu-open' : ''); ?> 
+                        <?php echo e(request()->is('admin/forms*') ? 'menu-open' : ''); ?>
+
+                        <?php echo e(request()->is('admin/competencies*') ? 'menu-open' : ''); ?>">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-toolbox"></i>
                         <p>
@@ -100,6 +103,19 @@
                     <ul class="nav nav-treeview">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
                         <li class="nav-item">
+                            <a href="<?php echo e(route("admin.competencies.index")); ?>"
+                                class="nav-link <?php echo e(request()->is('admin/competencies') || request()->is('admin/competencies/*') ? 'active' : ''); ?>">
+                                <i class="fa-fw fas fa-file-alt">
+
+                                </i>
+                                <p>
+                                    <span><?php echo e(trans('cruds.competency.title')); ?></span>
+                                </p>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                        <li class="nav-item">
                             <a href="<?php echo e(route("admin.criteria.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : ''); ?>">
                                 <i class="fa-fw fas fa-file-alt">
@@ -107,6 +123,19 @@
                                 </i>
                                 <p>
                                     <span><?php echo e(trans('cruds.criterion.title')); ?></span>
+                                </p>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route("admin.criteria.index")); ?>"
+                                class="nav-link <?php echo e(request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : ''); ?>">
+                                <i class="fa-fw fas fa-file-alt">
+
+                                </i>
+                                <p>
+                                    <span><?php echo e(trans('cruds.form.title')); ?></span>
                                 </p>
                             </a>
                         </li>

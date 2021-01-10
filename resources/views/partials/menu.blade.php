@@ -21,7 +21,7 @@
                         </p>
                     </a>
                 </li>
-                @can('user_management_access')
+                @can('user_edit')
                 <li
                     class="nav-item has-treeview {{ request()->is('admin/permissions*') ? 'menu-open' : '' }} {{ request()->is('admin/roles*') ? 'menu-open' : '' }} {{ request()->is('admin/users*') ? 'menu-open' : '' }}">
                     <a class="nav-link nav-dropdown-toggle" href="#">
@@ -34,7 +34,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @can('permission_access')
+                        @can('is_admin')
                         <li class="nav-item">
                             <a href="{{ route("admin.permissions.index") }}"
                                 class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('role_access')
+                        @can('is_admin')
                         <li class="nav-item">
                             <a href="{{ route("admin.roles.index") }}"
                                 class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('user_access')
+                        @can('user_edit')
                         <li class="nav-item">
                             <a href="{{ route("admin.users.index") }}"
                                 class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
@@ -72,9 +72,9 @@
                                 </p>
                             </a>
                         </li>
-                        @endcan
                     </ul>
                 </li>
+                @endcan
                 @endcan
                 @can('report_access')
                 <li class="nav-item">
@@ -87,9 +87,11 @@
                     </a>
                 </li>
                 @endcan
-                @can('competency_access')
-                <li
-                    class="nav-item has-treeview {{ request()->is('admin/criteria*') ? 'menu-open' : '' }} {{ request()->is('admin/forms*') ? 'menu-open' : '' }}">
+                @can('criterion_access')
+                <li class="nav-item has-treeview 
+                        {{ request()->is('admin/criteria*') ? 'menu-open' : '' }} 
+                        {{ request()->is('admin/forms*') ? 'menu-open' : '' }}
+                        {{ request()->is('admin/competencies*') ? 'menu-open' : '' }}">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-toolbox"></i>
                         <p>
@@ -100,6 +102,19 @@
                     <ul class="nav nav-treeview">
                         @can('criterion_access')
                         <li class="nav-item">
+                            <a href="{{ route("admin.competencies.index") }}"
+                                class="nav-link {{ request()->is('admin/competencies') || request()->is('admin/competencies/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-file-alt">
+
+                                </i>
+                                <p>
+                                    <span>{{ trans('cruds.competency.title') }}</span>
+                                </p>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('criterion_access')
+                        <li class="nav-item">
                             <a href="{{ route("admin.criteria.index") }}"
                                 class="nav-link {{ request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-file-alt">
@@ -107,6 +122,19 @@
                                 </i>
                                 <p>
                                     <span>{{ trans('cruds.criterion.title') }}</span>
+                                </p>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('criterion_access')
+                        <li class="nav-item">
+                            <a href="{{ route("admin.criteria.index") }}"
+                                class="nav-link {{ request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-file-alt">
+
+                                </i>
+                                <p>
+                                    <span>{{ trans('cruds.form.title') }}</span>
                                 </p>
                             </a>
                         </li>

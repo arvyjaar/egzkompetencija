@@ -9,7 +9,7 @@ class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return \Gate::allows('user_create');
+        return \Gate::allows('user_edit');
     }
 
     public function rules()
