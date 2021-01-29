@@ -34,23 +34,6 @@
                         {{ trans('global.actions') }}
                     </th>
                 </tr>
-                <tr>
-                    <th class="thead2 filterhead">
-                        
-                    </th>
-                    <th class="thead2 filterhead">
-                        
-                    </th>
-                    <th class="thead2 filterhead">
-                        
-                    </th>
-                    <th class="thead2 filterhead">
-                        
-                    </th>
-                    <th>
-                        
-                    </th>
-                </tr>
             </thead>
             <tfoot>
                 <tr>
