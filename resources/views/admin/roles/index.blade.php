@@ -11,7 +11,7 @@
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.role.title') }} - {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -19,9 +19,6 @@
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
                         <th>
                             {{ trans('cruds.role.fields.title') }}
                         </th>
@@ -36,9 +33,7 @@
                 <tbody>
                     @foreach($roles as $key => $role)
                         <tr data-entry-id="{{ $role->id }}">
-                            <td>
 
-                            </td>
                             <td>
                                 {{ $role->title ?? '' }}
                             </td>
@@ -68,7 +63,6 @@
                                     </form>
                                 @endcan
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -80,40 +74,8 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.roles.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('is_admin')
-  dtButtons.push(deleteButton)
-@endcan
-
-  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+$(function () {
+  $('.datatable').DataTable()
 })
-
 </script>
 @endsection

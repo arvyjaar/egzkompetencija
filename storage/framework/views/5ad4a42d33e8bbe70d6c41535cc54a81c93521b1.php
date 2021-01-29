@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('global.edit')); ?> <?php echo e(trans('cruds.criterion.title_singular')); ?>
+        <i class="far fa-edit"></i> <?php echo e(trans('cruds.criterion.title_singular')); ?>
 
     </div>
 

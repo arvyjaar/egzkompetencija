@@ -87,6 +87,17 @@
                     </a>
                 </li>
                 <?php endif; ?>
+                
+                <li class="nav-item">
+                    <a href="<?php echo e(route("admin.stats.index")); ?>"
+                        class="nav-link <?php echo e(request()->is('admin/stats') || request()->is('admin/stats/*') ? 'active' : ''); ?>">
+                        <i class="fas fa-chart-line"></i>"
+                        <p>
+                            <span><?php echo e(trans('cruds.statistics.title')); ?></span>
+                        </p>
+                    </a>
+                </li>
+                
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
                 <li class="nav-item has-treeview 
                         <?php echo e(request()->is('admin/criteria*') ? 'menu-open' : ''); ?> 
@@ -129,7 +140,7 @@
                         <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
                         <li class="nav-item">
-                            <a href="<?php echo e(route("admin.criteria.index")); ?>"
+                            <a href="<?php echo e(route("admin.forms.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : ''); ?>">
                                 <i class="fa-fw fas fa-file-alt">
 

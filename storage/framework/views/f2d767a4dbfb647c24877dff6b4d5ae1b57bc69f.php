@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_create')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="<?php echo e(route("admin.criteria.create")); ?>">
@@ -35,12 +35,10 @@
                             <?php echo e(trans('cruds.criterion.fields.rating_type')); ?>
 
                         </th>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                         <th>
                             <?php echo e(trans('global.actions')); ?>
 
                         </th>
-                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,11 +60,11 @@
                                 <?php echo e($criterion->assessment->title ?? ''); ?>
 
                             </td>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
                             <td>
                                     <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.criteria.show', $criterion->id)); ?>">
                                         <i class="far fa-eye"></i>
                                     </a>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
                                     <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.criteria.edit', $criterion->id)); ?>">
                                         <i class="far fa-edit"></i>
                                     </a>
@@ -78,8 +76,8 @@
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </form>
+                                    <?php endif; ?>
                             </td>
-                            <?php endif; ?>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
@@ -119,7 +117,7 @@
     }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_delete')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
   dtButtons.push(deleteButton)
 <?php endif; ?>
 

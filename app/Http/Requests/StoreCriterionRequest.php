@@ -28,13 +28,4 @@ class StoreCriterionRequest extends FormRequest
             ]
         ];
     }
-
-    public function messages()
-    {
-        return $messages = [
-            'title.required' => 'Pavadinimas privalomas',
-            'competency_id.required' => 'Kompetencija privaloma',
-            'assessment_type_id' => 'Vertinimo skalė privaloma'
-        ];
-    }
 }

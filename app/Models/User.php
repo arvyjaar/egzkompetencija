@@ -6,13 +6,14 @@ use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable;
+    use SoftDeletes, Notifiable, HasFactory;
 
     public $table = 'users';
 
@@ -40,6 +41,8 @@ class User extends Authenticatable
         'remember_token',
         'email_verified_at',
     ];
+
+    protected $width = ['branch'];
 
     public function getEmailVerifiedAtAttribute($value)
     {
@@ -71,5 +74,15 @@ class User extends Authenticatable
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function reportAsEmployee()
+    {
+        return $this->hasMany(Report::class, 'employee_id');
+    }
+
+        public function reportAsObserver()
+    {
+        return $this->hasMany(Report::class, 'observer_id');
     }
 }

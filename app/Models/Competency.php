@@ -28,7 +28,8 @@ class Competency extends Model
     protected $with = ['worktype'];
 
     // example: return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
-    public function form() {
+    public function form()
+    {
         return $this->belongsToMany('App\Models\Form', 'form_competency');
     }
 
@@ -37,8 +38,13 @@ class Competency extends Model
         return $this->belongsTo('App\Models\Worktype', 'worktype_id');
     }
 
-        public function criterion()
+    public function criterion()
     {
         return $this->hasMany('App\Models\Criterion', 'competency_id');
+    }
+
+    public function criterionWithTrashed()
+    {
+        return $this->hasMany('App\Models\Criterion', 'competency_id')->withTrashed();
     }
 }

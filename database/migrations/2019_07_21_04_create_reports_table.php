@@ -14,7 +14,7 @@ class CreateReportsTable extends Migration
             $table->foreignId('employee_id')->constrained('users');
             $table->foreignId('observer_id')->constrained('users');
             $table->dateTime('procedure_date');
-            $table->foreignId('drivecategory_id')->constrained();
+            $table->foreignId('drivecategory_id')->nullable()->constrained();
             $table->date('observing_date');
             $table->foreignId('observing_type_id')->constrained('observing_types');
             $table->longText('technical_note')->nullable();

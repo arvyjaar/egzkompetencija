@@ -29,9 +29,8 @@ class StoreReportRequest extends FormRequest
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
             ],
             'drivecategory_id' => [
-                'min:1',
-                'max:3',
-                'required',
+                'nullable',
+                'numeric',              
             ],
             'observing_date' => [
                 'required',
@@ -47,17 +46,4 @@ class StoreReportRequest extends FormRequest
             ],
         ];
     }
-
-    public function messages()
-    {
-        return $messages = [
-            'employee_id.required' => 'Nepasirinktas darbuotojas',
-            'procedure_date.required' => 'Nepasirinkta procedūros data ir laikas',
-            'observing_date.required' => 'Nepasirinkta stebėjimo data',
-            'drivecategory_id.required' => 'Nepasirinkta TP kategorija',
-            'observing_type.required' => 'Nepasirinkta Procedūra / Vaizdo įrašas',
-            'point.required' => 'Ne visi kriterijai įvertinti balais',
-        ];
-    }
 }
-// ToDo: translate messages to language file

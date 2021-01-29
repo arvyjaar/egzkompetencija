@@ -109,7 +109,7 @@
     }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('criterion_delete')
+@can('criterion_edit')
   dtButtons.push(deleteButton)
 @endcan
 

@@ -23,12 +23,4 @@ class StoreCompetencyRequest extends FormRequest
             ],
         ];
     }
-
-    public function messages()
-    {
-        return $messages = [
-            'title.required' => 'Pavadinimas privalomas',
-            'worktype_id.required' => 'Veikla privaloma',
-        ];
-    }
 }

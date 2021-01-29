@@ -20,10 +20,10 @@ class UsersController extends Controller
 
         if ($request->ajax()) {
             $query = User::query()->select('*');
+            $query->with(['branch']);
 
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', 'Actions');
             $table->removeColumn('password');
 
@@ -41,11 +41,8 @@ class UsersController extends Controller
                     'row'
                 ));
             });
-            $table->editColumn('branch_id', function ($row) {
-                return $row->branch_id ? $row->branch->title : '';
-            });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions']);
 
             $table->setRowAttr([
                 'data-entry-id' => function ($row) {

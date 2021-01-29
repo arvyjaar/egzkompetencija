@@ -87,6 +87,17 @@
                     </a>
                 </li>
                 @endcan
+                
+                <li class="nav-item">
+                    <a href="{{ route("admin.stats.index") }}"
+                        class="nav-link {{ request()->is('admin/stats') || request()->is('admin/stats/*') ? 'active' : '' }}">
+                        <i class="fas fa-chart-line"></i>"
+                        <p>
+                            <span>{{ trans('cruds.statistics.title') }}</span>
+                        </p>
+                    </a>
+                </li>
+                
                 @can('criterion_access')
                 <li class="nav-item has-treeview 
                         {{ request()->is('admin/criteria*') ? 'menu-open' : '' }} 
@@ -128,7 +139,7 @@
                         @endcan
                         @can('criterion_access')
                         <li class="nav-item">
-                            <a href="{{ route("admin.criteria.index") }}"
+                            <a href="{{ route("admin.forms.index") }}"
                                 class="nav-link {{ request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-file-alt">
 

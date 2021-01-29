@@ -35,4 +35,14 @@ class Form extends Model
     {
         return $this->belongsTo('App\Models\Worktype');
     }
+
+    public function getHasReportsAttribute()
+    {
+        return (Report::where('form_id', $this->id)->count() > 0) ? true : false;
+    }
+
+    public function report() 
+    {
+        return $this->hasMany('App\Models\Report');
+    }
 }

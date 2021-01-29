@@ -11,7 +11,7 @@ class CreateUsersTable extends Migration
             Schema::create('users', function (Blueprint $table) {
                 $table->id();
                 $table->string('username', 10)->nullable();
-                $table->string('name', 30);
+                $table->string('name', 50);
                 $table->string('email');
                 $table->foreignId('branch_id')->constrained();
                 $table->dateTime('email_verified_at')->nullable();

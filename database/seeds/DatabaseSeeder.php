@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CompetenciesTableSeeder::class,
             CriteriaTableSeeder::class,
             FormCompetencyPivotTableSeeder::class,
+            ReportTableSeeder::class,
         ]);
     }
 }

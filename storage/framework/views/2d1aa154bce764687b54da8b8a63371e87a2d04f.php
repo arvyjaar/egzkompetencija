@@ -2,27 +2,29 @@
 
 <div class="card">
     <div class="card-header">
-        Stebėjimo ataskaita Nr. <?php echo e($report->id); ?>
+        <?php echo e(trans('cruds.report.title_singular')); ?> Nr. <?php echo e($report->id); ?>
 
     </div>
 
     <div class="card-body">
         <div class="row">
             <div class="col-2">
-                <p><b>Stebėtojas: </b> <?php echo e($report->observer->name ?? ''); ?></p>
-                <p><b>Stebėjo: </b> <?php echo e($report->observing_date); ?></p>
-                <p><b>Tipas: </b><?php echo e($report->observingType->title); ?>
+                <p><b><?php echo e(trans('cruds.report.fields.observer')); ?></b> <?php echo e($report->observer->name ?? ''); ?></p>
+                <p><b><?php echo e(trans('cruds.report.fields.observing_date')); ?></b> <?php echo e($report->observing_date); ?></p>
+                <p><b><?php echo e(trans('cruds.report.fields.observing_type')); ?></b> <?php echo e($report->observingType->title); ?>
 
                 </p>
             </div>
             <div class="col-3">
-                <p><b>Darbuotojas: </b> <?php echo e($report->employee->name ?? ''); ?></p>
-                <p><b>Procedūros data: </b> <?php echo e(substr($report->procedure_date, 0, 16)); ?></p>
-                <p><b>Kategorija: </b><?php echo e($report->drivecategory->title ?? ''); ?></p>
+                <p><b><?php echo e(trans('cruds.report.fields.employee')); ?></b> <?php echo e($report->employee->name ?? ''); ?></p>
+                <p><b><?php echo e(trans('cruds.report.fields.procedure_datetime')); ?></b> <?php echo e(substr($report->procedure_date, 0, 16)); ?></p>
+                <?php if($report->drivecategory): ?>
+                <p><b><?php echo e(trans('cruds.report.fields.category')); ?> </b><?php echo e($report->drivecategory->title ?? ''); ?></p>
+                <?php endif; ?>
             </div>
             <div class="col-2">
-                <p><b>Forma: </b> <?php echo e($report->form->title ?? ''); ?>, v.<?php echo e($report->form->version); ?></p>
-                <p><b>Veikla: </b> <?php echo e($report->form->worktype->title ?? ''); ?></p>
+                <p><b><?php echo e(trans('cruds.form.title_singular')); ?></b> <?php echo e($report->form->title ?? ''); ?>, v.<?php echo e($report->form->version); ?></p>
+                <p><b><?php echo e(trans('cruds.worktype.title_singular')); ?></b> <?php echo e($report->form->worktype->title ?? ''); ?></p>
             </div>
         </div>
         <hr>
@@ -37,7 +39,7 @@
         <?php $__currentLoopData = $evaluations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $evaluation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="row">
             <div class="col-9">
-                <?php echo e($evaluation->criterion->title); ?>
+                <?php echo e($evaluation->criterionWithTrashed->title); ?>
 
             </div>
             <div class="col-2">
@@ -45,7 +47,7 @@
 
             </div>
             <div class="col-1">
-                <span <?php if(in_array($evaluation->assessment_value, $evaluation->criterion->assessment->bad_values)): ?>
+                <div <?php if(in_array($evaluation->assessment_value, $evaluation->criterionWithTrashed->assessment->bad_values)): ?>
                         class="text-center square text-danger"
                     <?php elseif(strtolower($evaluation->assessment_value) == 'n'): ?>
                         class="text-center square text-warning"
@@ -53,8 +55,8 @@
                         class="text-center square"
                     <?php endif; ?>
                 >
-                    <b title="<?php echo e($evaluation->criterion->assessment->title); ?>"><?php echo e(strtoupper($evaluation->assessment_value)); ?></b>
-                </span>
+                    <b title="<?php echo e($evaluation->criterionWithTrashed->assessment->title); ?>"><?php echo e(strtoupper($evaluation->assessment_value)); ?></b>
+                </div>
             </div>
         </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -62,60 +64,61 @@
             <div class="col-8">
                 <br>
                 <?php if(isset($evaluations->competency_note)): ?>
-                <p><u><i>Pastaba:</i></u> <span class="text-info"><?php echo e($evaluations->competency_note); ?></span></p>
+                <p><u><i><?php echo e(trans('cruds.report.fields.notes_singular')); ?>:</i></u> <span class="text-info"><?php echo e($evaluations->competency_note); ?></span></p>
                 <?php endif; ?>
                 <hr>
             </div>
         </div>
-
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         <div class="row">
             <div class="col-8">
-                <b>Papildomos/bendrosios pastabos (pastabos dėl techninių priemonių, trukdančių efektyviam
-                    darbui, nesusijusios su šiuo įvertinimu)</b>
-                <p><span class="text-info"><?php echo e($report->technical_note ?? 'nėra'); ?></span></p>
+                <b><?php echo e(trans('cruds.report.fields.technical_notes')); ?></b>
+                <p><span class="text-info"><?php echo e($report->technical_note ?? '-'); ?></span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <b>Stebėtojo išvados, pasiūlymai</b>
-                <p><span class="text-info"><?php echo e($report->observer_note ?? 'nėra'); ?></span></p>
+                <b><?php echo e(trans('cruds.report.fields.observer_notes')); ?></b>
+                <p><span class="text-info"><?php echo e($report->observer_note ?? '-'); ?></span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <b>Darbuotojo atsiliepimas</b>
-                <p><span class="text-info"><?php echo e($report->employee_note ?? 'nėra'); ?></span></p>
+                <b><?php echo e(trans('cruds.report.fields.employee_notes')); ?></b>
+                <p><span class="text-info"><?php echo e($report->employee_note ?? '-'); ?></span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <b>Darbuotojas susipažino</b>
+                <b><?php echo e(trans('cruds.report.fields.employee_reviewed_at')); ?></b>
                 <?php if(isset($report->employee_reviewed_at)): ?>
                 <p><span class="text-info"><?php echo e($report->employee_reviewed_at); ?></span></p>
-                <?php else: ?>
-                <p class="text-danger">nesusipažino</p>
+                <?php endif; ?>
+                <?php if(empty($report->employee_reviewed_at)): ?>
+                <p class="text-danger"><?php echo e(trans('cruds.report.not_reviewed')); ?></p>
                 <?php endif; ?>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <b>Administracijos pastabos</b>
-                <p><span class="text-info"><?php echo e($report->manager_note ?? 'nėra'); ?></span></p>
+                <b><?php echo e(trans('cruds.report.fields.manager_notes')); ?></b>
+                <p><span class="text-info"><?php echo e($report->manager_note ?? '-'); ?></span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-2">
-                <a class="btn btn-default" href="<?php echo e(url()->previous()); ?>">
-                    Atgal į sąrašą
+                <a class="btn btn-default" href="<?php echo e(route('admin.reports.index')); ?>">
+                    <?php echo e(trans('global.back_to_list')); ?>
+
                 </a>
             </div>
 
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('report_comment', $report)): ?>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#commentModal">
-                Rašyti pastabą
+                <?php echo e(trans('global.write_note')); ?>
+
             </button>
 
             <!-- Modal -->
@@ -126,9 +129,11 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="commentModalLabel">
                                 <?php if(auth()->user()->id === $report->employee_id): ?>
-                                Darbuotojo pastaba
+                                <?php echo e(trans('cruds.report.fields.employee_notes')); ?>
+
                                 <?php else: ?>
-                                Administracijos pastaba
+                                <?php echo e(trans('cruds.report.fields.manager_notes')); ?>
+
                                 <?php endif; ?>
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,9 +148,10 @@
                                 <textarea name="comment" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Uždaryti
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo e(trans('global.close')); ?>
+
                                 </button>
-                                <button type="submit" class="btn btn-danger">Išsaugoti</button>
+                                <button type="submit" class="btn btn-danger"><?php echo e(trans('global.save')); ?></button>
                             </div>
                         </form>
                     </div>

@@ -24,6 +24,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Permissions are defined in AuthGates middleware too!
+
         $this->registerPolicies();
 
         Gate::define('is_admin', function ($user) {
@@ -41,9 +43,10 @@ class AuthServiceProvider extends ServiceProvider
                 ||
                 ($user->id === $report->observer_id)
                 ||
-                $user->roles->contains('title', 'manager');
+                $user->roles->contains('title', ['manager']);
         });
 
+        // Manager and assessed emplyee can comment report
         Gate::define('report_comment', function ($user, $report) {
             return
                 ($user->id === $report->employee_id)

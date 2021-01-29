@@ -43,9 +43,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('users', 'UsersController');
 
-    Route::delete('reports/destroy', 'ReportsController@massDestroy')->name('reports.massDestroy');
-
     Route::resource('reports', 'ReportsController');
+
+    Route::get('reports/create-report/{id}', 'ReportsController@createByForm')->name('reports.create-report');
 
     Route::put('evaluation/update-evaluation/{report}', 'ReportsController@updateSingleEvaluation')->name('reports.updateSingleEvaluation');
 
@@ -62,4 +62,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('evaluations/destroy', 'EvaluationsController@massDestroy')->name('evaluations.massDestroy');
 
     Route::resource('evaluations', 'EvaluationsController');
+
+    Route::resource('forms', 'FormsController');
+
+    Route::delete('forms/destroy', 'FormsController@massDestroy')->name('forms.massDestroy');
+
+    Route::get('stats/index', 'StatsController@index')->name('stats.index');
+
 });

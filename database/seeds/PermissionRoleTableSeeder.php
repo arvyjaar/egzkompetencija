@@ -13,17 +13,25 @@ class PermissionRoleTableSeeder extends Seeder
 
         // Employee
         $employee_permissions = $admin_permissions->filter(function ($permission) {
-            return substr($permission->title, 0, 13) == 'report_access' || substr($permission->title, 0, 11) == 'report_show';
+            return substr($permission->title, 0, 13) == 'report_access';
         });
         Role::findOrFail(2)->permissions()->sync($employee_permissions);
 
         // Manager
-        Role::findOrFail(4)->permissions()->sync($employee_permissions);
+        $manager_permissions = $admin_permissions->filter(function ($permission) {
+            return 
+               substr($permission->title, 0, 14) == 'criterion_edit' 
+            || substr($permission->title, 0, 16) == 'criterion_access'
+            || substr($permission->title, 0, 13) == 'report_access';
+        });
+        Role::findOrFail(4)->permissions()->sync($manager_permissions);
 
         // Observer
-        $user_permissions = $admin_permissions->filter(function ($permission) {
-            return substr($permission->title, 0, 11) == 'report_edit' || substr($permission->title, 0, 11) == 'report_show';
+        $observer_permissions = $admin_permissions->filter(function ($permission) {
+            return 
+                substr($permission->title, 0, 13) == 'report_create'
+            ||  substr($permission->title, 0, 13) == 'report_access';
         });
-        Role::findOrFail(3)->permissions()->sync($user_permissions);
+        Role::findOrFail(3)->permissions()->sync($observer_permissions);
     }
 }

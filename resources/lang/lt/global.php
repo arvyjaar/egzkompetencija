@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'active'                               => 'Aktyvuota',
     'settings'                             => 'Nustatymai',
     'actions'                              => 'Veiksmai',
     'add'                                  => 'Sukurti',
@@ -8,6 +9,7 @@ return [
     'areYouSure'                           => 'Ar tikrai?',
     'clickHereToVerify'                    => 'Click here to verify',
     'create'                               => 'Sukurti',
+    'close'                                => 'Uždaryti',
     'dashboard'                            => 'Skydelis',
     'delete'                               => 'Trinti',
     'downloadFile'                         => 'Download file',
@@ -24,6 +26,7 @@ return [
     'login_password_confirmation'          => 'Password confirmation',
     'logout'                               => 'Išeiti',
     'month'                                => 'Mėnuo',
+    'new'                                  => 'Nauja',
     'no'                                   => 'Ne',
     'pleaseSelect'                         => 'Pasirinkite',
     'register'                             => 'Register',
@@ -43,7 +46,7 @@ return [
     'view'                                 => 'Rodyti',
     'view_file'                            => 'View file',
     'year'                                 => 'Year',
-    'yes'                                  => 'Yes',
+    'yes'                                  => 'Taip',
     'youAreLoggedIn'                       => 'You are logged in!',
     'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in',
     'submit'                               => 'Patvirtinti',
@@ -242,4 +245,5 @@ return [
     'y_axis_field'                         => 'Y-axis field',
     'you_have_no_messages'                 => 'You have no messages.',
     'calendar'                             => 'Calendar',
+    'write_note'                           => 'Rašyti pastabą'
 ];

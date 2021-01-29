@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Report extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'reports';
 
@@ -35,12 +36,12 @@ class Report extends Model
 
     public function employee()
     {
-        return $this->belongsTo('App\Models\User', 'employee_id');
+        return $this->belongsTo('App\Models\User', 'employee_id')->withTrashed();
     }
 
     public function observer()
     {
-        return $this->belongsTo('App\Models\User', 'observer_id');
+        return $this->belongsTo('App\Models\User', 'observer_id')->withTrashed();
     }
 
     public function evaluation()
@@ -55,24 +56,24 @@ class Report extends Model
 
     public function observingType()
     {
-        return $this->belongsTo('App\Models\ObservingType');
+        return $this->belongsTo('App\Models\ObservingType')->withTrashed();
     }
 
     public function form()
     {
-        return $this->belongsTo('App\Models\Form');
+        return $this->belongsTo('App\Models\Form')->withTrashed();
     }
 
     public function drivecategory()
     {
-        return $this->belongsTo('App\Models\Drivecategory');
+        return $this->belongsTo('App\Models\Drivecategory')->withTrashed();
     }
 
     public function getProcedureDateAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
-
+/*
     public function setProcedureDateAttribute($value)
     {
         $this->attributes['procedure_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
@@ -97,12 +98,12 @@ class Report extends Model
     {
         $this->attributes['employee_reviewed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
-
+*/
     public function evaluationSet()
     {
-        $evaluation_set = $this->evaluation->groupBy('criterion.competency.title');
+        $evaluation_set = $this->evaluation->groupBy('criterionWithTrashed.competency.title');
         foreach ($evaluation_set as $id => $competency) {
-            $competency->competency_id = ($competency->first()->criterion->competency_id ?? 0);
+            $competency->competency_id = ($competency->first()->criterionWithTrashed->competency_id ?? 0);
             $notes = $this->competencyNote()->where('competency_id', $competency->competency_id);
             $competency->competency_note = (
                 $notes->count() > 0 ?
@@ -113,6 +114,6 @@ class Report extends Model
         }
         return $evaluation_set;
     }
-
+    // ToDo: show trashed competency and criteria too
     // ToDo: somewhere must be restriction that prevents creating report with empty competencies (without criteria)
 }

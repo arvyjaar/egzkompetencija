@@ -19,9 +19,6 @@
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
                         <th>
                             {{ trans('cruds.permission.fields.title') }}
                         </th>
@@ -33,9 +30,6 @@
                 <tbody>
                     @foreach($permissions as $key => $permission)
                         <tr data-entry-id="{{ $permission->id }}">
-                            <td>
-
-                            </td>
                             <td>
                                 {{ $permission->title ?? '' }}
                             </td>
@@ -60,7 +54,6 @@
                                     </form>
                                 @endcan
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -72,40 +65,8 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.permissions.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('permission_delete')
-  dtButtons.push(deleteButton)
-@endcan
-
-  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+$(function () {
+    $('.datatable').DataTable()
 })
-
 </script>
 @endsection

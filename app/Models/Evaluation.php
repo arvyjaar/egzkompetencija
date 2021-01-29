@@ -25,11 +25,11 @@ class Evaluation extends Model
         'assessment_value',
     ];
 
-    protected $with = ['criterion'];
+    protected $with = ['criterionWithTrashed'];
 
-    public function criterion()
+    public function criterionWithTrashed()
     {
-        return $this->belongsTo('App\Models\Criterion', 'criterion_id');
+        return $this->belongsTo('App\Models\Criterion', 'criterion_id')->withTrashed();
     }
 
     public function report()

@@ -24,10 +24,7 @@ class Branch extends Model
         'deleted_at',
     ];
 
-    /** 
-    * Get the users (examiners) of Branch     
-    **/
-    public function users() {
+    public function user() {
         return $this->hasMany('App\Models\User');
     }
 }

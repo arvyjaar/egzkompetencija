@@ -26,7 +26,7 @@ class Criterion extends Model
     protected $with = ['competency', 'assessment'];
 
     public function competency() {
-        return $this->belongsTo('App\Models\Competency');
+        return $this->belongsTo('App\Models\Competency')->withTrashed();
     }
 
     public function assessment() {

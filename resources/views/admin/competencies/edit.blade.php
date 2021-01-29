@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.competency.title_singular') }}
+        <i class="far fa-edit"></i> {{ trans('cruds.competency.title_singular') }}
     </div>
 
     <div class="card-body">

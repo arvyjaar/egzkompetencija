@@ -44,4 +44,3 @@ class UpdateReportRequest extends FormRequest
         ];
     }
 }
-//ToDo: validation messages

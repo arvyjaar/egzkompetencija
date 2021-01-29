@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header alert alert-warning">
-        Redaguojama darbuotojo darbo stebėjimo ataskaita Nr. <b><?php echo e($report->id); ?></b>
+        <i class="far fa-edit"></i> <?php echo e(trans('cruds.report.title_singular')); ?> Nr. <b><?php echo e($report->id); ?></b>
     </div>
 
     <div class="card-body">
@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group <?php echo e($errors->has('user_id') ? 'has-error' : ''); ?>">
-                        <label for="employee_id">Darbuotojas (-a)*</label>
+                        <label for="employee_id"><?php echo e(trans('cruds.report.fields.employee')); ?>*</label>
                         <select name="employee_id" id="employee_id" class="form-control select2">
                             <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($id); ?>"
@@ -29,12 +29,12 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label for="observer_id">Vertintojas (-a)*</label>
+                    <label for="observer_id"><?php echo e(trans('cruds.report.fields.observer')); ?>*</label>
                     <input type="text" class="form-control" disabled="disabled"
                         placeholder="<?php echo e($report->observer->name ?? ''); ?>">
                 </div>
                 <div class="col-4">
-                    <label for="form_id">Forma:*</label>
+                    <label for="form_id"><?php echo e(trans('cruds.form.title_singular')); ?>*</label>
                     <input type="text" name="form_id" id="form_id" class="form-control"
                         placeholder="<?php echo e($report->form->title); ?>, v.<?php echo e($report->form->version); ?>" disabled />
                 </div>
@@ -42,13 +42,13 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group <?php echo e($errors->has('drivecategory_id') ? 'has-error' : ''); ?>">
-                        <label for="drivecategory_id">Kategorija*</label>
+                        <label for="drivecategory_id"><?php echo e(trans('cruds.report.fields.category')); ?>*</label>
                         <select type="text" id="drivecategory_id" name="drivecategory_id" class="form-control select2"
                             required>
-                            <?php $__currentLoopData = $drivecategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $drivecategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($drivecategory->id); ?>"
-                                <?php echo e(old('drivecategory_id') == $drivecategory->id ? 'selected' : ''); ?>>
-                                <?php echo e($drivecategory->title); ?>
+                            <?php $__currentLoopData = $drivecategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($id); ?>"
+                                <?php echo e((old('drivecategory_id') == $id || $report->drivecategory_id == $id) ? 'selected' : ''); ?>>
+                                <?php echo e($title); ?>
 
                             </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group <?php echo e($errors->has('procedure_date') ? 'has-error' : ''); ?>">
-                        <label for="procedure_date">Procedūros data, laikas*</label>
+                        <label for="procedure_date"><?php echo e(trans('cruds.report.fields.procedure_datetime')); ?>*</label>
                         <input type="text" id="procedure_date" name="procedure_date" class="form-control datetime"
                             value="<?php echo e(old('procedure_date', $report->procedure_date ?? '')); ?>" required>
                         <?php if($errors->has('procedure_date')): ?>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group <?php echo e($errors->has('observing_date') ? 'has-error' : ''); ?>">
-                        <label for="observing_date">Stebėjimo data*</label>
+                        <label for="observing_date"><?php echo e(trans('cruds.report.fields.observing_date')); ?>*</label>
                         <input type="text" id="observing_date" name="observing_date" class="form-control date"
                             value="<?php echo e(old('observing_date', $report->observing_date ?? '')); ?>" required>
                         <?php if($errors->has('observing_date')): ?>
@@ -91,17 +91,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group <?php echo e($errors->has('observing_type_id') ? 'has-error' : ''); ?>">
-                        <b>Buvo stebėta*: &nbsp;</b>
+                        <b><?php echo e(trans('cruds.report.fields.observing_type')); ?>*: &nbsp;</b>
                         <?php $__currentLoopData = $observing_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <label for="observing_type_<?php echo e($type->id); ?>"><?php echo e($type->title); ?>
-
-                        </label>
-                        <input type="radio" id="observing_type_<?php echo e($type->id); ?>" name="observing_type_id"
+                        <div class="icheck-primary icheck-inline">
+                            <input type="radio" id="observing_type_<?php echo e($type->id); ?>" name="observing_type_id"
                             value="<?php echo e($type->id); ?>"
                             <?php echo e((old('observing_type_id') == $type->id || $report->observing_type_id == $type->id) ? 'checked' : ''); ?>
 
                             required />
-
+                            <label for="observing_type_<?php echo e($type->id); ?>"><?php echo e($type->title); ?></label>
+                        </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php if($errors->has('observing_type_id')): ?>
                         <p class="help-block">
                             <?php echo e($errors->first('observing_type_id')); ?>
@@ -119,25 +118,29 @@
                     <strong><?php echo e($competency_title); ?></strong>
                 </div>
             </div>
-            
+
             <?php $__currentLoopData = $evaluations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $evaluation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="row">
-                <div class="col-7">
-                    <p class="criterion"> <?php echo e($evaluation->criterion->title); ?></p>
+                <div class="col-6">
+                    <p class="criterion"> <?php echo e($evaluation->criterionWithTrashed->title); ?></p>
                 </div>
-                <div class="col-5">
-                    <?php $__currentLoopData = json_decode($evaluation->criterion->assessment->assessment_values); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $point): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <label class="custom-label" for="point_cr<?php echo e($evaluation->criterion->id); ?>_p<?php echo e($point->value); ?>">
-                        <?php echo e($point->title); ?>
-
-                        <input type="radio" id="point_cr<?php echo e($evaluation->criterion->id); ?>_p<?php echo e($point->value); ?>"
-                            class="point" name="point[<?php echo e($evaluation->criterion->id); ?>]" value="<?php echo e($point->value); ?>"
+                <div class="col-6">
+                    <?php $__currentLoopData = json_decode($evaluation->criterionWithTrashed->assessment->assessment_values); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $point): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="icheck-primary icheck-inline">
+                        <input type="radio"
+                            id="point_cr<?php echo e($evaluation->criterionWithTrashed->id); ?>_p<?php echo e($point->value); ?>" class="point"
+                            name="point[<?php echo e($evaluation->criterionWithTrashed->id); ?>]" value="<?php echo e($point->value); ?>"
                             data-evaluation_id="<?php echo e($evaluation->id); ?>" data-assessment_value="<?php echo e($point->value); ?>"
                             onclick="updateSingleEvaluation(this)"
-                            <?php echo e((old("point.".$evaluation->criterion->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''); ?>
+                            <?php echo e((old("point.".$evaluation->criterionWithTrashed->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''); ?>
 
                             required />
-                    </label>
+                        <label class="custom-label"
+                            for="point_cr<?php echo e($evaluation->criterionWithTrashed->id); ?>_p<?php echo e($point->value); ?>">
+                            <?php echo e($point->title); ?>
+
+                        </label>
+                    </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
                 </div>
             </div>
@@ -146,7 +149,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group <?php echo e($errors->has('competency_note') ? 'has-error' : ''); ?>">
-                        <label for="competency_note">Pastabos</label>
+                        <label for="competency_note"><?php echo e(trans('cruds.report.fields.notes')); ?></label>
                         <textarea id="competency_note" name="competency_note[<?php echo e($evaluations->competency_id); ?>]"
                             class="form-control"><?php echo e(old('competency_note.'.$evaluations->competency_id, $evaluations->competency_note ?? '')); ?></textarea>
 
@@ -163,11 +166,10 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
 
             <div class="form-group <?php echo e($errors->has('technical_note') ? 'has-error' : ''); ?>">
-                <label for="technical_note">Papildomos/bendrosios pastabos</label>
+                <label for="technical_note"><?php echo e(trans('cruds.report.fields.technical_notes')); ?></label>
                 <p class="helper-block">
-                    Pastabos dėl techninių priemonių, trukdančių efektyviam darbui,
-                    nesusijusios su šiuo
-                    įvertinimu
+                    <?php echo e(trans('cruds.report.fields.technical_notes_helper')); ?>
+
                 </p>
                 <textarea id="technical_note" name="technical_note"
                     class="form-control"><?php echo e(old('technical_note', isset($report) ? $report->technical_note : '')); ?>
@@ -181,10 +183,10 @@
                 <?php endif; ?>
             </div>
             <div class="form-group <?php echo e($errors->has('observer_note') ? 'has-error' : ''); ?>">
-                <label for="observer_note">Stebėtojo išvados, pasiūlymai</label>
+                <label for="observer_note"><?php echo e(trans('cruds.report.fields.observer_notes')); ?></label>
                 <textarea id="observer_note" name="observer_note"
                     class="form-control"><?php echo e(old('observer_note', isset($report) ? $report->observer_note : '')); ?></textarea>
-                    
+
                 <?php if($errors->has('observer_note')): ?>
                 <p class="help-block">
                     <?php echo e($errors->first('observer_note')); ?>
@@ -193,7 +195,7 @@
                 <?php endif; ?>
             </div>
 
-            <p id="count">Įvertinimų skaitliukas</p>
+            <p id="count">Counter</p>
 
             <div>
                 <input class="btn btn-danger" type="submit" value="Išsaugoti">
@@ -206,7 +208,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-info">Naujas įvertinimas</h5>
+                <h5 class="modal-title text-info"><?php echo e(trans('cruds.report.new_value')); ?>: <span id=json-value></span>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -229,7 +232,7 @@
                 color = 'green';
                 $('input[type=submit]').attr('disabled', false);
             }
-            $("#count").html("<span style='color:" + color + " '> Įvertinote aspektų: " + n + " iš " + total + "</span>");
+            $("#count").html("<span style='color:" + color + " '> <?php echo e(trans('cruds.report.counter.assessed')); ?> " + n + " / " + total + "</span>");
         };
         countChecked();
         $(".point").on("click", countChecked);
@@ -242,9 +245,10 @@
                 url: '<?php echo e(route("admin.reports.updateSingleEvaluation", [$report->id])); ?>',
                 data: {evaluation_id: eval.dataset.evaluation_id, assessment_value: eval.dataset.assessment_value, _method: 'PUT'},
                 success: function (data) {
-                    $('.modal-title').html(data.success);
+                    $('#json-value').html(data.result);
                     $("#value-confirmation").modal('show');
                     setTimeout(function () {
+                        $('#json-value').html(''); // unset result
                         $("#value-confirmation").modal('hide');
                     }, 2000);
                 }

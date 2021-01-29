@@ -11,7 +11,7 @@
 <?php endif; ?>
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('cruds.user.title_singular')); ?> <?php echo e(trans('global.list')); ?>
+        <?php echo e(trans('cruds.user.title')); ?> - <?php echo e(trans('global.list')); ?>
 
     </div>
 
@@ -19,9 +19,6 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable">
             <thead>
                 <tr>
-                    <th width="10">
-                        &#10043;
-                    </th>
                     <th>
                         <?php echo e(trans('cruds.user.fields.name')); ?>
 
@@ -45,54 +42,21 @@
 ##parent-placeholder-16728d18790deb58b3b8c1df74f06e536b532695##
 <script>
     $(function () {
-        let deleteButtonTrans = '<?php echo e(trans('global.datatables.delete')); ?>';
-        let deleteButton = {
-            text: deleteButtonTrans,
-            url: "<?php echo e(route('admin.users.massDestroy')); ?>",
-            className: 'btn-danger',
-            action: function (e, dt, node, config) {
-                let ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-                return $(entry).data('entry-id')
-            });
-
-            if (ids.length === 0) {
-                alert('<?php echo e(trans('global.datatables.zero_selected')); ?>')
-                return
-            }
-
-            if (confirm('<?php echo e(trans('global.areYouSure')); ?>')) {
-                $.ajax({
-                    headers: {'x-csrf-token': _token},
-                    method: 'POST',
-                    url: config.url,
-                    data: { ids: ids, _method: 'DELETE' }
-                }).done(function () { location.reload() })
-            }
-            }
-        };
-  
-        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
-            dtButtons.push(deleteButton)
-        <?php endif; ?>
-
-        let dtOverrideGlobals = {
-            buttons: dtButtons,
+        $('.datatable').DataTable({
             processing: true,
             serverSide: true,
-            retrieve: true,
-            aaSorting: [],
+            pageLength: 25,
+            orderCellsTop: true,
+            fixedHeader: true,
             ajax: "<?php echo e(route('admin.users.index')); ?>",
+            dom: 'lBfrtip',
+            buttons: ['csv', 'print', 'colvis'],
             columns: [
-                {data: 'placeholder', name: 'placeholder'},
                 {data: 'name', name: 'name'},
-                {data: 'branch_id', name: 'branch_id'},
+                {data: 'branch.title', name: 'branch.title'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
-        };
-
-    $('.datatable').DataTable(dtOverrideGlobals);
-
+        });
 });
 </script>
 <?php $__env->stopSection(); ?>

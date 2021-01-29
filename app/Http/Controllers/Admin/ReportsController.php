@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\CompetencyNote;
 use App\Models\User;
-use App\Models\Competency;
 use App\Models\Evaluation;
 use App\Models\Report;
 use App\Rules\AllPoints;
@@ -16,26 +15,24 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
 use App\Http\Requests\MassDestroyReportRequest;
-use App\Models\AssessmentType;
-use Illuminate\Support\Facades\DB;
 use App\Models\Criterion;
 use App\Models\Drivecategory;
 use App\Models\Form;
 use App\Models\ObservingType;
+use Yajra\DataTables\Html\Builder;
 
 class ReportsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Builder $builder)
     {
         abort_unless(\Gate::allows('report_access'), 403);
 
         if ($request->ajax()) {
             $query = Report::query()->select('*');
-            $query->with(['employee', 'observer']);
+            $query->with(['employee', 'observer', 'drivecategory']);
 
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', 'Actions');
 
             $table->editColumn('actions', function ($row) {
@@ -52,33 +49,24 @@ class ReportsController extends Controller
                     'row'
                 ));
             });
-            $table->editColumn('observer_id', function ($row) {
-                return $row->observer_id ? $row->observer->name : '';
-            });
-            $table->editColumn('employee_id', function ($row) {
-                return $row->employee_id ? $row->employee->name : '';
-            });
-            $table->editColumn('drivecategory_id', function ($row) {
-                return $row->drivecategory ? $row->drivecategory : "";
-            });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions']);
 
-            return $table->make(true);
+            return $table->toJson();
         }
 
         return view('admin.reports.index');
     }
 
-    public function create()
+    public function createByForm($id)
     {
         abort_unless(\Gate::allows('report_create'), 403);
 
-        $form = Form::find(1); // ToDo: get id from request
+        $form = Form::where('active', 1)->where('id', $id)->first();
         $competencies = $form->competency->load(['criterion']);
         $users = User::all()->pluck('name', 'id')->prepend('---', '');
-        $drivecategories = Drivecategory::all();
-        $observing_types = ObservingType::all();
+        $drivecategories = Drivecategory::pluck('title', 'id')->prepend('---', '');
+        $observing_types = ObservingType::pluck('title', 'id');
 
         return view('admin.reports.create', compact(
             'users',
@@ -89,11 +77,18 @@ class ReportsController extends Controller
         ));
     }
 
-    public function store(StoreReportRequest $request)
+    public function create()
     {
         abort_unless(\Gate::allows('report_create'), 403);
 
-        // ToDo: validate if the Form is still active and all criteria belongs to this form
+        $forms = Form::where('active', true)->get();
+
+        return view('admin.reports.choose-form', compact('forms'));
+    }
+
+    public function store(StoreReportRequest $request)
+    {
+        abort_unless(\Gate::allows('report_create'), 403);
 
         // validating quantity of submitted evaluations (custom validation rule - AllPoints)
         $request->validate(['point' => [ new AllPoints($request->form_id)]]);
@@ -137,11 +132,10 @@ class ReportsController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend('---', '');
         
-        $drivecategories = Drivecategory::all();
+        $drivecategories = Drivecategory::pluck('title', 'id')->prepend('---', '');
         $observing_types = ObservingType::all();
         $evaluation_set = $report->evaluationSet();
        
-        //dd($evaluation_set);
         return view('admin.reports.edit', compact(
             'report',
             'users',
@@ -180,16 +174,16 @@ class ReportsController extends Controller
         if (\Gate::allows('report_edit_delete', $report)) {
             $evaluation = tap(Evaluation::find($request->evaluation_id))->update(['assessment_value' => $request->assessment_value]);
 
-            return response()->json(['success' => 'Nauja reikšmė: '.strtoupper($evaluation->assessment_value)]);
+            return response()->json(['result' => strtoupper($evaluation->assessment_value)]);
         } else {
-            return response()->json(['success' => 'Nepavyko išsaugoti!']);
+            return response()->json(['result' => 'error!']);
         }
     }
 
     public function show(Report $report)
     {
         abort_unless(\Gate::allows('report_show', $report), 403);
-        // Restricted to employee, observer, manager
+        // Only employee, observer, manager can view report
         $evaluation_set = $report->evaluationSet();
 
         if (auth()->user()->id === $report->employee_id) {
@@ -205,12 +199,12 @@ class ReportsController extends Controller
     public function comment(Request $request, Report $report)
     {
         abort_unless(\Gate::allows('report_comment', $report), 403);
-        // Restricted to employee and manager
+        // Only employee and manager can leave a comment
         if (auth()->user()->id === $report->employee_id) {
             $updated = tap($report)->update(['employee_note' => $request->comment]);
         } else {
             $updated = tap($report)->update(['manager_note' => $request->comment]);
-        }
+        };
 
         $report = $updated;
         $evaluation_set = $report->evaluationSet();
@@ -227,16 +221,5 @@ class ReportsController extends Controller
         $report->delete();
 
         return back();
-    }
-
-    public function massDestroy(MassDestroyReportRequest $request)
-    {
-        abort_unless(\Gate::allows('is_admin'), 403);
-
-        Report::whereIn('id', request('ids'))->delete();
-        Evaluation::whereIn('report_id', request('ids'))->delete();
-        CompetencyNote::whereIn('report_id', request('ids'))->delete();
-
-        return response(null, 204);
     }
 }

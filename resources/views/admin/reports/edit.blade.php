@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header alert alert-warning">
-        Redaguojama darbuotojo darbo stebėjimo ataskaita Nr. <b>{{ $report->id }}</b>
+        <i class="far fa-edit"></i> {{ trans('cruds.report.title_singular') }} Nr. <b>{{ $report->id }}</b>
     </div>
 
     <div class="card-body">
@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
-                        <label for="employee_id">Darbuotojas (-a)*</label>
+                        <label for="employee_id">{{ trans('cruds.report.fields.employee') }}*</label>
                         <select name="employee_id" id="employee_id" class="form-control select2">
                             @foreach($users as $id => $user)
                             <option value="{{ $id }}"
@@ -29,12 +29,12 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label for="observer_id">Vertintojas (-a)*</label>
+                    <label for="observer_id">{{ trans('cruds.report.fields.observer') }}*</label>
                     <input type="text" class="form-control" disabled="disabled"
                         placeholder="{{ $report->observer->name ?? '' }}">
                 </div>
                 <div class="col-4">
-                    <label for="form_id">Forma:*</label>
+                    <label for="form_id">{{ trans('cruds.form.title_singular') }}*</label>
                     <input type="text" name="form_id" id="form_id" class="form-control"
                         placeholder="{{ $report->form->title }}, v.{{ $report->form->version }}" disabled />
                 </div>
@@ -42,13 +42,13 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group {{ $errors->has('drivecategory_id') ? 'has-error' : '' }}">
-                        <label for="drivecategory_id">Kategorija*</label>
+                        <label for="drivecategory_id">{{ trans('cruds.report.fields.category') }}*</label>
                         <select type="text" id="drivecategory_id" name="drivecategory_id" class="form-control select2"
                             required>
-                            @foreach($drivecategories as $drivecategory)
-                            <option value="{{ $drivecategory->id }}"
-                                {{ old('drivecategory_id') == $drivecategory->id ? 'selected' : '' }}>
-                                {{ $drivecategory->title }}
+                            @foreach($drivecategories as $id => $title)
+                            <option value="{{ $id }}"
+                                {{ (old('drivecategory_id') == $id || $report->drivecategory_id == $id) ? 'selected' : ''}}>
+                                {{ $title }}
                             </option>
                             @endforeach
                         </select>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group {{ $errors->has('procedure_date') ? 'has-error' : '' }}">
-                        <label for="procedure_date">Procedūros data, laikas*</label>
+                        <label for="procedure_date">{{ trans('cruds.report.fields.procedure_datetime') }}*</label>
                         <input type="text" id="procedure_date" name="procedure_date" class="form-control datetime"
                             value="{{ old('procedure_date', $report->procedure_date ?? '') }}" required>
                         @if($errors->has('procedure_date'))
@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group {{ $errors->has('observing_date') ? 'has-error' : '' }}">
-                        <label for="observing_date">Stebėjimo data*</label>
+                        <label for="observing_date">{{ trans('cruds.report.fields.observing_date') }}*</label>
                         <input type="text" id="observing_date" name="observing_date" class="form-control date"
                             value="{{ old('observing_date', $report->observing_date ?? '') }}" required>
                         @if($errors->has('observing_date'))
@@ -87,15 +87,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group {{ $errors->has('observing_type_id') ? 'has-error' : '' }}">
-                        <b>Buvo stebėta*: &nbsp;</b>
+                        <b>{{ trans('cruds.report.fields.observing_type') }}*: &nbsp;</b>
                         @foreach($observing_types as $type)
-                        <label for="observing_type_{{ $type->id }}">{{ $type->title }}
-                        </label>
-                        <input type="radio" id="observing_type_{{ $type->id }}" name="observing_type_id"
+                        <div class="icheck-primary icheck-inline">
+                            <input type="radio" id="observing_type_{{ $type->id }}" name="observing_type_id"
                             value="{{ $type->id }}"
                             {{ (old('observing_type_id') == $type->id || $report->observing_type_id == $type->id) ? 'checked' : ''}}
                             required />
-
+                            <label for="observing_type_{{ $type->id }}">{{ $type->title }}</label>
+                        </div>
                         @endforeach @if($errors->has('observing_type_id'))
                         <p class="help-block">
                             {{ $errors->first('observing_type_id') }}
@@ -112,23 +112,27 @@
                     <strong>{{ $competency_title }}</strong>
                 </div>
             </div>
-            
+
             @foreach($evaluations as $evaluation)
             <div class="row">
-                <div class="col-7">
-                    <p class="criterion"> {{ $evaluation->criterion->title }}</p>
+                <div class="col-6">
+                    <p class="criterion"> {{ $evaluation->criterionWithTrashed->title }}</p>
                 </div>
-                <div class="col-5">
-                    @foreach(json_decode($evaluation->criterion->assessment->assessment_values) as $point)
-                    <label class="custom-label" for="point_cr{{ $evaluation->criterion->id }}_p{{ $point->value }}">
-                        {{ $point->title }}
-                        <input type="radio" id="point_cr{{ $evaluation->criterion->id }}_p{{ $point->value }}"
-                            class="point" name="point[{{ $evaluation->criterion->id }}]" value="{{ $point->value }}"
+                <div class="col-6">
+                    @foreach(json_decode($evaluation->criterionWithTrashed->assessment->assessment_values) as $point)
+                    <div class="icheck-primary icheck-inline">
+                        <input type="radio"
+                            id="point_cr{{ $evaluation->criterionWithTrashed->id }}_p{{ $point->value }}" class="point"
+                            name="point[{{ $evaluation->criterionWithTrashed->id }}]" value="{{ $point->value }}"
                             data-evaluation_id="{{ $evaluation->id }}" data-assessment_value="{{ $point->value }}"
                             onclick="updateSingleEvaluation(this)"
-                            {{ (old("point.".$evaluation->criterion->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''}}
+                            {{ (old("point.".$evaluation->criterionWithTrashed->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''}}
                             required />
-                    </label>
+                        <label class="custom-label"
+                            for="point_cr{{ $evaluation->criterionWithTrashed->id }}_p{{ $point->value }}">
+                            {{ $point->title }}
+                        </label>
+                    </div>
                     @endforeach {{-- end assessment values --}}
                 </div>
             </div>
@@ -137,7 +141,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group {{ $errors->has('competency_note') ? 'has-error' : '' }}">
-                        <label for="competency_note">Pastabos</label>
+                        <label for="competency_note">{{ trans('cruds.report.fields.notes') }}</label>
                         <textarea id="competency_note" name="competency_note[{{ $evaluations->competency_id }}]"
                             class="form-control">{{ old('competency_note.'.$evaluations->competency_id, $evaluations->competency_note ?? '') }}</textarea>
 
@@ -153,11 +157,9 @@
             @endforeach {{-- end competencies --}}
 
             <div class="form-group {{ $errors->has('technical_note') ? 'has-error' : '' }}">
-                <label for="technical_note">Papildomos/bendrosios pastabos</label>
+                <label for="technical_note">{{ trans('cruds.report.fields.technical_notes') }}</label>
                 <p class="helper-block">
-                    Pastabos dėl techninių priemonių, trukdančių efektyviam darbui,
-                    nesusijusios su šiuo
-                    įvertinimu
+                    {{ trans('cruds.report.fields.technical_notes_helper') }}
                 </p>
                 <textarea id="technical_note" name="technical_note"
                     class="form-control">{{ old('technical_note', isset($report) ? $report->technical_note : '') }}
@@ -169,10 +171,10 @@
                 @endif
             </div>
             <div class="form-group {{ $errors->has('observer_note') ? 'has-error' : '' }}">
-                <label for="observer_note">Stebėtojo išvados, pasiūlymai</label>
+                <label for="observer_note">{{ trans('cruds.report.fields.observer_notes') }}</label>
                 <textarea id="observer_note" name="observer_note"
                     class="form-control">{{ old('observer_note', isset($report) ? $report->observer_note : '') }}</textarea>
-                    
+
                 @if($errors->has('observer_note'))
                 <p class="help-block">
                     {{ $errors->first('observer_note') }}
@@ -180,7 +182,7 @@
                 @endif
             </div>
 
-            <p id="count">Įvertinimų skaitliukas</p>
+            <p id="count">Counter</p>
 
             <div>
                 <input class="btn btn-danger" type="submit" value="Išsaugoti">
@@ -193,7 +195,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-info">Naujas įvertinimas</h5>
+                <h5 class="modal-title text-info">{{ trans('cruds.report.new_value') }}: <span id=json-value></span>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -216,7 +219,7 @@
                 color = 'green';
                 $('input[type=submit]').attr('disabled', false);
             }
-            $("#count").html("<span style='color:" + color + " '> Įvertinote aspektų: " + n + " iš " + total + "</span>");
+            $("#count").html("<span style='color:" + color + " '> {{ trans('cruds.report.counter.assessed') }} " + n + " / " + total + "</span>");
         };
         countChecked();
         $(".point").on("click", countChecked);
@@ -229,9 +232,10 @@
                 url: '{{ route("admin.reports.updateSingleEvaluation", [$report->id]) }}',
                 data: {evaluation_id: eval.dataset.evaluation_id, assessment_value: eval.dataset.assessment_value, _method: 'PUT'},
                 success: function (data) {
-                    $('.modal-title').html(data.success);
+                    $('#json-value').html(data.result);
                     $("#value-confirmation").modal('show');
                     setTimeout(function () {
+                        $('#json-value').html(''); // unset result
                         $("#value-confirmation").modal('hide');
                     }, 2000);
                 }
