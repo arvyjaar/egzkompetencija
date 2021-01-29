@@ -11,7 +11,7 @@
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.form.title') }} {{ trans('global.list') }}
+        {{ trans('cruds.form.title') }} - {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -19,9 +19,6 @@
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-                            &#10043;
-                        </th>
                         <th>
                             {{ trans('cruds.form.title_singular') }}
                         </th>
@@ -46,9 +43,6 @@
                 <tbody>
                     @foreach($forms as $form)
                     <tr data-entry-id="{{ $form->id }}">
-                        <td>
-
-                        </td>
                         <td>
                             {{ $form->title ?? '' }}
                         </td>
@@ -96,8 +90,10 @@
 @section('scripts')
 @parent
 <script>
-    $(function () { 
-        $('.datatable:not(.ajaxTable)').DataTable()
-    })
+$(function () {
+    $('.datatable').DataTable({
+        pageLength: 25,
+    });
+})
 </script>
 @endsection

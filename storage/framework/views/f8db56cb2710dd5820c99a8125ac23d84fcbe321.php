@@ -20,9 +20,6 @@
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-                            &#10043;
-                        </th>
                         <th>
                             <?php echo e(trans('cruds.form.title_singular')); ?>
 
@@ -53,9 +50,6 @@
                 <tbody>
                     <?php $__currentLoopData = $forms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $form): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr data-entry-id="<?php echo e($form->id); ?>">
-                        <td>
-
-                        </td>
                         <td>
                             <?php echo e($form->title ?? ''); ?>
 
@@ -108,9 +102,11 @@
 <?php $__env->startSection('scripts'); ?>
 ##parent-placeholder-16728d18790deb58b3b8c1df74f06e536b532695##
 <script>
-    $(function () { 
-        $('.datatable:not(.ajaxTable)').DataTable()
-    })
+$(function () {
+    $('.datatable').DataTable({
+        pageLength: 25,
+    });
+})
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/vagrant/egzkomp.test/resources/views/admin/forms/index.blade.php ENDPATH**/ ?>
