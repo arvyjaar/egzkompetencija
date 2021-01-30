@@ -114,7 +114,7 @@
                 </a>
             </div>
 
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('report_comment', $report)): ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('comment', $report)): ?>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#commentModal">
                 <?php echo e(trans('global.write_note')); ?>

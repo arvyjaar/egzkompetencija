@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('criterion_edit')
+@can('create', \App\Models\Form::class)
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a class="btn btn-success" href="{{ route("admin.forms.create") }}">
@@ -60,11 +60,13 @@
                         </td>
 
                         <td>
+                            @can('view', $form)
                             <a class="btn btn-sm btn-primary" href="{{ route('admin.forms.show', $form->id) }}">
                                 <i class="far fa-eye"></i>
                             </a>
+                            @endcan
                             @if (!$form->hasReports)
-                            @can('criterion_edit')
+                            @can('update', $form)
                             <a class="btn btn-sm btn-info" href="{{ route('admin.forms.edit', $form->id) }}">
                                 <i class="far fa-edit"></i>
                             </a>

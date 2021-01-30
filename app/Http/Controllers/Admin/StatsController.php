@@ -15,6 +15,8 @@ class StatsController extends Controller
 {
     public function index(Request $request, Builder $builder)
     {
+        return "Still in progress";
+
         $worktypes = Worktype::pluck('title', 'id')->prepend('---', '');
         $branches = Branch::pluck('title', 'id')->prepend('---', '');
         

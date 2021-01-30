@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create', \App\Models\Role::class)): ?>
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="<?php echo e(route("admin.roles.create")); ?>">
@@ -48,17 +48,17 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </td>
                             <td>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', $role)): ?>
                                     <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.roles.show', $role->id)); ?>">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $role)): ?>
                                     <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.roles.edit', $role->id)); ?>">
                                         <i class="far fa-edit"></i>
                                     </a>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $role)): ?>
                                     <form action="<?php echo e(route('admin.roles.destroy', $role->id)); ?>" method="POST" onsubmit="return confirm('<?php echo e(trans('global.areYouSure')); ?>');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">

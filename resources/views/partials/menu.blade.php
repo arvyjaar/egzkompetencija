@@ -21,7 +21,7 @@
                         </p>
                     </a>
                 </li>
-                @can('user_edit')
+                @can('viewAny', \App\Models\User::class)
                 <li
                     class="nav-item has-treeview {{ request()->is('admin/permissions*') ? 'menu-open' : '' }} {{ request()->is('admin/roles*') ? 'menu-open' : '' }} {{ request()->is('admin/users*') ? 'menu-open' : '' }}">
                     <a class="nav-link nav-dropdown-toggle" href="#">
@@ -34,7 +34,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @can('is_admin')
+                        @can('viewAny', \App\Models\Permission::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.permissions.index") }}"
                                 class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('is_admin')
+                        @can('viewAny', \App\Models\Role::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.roles.index") }}"
                                 class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('user_edit')
+                        @can('viewAny', \App\Models\User::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.users.index") }}"
                                 class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
@@ -76,7 +76,7 @@
                 </li>
                 @endcan
                 @endcan
-                @can('report_access')
+                @can('viewAny', \App\Models\Report::class)
                 <li class="nav-item">
                     <a href="{{ route("admin.reports.index") }}"
                         class="nav-link {{ request()->is('admin/reports') || request()->is('admin/reports/*') ? 'active' : '' }}">
@@ -98,7 +98,7 @@
                     </a>
                 </li>
                 
-                @can('criterion_access')
+                @can('viewAny', \App\Models\Form::class)
                 <li class="nav-item has-treeview 
                         {{ request()->is('admin/criteria*') ? 'menu-open' : '' }} 
                         {{ request()->is('admin/forms*') ? 'menu-open' : '' }}
@@ -111,7 +111,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @can('criterion_access')
+                        @can('viewAny', \App\Models\Competency::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.competencies.index") }}"
                                 class="nav-link {{ request()->is('admin/competencies') || request()->is('admin/competencies/*') ? 'active' : '' }}">
@@ -124,7 +124,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('criterion_access')
+                        @can('viewAny', \App\Models\Criterion::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.criteria.index") }}"
                                 class="nav-link {{ request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : '' }}">
@@ -137,7 +137,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('criterion_access')
+                        @can('viewAny', \App\Models\Form::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.forms.index") }}"
                                 class="nav-link {{ request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : '' }}">
@@ -160,7 +160,7 @@
                             <i class="fas fa-fw fa-sign-out-alt">
 
                             </i>
-                            <span>Atsijungti</span>
+                            <span>{{ trans('global.logout') }}</span>
                         </p>
                     </a>
                 </li>

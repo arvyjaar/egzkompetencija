@@ -7,11 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return \Gate::allows('is_admin');
-    }
-
     public function rules()
     {
         return [
@@ -22,7 +17,6 @@ class UpdateRoleRequest extends FormRequest
                 'integer',
             ],
             'permissions'   => [
-                'required',
                 'array',
             ],
         ];

@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group {{ $errors->has('drivecategory_id') ? 'has-error' : '' }}">
-                        <label for="drivecategory_id">{{ trans('cruds.report.fields.category') }}*</label>
+                        <label for="drivecategory_id">{{ trans('cruds.report.fields.category') }}</label>
                         <select type="text" id="drivecategory_id" name="drivecategory_id" class="form-control">
                             @foreach($drivecategories as $id => $title)
                             <option value="{{ $id }}" {{ old('drivecategory_id') == $id ? 'selected' : '' }}>

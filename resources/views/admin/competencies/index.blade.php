@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('criterion_edit')
+@can('create', \App\Models\Competency::class)
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a class="btn btn-success" href="{{ route("admin.competencies.create") }}">
@@ -51,11 +51,13 @@
                             @endif
                         </td>  
                         <td>
+                            @can('view', $competency)
                             <a class="btn btn-sm btn-primary"
                                 href="{{ route('admin.competencies.show', $competency->id) }}">
                                 <i class="far fa-eye"></i>
                             </a>
-                            @can('criterion_edit')
+                            @endcan
+                            @can('update', $competency)
                             <a class="btn btn-sm btn-info"
                                 href="{{ route('admin.competencies.edit', $competency->id) }}">
                                 <i class="far fa-edit"></i>

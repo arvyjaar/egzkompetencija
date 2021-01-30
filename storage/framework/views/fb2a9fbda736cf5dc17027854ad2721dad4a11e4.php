@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create', \App\Models\Competency::class)): ?>
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a class="btn btn-success" href="<?php echo e(route("admin.competencies.create")); ?>">
@@ -59,11 +59,13 @@
                             <?php endif; ?>
                         </td>  
                         <td>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', $competency)): ?>
                             <a class="btn btn-sm btn-primary"
                                 href="<?php echo e(route('admin.competencies.show', $competency->id)); ?>">
                                 <i class="far fa-eye"></i>
                             </a>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
+                            <?php endif; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $competency)): ?>
                             <a class="btn btn-sm btn-info"
                                 href="<?php echo e(route('admin.competencies.edit', $competency->id)); ?>">
                                 <i class="far fa-edit"></i>

@@ -21,6 +21,8 @@ class Role extends Model
         'title',
     ];
 
+    protected $with = ['permissions'];
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);

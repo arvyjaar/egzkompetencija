@@ -24,10 +24,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Permissions are defined in AuthGates middleware too!
-
         $this->registerPolicies();
-
+/*
         Gate::define('is_admin', function ($user) {
             return $user->roles->contains('title', 'admin');
         });
@@ -53,5 +51,6 @@ class AuthServiceProvider extends ServiceProvider
                 ||
                 $user->roles->contains('title', 'manager');
         });
+*/
     }
 }

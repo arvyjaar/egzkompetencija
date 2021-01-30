@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create', \App\Models\Form::class)): ?>
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a class="btn btn-success" href="<?php echo e(route("admin.forms.create")); ?>">
@@ -11,7 +11,7 @@
 <?php endif; ?>
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('cruds.form.title')); ?> <?php echo e(trans('global.list')); ?>
+        <?php echo e(trans('cruds.form.title')); ?> - <?php echo e(trans('global.list')); ?>
 
     </div>
 
@@ -72,11 +72,13 @@
                         </td>
 
                         <td>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', $form)): ?>
                             <a class="btn btn-sm btn-primary" href="<?php echo e(route('admin.forms.show', $form->id)); ?>">
                                 <i class="far fa-eye"></i>
                             </a>
+                            <?php endif; ?>
                             <?php if(!$form->hasReports): ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_edit')): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $form)): ?>
                             <a class="btn btn-sm btn-info" href="<?php echo e(route('admin.forms.edit', $form->id)); ?>">
                                 <i class="far fa-edit"></i>
                             </a>

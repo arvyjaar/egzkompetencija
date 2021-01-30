@@ -7,11 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCriterionRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return \Gate::allows('criterion_edit');
-    }
-
     public function rules()
     {
         return [

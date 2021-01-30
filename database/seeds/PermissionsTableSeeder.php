@@ -9,39 +9,24 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
             [
-                'title' => 'user_management_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'user_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-                        [
-                'title' => 'criterion_edit',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
-                'title' => 'criterion_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
-            ],
-            [
                 'title' => 'report_create',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
+                'created_at' => '2021-01-01 00:00:00',
+                'updated_at' => '2021-01-01 00:00:00',
             ],
             [
-                'title' => 'report_access',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
+                'title' => 'report_comment',
+                'created_at' => '2021-01-01 00:00:00',
+                'updated_at' => '2021-01-01 00:00:00',
             ],
             [
-                'title' => 'report_show',
-                'created_at' => '2019-07-21 15:26:45',
-                'updated_at' => '2019-07-21 15:26:45',
+                'title' => 'report_view',
+                'created_at' => '2021-01-01 00:00:00',
+                'updated_at' => '2021-01-01 00:00:00',
+            ],
+            [
+                'title' => 'manage_forms',
+                'created_at' => '2021-01-01 00:00:00',
+                'updated_at' => '2021-01-01 00:00:00',
             ],
         ];
 

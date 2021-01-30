@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_create')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create', \App\Models\User::class)): ?>
 <div style="margin-bottom: 10px;" class="row">
     <div class="col-lg-12">
         <a class="btn btn-success" href="<?php echo e(route("admin.users.create")); ?>">

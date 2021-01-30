@@ -130,7 +130,8 @@
                         <input type="radio"
                             id="point_cr<?php echo e($evaluation->criterionWithTrashed->id); ?>_p<?php echo e($point->value); ?>" class="point"
                             name="point[<?php echo e($evaluation->criterionWithTrashed->id); ?>]" value="<?php echo e($point->value); ?>"
-                            data-evaluation_id="<?php echo e($evaluation->id); ?>" data-assessment_value="<?php echo e($point->value); ?>"
+                            data-evaluation_id="<?php echo e($evaluation->id); ?>" 
+                            data-assessment_value="<?php echo e($point->value); ?>"
                             onclick="updateSingleEvaluation(this)"
                             <?php echo e((old("point.".$evaluation->criterionWithTrashed->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''); ?>
 
@@ -243,7 +244,10 @@
                 headers: {'x-csrf-token': _token},
                 method: 'POST',
                 url: '<?php echo e(route("admin.reports.updateSingleEvaluation", [$report->id])); ?>',
-                data: {evaluation_id: eval.dataset.evaluation_id, assessment_value: eval.dataset.assessment_value, _method: 'PUT'},
+                data: {
+                    evaluation_id: eval.dataset.evaluation_id, 
+                    assessment_value: eval.dataset.assessment_value,
+                    _method: 'PUT'},
                 success: function (data) {
                     $('#json-value').html(data.result);
                     $("#value-confirmation").modal('show');

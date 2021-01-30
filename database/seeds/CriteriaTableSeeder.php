@@ -133,20 +133,6 @@ class CriteriaTableSeeder extends Seeder
                 'assessment_type_id' => 2,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],
-            // ToDo: trinti
-                        //Egzamino ataskaitos pildymas
-            [
-                'title' => 'Tinkamai akcentuoja teigiamus gebėjimus ir įgūdžius',
-                'competency_id' => 5,
-                'assessment_type_id' => 2,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
-            [
-                'title' => 'testinis kriterijus su Taip-Ne vertinimu',
-                'competency_id' => 5,
-                'assessment_type_id' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
         ];
 
         Criterion::insert($criteria);

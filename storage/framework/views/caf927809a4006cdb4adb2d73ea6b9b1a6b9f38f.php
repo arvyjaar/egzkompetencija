@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header">
-        <?php echo e(trans('global.show')); ?> <?php echo e(trans('cruds.permission.title')); ?>
+        <?php echo e(trans('cruds.permission.title_singular')); ?>
 
     </div>
 

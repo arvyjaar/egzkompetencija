@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('is_admin')
+@can('create', \App\Models\Role::class)
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.roles.create") }}">
@@ -43,17 +43,17 @@
                                 @endforeach
                             </td>
                             <td>
-                                @can('is_admin')
+                                @can('view', $role)
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.roles.show', $role->id) }}">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 @endcan
-                                @can('is_admin')
+                                @can('update', $role)
                                     <a class="btn btn-sm btn-info" href="{{ route('admin.roles.edit', $role->id) }}">
                                         <i class="far fa-edit"></i>
                                     </a>
                                 @endcan
-                                @can('is_admin')
+                                @can('delete', $role)
                                     <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">

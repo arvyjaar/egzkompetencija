@@ -124,7 +124,8 @@
                         <input type="radio"
                             id="point_cr{{ $evaluation->criterionWithTrashed->id }}_p{{ $point->value }}" class="point"
                             name="point[{{ $evaluation->criterionWithTrashed->id }}]" value="{{ $point->value }}"
-                            data-evaluation_id="{{ $evaluation->id }}" data-assessment_value="{{ $point->value }}"
+                            data-evaluation_id="{{ $evaluation->id }}" 
+                            data-assessment_value="{{ $point->value }}"
                             onclick="updateSingleEvaluation(this)"
                             {{ (old("point.".$evaluation->criterionWithTrashed->id) == $point->value || $evaluation->assessment_value == $point->value) ? 'checked' : ''}}
                             required />
@@ -230,7 +231,10 @@
                 headers: {'x-csrf-token': _token},
                 method: 'POST',
                 url: '{{ route("admin.reports.updateSingleEvaluation", [$report->id]) }}',
-                data: {evaluation_id: eval.dataset.evaluation_id, assessment_value: eval.dataset.assessment_value, _method: 'PUT'},
+                data: {
+                    evaluation_id: eval.dataset.evaluation_id, 
+                    assessment_value: eval.dataset.assessment_value,
+                    _method: 'PUT'},
                 success: function (data) {
                     $('#json-value').html(data.result);
                     $("#value-confirmation").modal('show');

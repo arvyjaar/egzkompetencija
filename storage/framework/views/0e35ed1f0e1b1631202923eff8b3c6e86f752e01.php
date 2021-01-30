@@ -21,7 +21,7 @@
                         </p>
                     </a>
                 </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_edit')): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\User::class)): ?>
                 <li
                     class="nav-item has-treeview <?php echo e(request()->is('admin/permissions*') ? 'menu-open' : ''); ?> <?php echo e(request()->is('admin/roles*') ? 'menu-open' : ''); ?> <?php echo e(request()->is('admin/users*') ? 'menu-open' : ''); ?>">
                     <a class="nav-link nav-dropdown-toggle" href="#">
@@ -34,7 +34,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Permission::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.permissions.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : ''); ?>">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('is_admin')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Role::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.roles.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : ''); ?>">
@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user_edit')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\User::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.users.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : ''); ?>">
@@ -76,7 +76,7 @@
                 </li>
                 <?php endif; ?>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('report_access')): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Report::class)): ?>
                 <li class="nav-item">
                     <a href="<?php echo e(route("admin.reports.index")); ?>"
                         class="nav-link <?php echo e(request()->is('admin/reports') || request()->is('admin/reports/*') ? 'active' : ''); ?>">
@@ -98,7 +98,7 @@
                     </a>
                 </li>
                 
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Form::class)): ?>
                 <li class="nav-item has-treeview 
                         <?php echo e(request()->is('admin/criteria*') ? 'menu-open' : ''); ?> 
                         <?php echo e(request()->is('admin/forms*') ? 'menu-open' : ''); ?>
@@ -112,7 +112,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Competency::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.competencies.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/competencies') || request()->is('admin/competencies/*') ? 'active' : ''); ?>">
@@ -125,7 +125,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Criterion::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.criteria.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/criteria') || request()->is('admin/criteria/*') ? 'active' : ''); ?>">
@@ -138,7 +138,7 @@
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('criterion_access')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', \App\Models\Form::class)): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route("admin.forms.index")); ?>"
                                 class="nav-link <?php echo e(request()->is('admin/forms') || request()->is('admin/forms/*') ? 'active' : ''); ?>">
@@ -161,7 +161,7 @@
                             <i class="fas fa-fw fa-sign-out-alt">
 
                             </i>
-                            <span>Atsijungti</span>
+                            <span><?php echo e(trans('global.logout')); ?></span>
                         </p>
                     </a>
                 </li>

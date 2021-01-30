@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('is_admin')
+@can('create', \App\Models\Permission::class)
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.permissions.create") }}">
@@ -34,17 +34,17 @@
                                 {{ $permission->title ?? '' }}
                             </td>
                             <td>
-                                @can('is_admin')
+                                @can('view', $permission)
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.permissions.show', $permission->id) }}">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 @endcan
-                                @can('is_admin')
+                                @can('update', $permission)
                                     <a class="btn btn-sm btn-info" href="{{ route('admin.permissions.edit', $permission->id) }}">
                                         <i class="far fa-edit"></i>
                                     </a>
                                 @endcan
-                                @can('is_admin')
+                                @can('delete', $permission)
                                     <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">

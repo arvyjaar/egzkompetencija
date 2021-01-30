@@ -12,8 +12,8 @@ class UsersTableSeeder extends Seeder
         // Create 3 specific users
         $users = [
             [
-                'name' => 'Admin',
-                'email' => 'admin@admin.com',
+                'name' => 'Admin Admin',
+                'email' => 'admin@example.com',
                 'password' => '$2y$10$L1Q41dc2cPndrFAXTOAf2uB9HIHUiiUcWQ33wZFquII7oCIXXla5W',
                 'remember_token' => null,
                 'branch_id' => '1',
@@ -21,8 +21,18 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2019-07-14 17:22:04',
                 'deleted_at' => null,
             ],
+            [
+                'name' => 'Manager Manager',
+                'email' => 'manager@example.com',
+                'password' => '$2y$10$kkKVG0SuIdecC5QpwUX11.jr56qrSxUHSTzKLz7L7Ohn/Nfj4yA3C',
+                'remember_token' => null,
+                'branch_id' => '1',
+                'created_at' => '2019-07-14 17:22:04',
+                'updated_at' => '2019-07-14 17:22:04',
+                'deleted_at' => null,
+            ],
                         [
-                'name' => 'observer',
+                'name' => 'Observer Observer',
                 'email' => 'observer@example.com',
                 'password' => '$2y$10$8hcEsDE7qnuG0i5JRsPmiuQYg83BtkN75xvKl/z.ue3ghrjhR1x6K',
                 'remember_token' => null,
@@ -32,7 +42,7 @@ class UsersTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name' => 'employee',
+                'name' => 'Employee Employee',
                 'email' => 'employee@example.com',
                 'password' => '$2y$10$kkKVG0SuIdecC5QpwUX11.jr56qrSxUHSTzKLz7L7Ohn/Nfj4yA3C',
                 'remember_token' => null,
@@ -46,6 +56,6 @@ class UsersTableSeeder extends Seeder
         
         // Create more random users using model factory
 
-        $users = User::factory()->count(500)->create();
+        $users = User::factory()->count(200)->create();
     }
 }

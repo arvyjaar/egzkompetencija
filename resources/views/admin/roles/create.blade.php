@@ -22,10 +22,10 @@
                 </p>
             </div>
             <div class="form-group {{ $errors->has('permissions') ? 'has-error' : '' }}">
-                <label for="permissions">{{ trans('cruds.role.fields.permissions') }}*
+                <label for="permissions">{{ trans('cruds.role.fields.permissions') }}
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
-                <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple" required>
+                <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple">
                     @foreach($permissions as $id => $permissions)
                         <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>{{ $permissions }}</option>
                     @endforeach

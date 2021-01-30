@@ -18,14 +18,20 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable">
             <thead>
                 <tr>
+                    <th width="10">
+                        Id
+                    </th>
+
                     <th>
-                        Stebėtojas
+                        <?php echo e(trans('cruds.report.fields.observer')); ?>
+
                     </th>
                     <th>
-                        Darbuotojas
+                        <?php echo e(trans('cruds.report.fields.employee')); ?>
+
                     </th>
                     <th>
-                        Stebėjimo data
+                        Vertinta
                     </th>
                     <th>
                         Darbuotojas susipažino
@@ -36,25 +42,6 @@
                     </th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        3
-                    </td>
-                    <td>
-                        4
-                    </td>
-                    <td>
-                        5
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 </div>
@@ -71,6 +58,7 @@ $(function () {
         fixedHeader: true,
         ajax: "<?php echo e(route('admin.reports.index')); ?>",
         columns: [
+            {data: 'id', name: 'id'},
             {data: 'observer.name', name: 'observer.name'},
             {data: 'employee.name', name: 'employee.name'},
             {data: 'observing_date', name: 'observing_date'},
@@ -80,8 +68,7 @@ $(function () {
         dom: 'lBfrtip',
         buttons: ['csv', 'print', 'colvis'],
         initComplete: function () { 
-            let col_count = this.api().columns(':visible').count(); // count visible columns
-            this.api().columns().every(function () {
+            /*this.api().columns().every(function () {
                 var column = this;
                 var input = document.createElement('input');
                 $(input).appendTo($(column.footer()).empty()).on('keyup', function () {
@@ -89,6 +76,7 @@ $(function () {
                     column.search(val ? val : '', true, false).draw();
                 });
             });
+            */
         }
     });
 });

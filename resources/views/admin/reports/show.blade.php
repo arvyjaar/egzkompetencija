@@ -110,7 +110,7 @@
                 </a>
             </div>
 
-            @can('report_comment', $report)
+            @can('comment', $report)
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#commentModal">
                 {{ trans('global.write_note') }}

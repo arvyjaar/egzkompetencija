@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group <?php echo e($errors->has('drivecategory_id') ? 'has-error' : ''); ?>">
-                        <label for="drivecategory_id"><?php echo e(trans('cruds.report.fields.category')); ?>*</label>
+                        <label for="drivecategory_id"><?php echo e(trans('cruds.report.fields.category')); ?></label>
                         <select type="text" id="drivecategory_id" name="drivecategory_id" class="form-control">
                             <?php $__currentLoopData = $drivecategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($id); ?>" <?php echo e(old('drivecategory_id') == $id ? 'selected' : ''); ?>>
