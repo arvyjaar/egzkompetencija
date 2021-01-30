@@ -63,9 +63,11 @@
     <!-- test accounts -->
     <div style="color: darkred">
         <u>Test accounts:</u> <br><br>
-        admin@admin.com - Admin <br>
-        employee@example.com - Employee <br>
-        observer@example.com - Observer <br><br>
+        admin@example.com - Admin <br>
+        manager@example.com - Manager <br>
+        observer@example.com - Observer <br>
+        employee@example.com - Employee <br><br>
+        
         <u>paswords:</u> "password" for all users
     </div>
 </div>
