@@ -151,7 +151,7 @@
                 <div class="col-12">
                     <div class="form-group <?php echo e($errors->has('competency_note') ? 'has-error' : ''); ?>">
                         <label for="competency_note"><?php echo e(trans('cruds.report.fields.notes')); ?></label>
-                        <textarea id="competency_note" name="competency_note[<?php echo e($evaluations->competency_id); ?>]"
+                        <textarea id="competency_note_<?php echo e($evaluations->competency_id); ?>" name="competency_note[<?php echo e($evaluations->competency_id); ?>]"
                             class="form-control"><?php echo e(old('competency_note.'.$evaluations->competency_id, $evaluations->competency_note ?? '')); ?></textarea>
 
                         <?php if($errors->has('competency_note')): ?>

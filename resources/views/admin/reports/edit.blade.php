@@ -143,7 +143,7 @@
                 <div class="col-12">
                     <div class="form-group {{ $errors->has('competency_note') ? 'has-error' : '' }}">
                         <label for="competency_note">{{ trans('cruds.report.fields.notes') }}</label>
-                        <textarea id="competency_note" name="competency_note[{{ $evaluations->competency_id }}]"
+                        <textarea id="competency_note_{{ $evaluations->competency_id }}" name="competency_note[{{ $evaluations->competency_id }}]"
                             class="form-control">{{ old('competency_note.'.$evaluations->competency_id, $evaluations->competency_note ?? '') }}</textarea>
 
                         @if($errors->has('competency_note'))

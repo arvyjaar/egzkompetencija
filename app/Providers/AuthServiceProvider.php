@@ -25,32 +25,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-/*
-        Gate::define('is_admin', function ($user) {
-            return $user->roles->contains('title', 'admin');
-        });
-
-        Gate::define('report_edit_delete', function ($user, $report) {
-            return
-                ($user->id === $report->observer_id) || $user->roles->contains('title', 'manager');
-        });
-
-        Gate::define('report_show', function ($user, $report) {
-            return
-                ($user->id === $report->employee_id)
-                ||
-                ($user->id === $report->observer_id)
-                ||
-                $user->roles->contains('title', ['manager']);
-        });
-
-        // Manager and assessed emplyee can comment report
-        Gate::define('report_comment', function ($user, $report) {
-            return
-                ($user->id === $report->employee_id)
-                ||
-                $user->roles->contains('title', 'manager');
-        });
-*/
     }
 }
