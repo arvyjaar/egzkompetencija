@@ -10,15 +10,13 @@
             <div class="col-3">
                 <div class="form-group">
                     <label for="date_from">{{ trans('cruds.statistics.date_from') }}</label>
-                    <input type="text" id="date_from" name="date_from" class="form-control date"
-                        value="">
+                    <input type="text" id="date_from" name="date_from" class="form-control date" value="">
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-group">
                     <label for="date_to">{{ trans('cruds.statistics.date_to') }}</label>
-                    <input type="text" id="date_to" name="date_to" class="form-control date"
-                        value="">
+                    <input type="text" id="date_to" name="date_to" class="form-control date" value="">
                 </div>
             </div>
             <div class="col-3">
@@ -35,14 +33,18 @@
             </div>
         </div> <!-- /row -->
         <div class="row">
-            <div class="col-2">
-                <button class="btn btn-outline-info" id="go">
+            <div class="col-1">
+                <button class="btn btn-outline-primary" id="go">
                     {{ trans('global.search') }}
                 </button>
+            </div>
+            <div class="col-3 col-offset-2">
+                <b><span class="search_params">....</span></b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <p></p>
-            </div>    
-            <div class="col-10">    
-                <p class="search_params"></p>
             </div>
         </div>
 
@@ -58,7 +60,7 @@
 @section('scripts')
 @parent
 <script>
-$(function () {
+    $(function () {
     var table = $('#dataTableBuilder').DataTable({
         processing: true,
         serverSide: true,
