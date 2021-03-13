@@ -29,7 +29,7 @@ class CompetencyController extends Controller
     }
 
     public function store(StoreCompetencyRequest $request)
-    {   
+    {
         $competency = Competency::create($request->all());
 
         return redirect()->route('admin.competencies.index');

@@ -25,7 +25,7 @@ class StoreReportRequest extends FormRequest
             ],
             'drivecategory_id' => [
                 'nullable',
-                'numeric',              
+                'numeric',
             ],
             'observing_date' => [
                 'required',

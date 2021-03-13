@@ -67,7 +67,7 @@ class ReportController extends Controller
         return view('admin.reports.choose-form', compact('forms'));
     }
 
-        public function createByForm($id)
+    public function createByForm($id)
     {
         if (! \Gate::allows('create', Report::class)) {
             abort(403);
@@ -171,10 +171,12 @@ class ReportController extends Controller
             abort(403);
         }
 
-        $evaluation = tap(Evaluation::find($request->evaluation_id), function($eval) use($report, $request){
-            if($eval->report_id == $report->id) { // Second part of security - evaluation must belong to report checked above
+        $evaluation = tap(Evaluation::find($request->evaluation_id), function ($eval) use ($report, $request) {
+            if ($eval->report_id == $report->id) { // Second part of security - evaluation must belong to report checked above
                 $eval->update(['assessment_value' => $request->assessment_value]);
-            } else abort(403);
+            } else {
+                abort(403);
+            }
         });
 
         return response()->json(['result' => strtoupper($evaluation->assessment_value)]);

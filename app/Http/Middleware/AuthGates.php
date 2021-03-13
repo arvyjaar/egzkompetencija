@@ -10,7 +10,6 @@ class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        
         $user = \Auth::user();
 
         if (!app()->runningInConsole() && $user) {

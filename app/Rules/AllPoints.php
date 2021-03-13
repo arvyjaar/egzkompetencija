@@ -39,7 +39,7 @@ class AllPoints implements Rule
         
         $submited_points = count($value);
         // for error text in message()
-        $this->total_criteria = $total_criteria; 
+        $this->total_criteria = $total_criteria;
         $this->submited_points = $submited_points;
 
         return $submited_points === $total_criteria;

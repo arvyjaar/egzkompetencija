@@ -73,32 +73,32 @@ class Report extends Model
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
-/*
-    public function setProcedureDateAttribute($value)
-    {
-        $this->attributes['procedure_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
+    /*
+        public function setProcedureDateAttribute($value)
+        {
+            $this->attributes['procedure_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        }
 
-    public function getObservingDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
+        public function getObservingDateAttribute($value)
+        {
+            return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        }
 
-    public function setObservingDateAttribute($value)
-    {
-        $this->attributes['observing_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
+        public function setObservingDateAttribute($value)
+        {
+            $this->attributes['observing_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        }
 
-    public function getEmployeeReviewedAttribute($value)
-    {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-    }
+        public function getEmployeeReviewedAttribute($value)
+        {
+            return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        }
 
-    public function setEmployeeReviewedAttribute($value)
-    {
-        $this->attributes['employee_reviewed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-*/
+        public function setEmployeeReviewedAttribute($value)
+        {
+            $this->attributes['employee_reviewed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        }
+    */
     public function evaluationSet()
     {
         $evaluation_set = $this->evaluation->groupBy('criterionWithTrashed.competency.title');

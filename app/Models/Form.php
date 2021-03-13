@@ -41,7 +41,7 @@ class Form extends Model
         return (Report::where('form_id', $this->id)->count() > 0) ? true : false;
     }
 
-    public function report() 
+    public function report()
     {
         return $this->hasMany('App\Models\Report');
     }

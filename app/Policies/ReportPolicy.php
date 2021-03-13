@@ -36,7 +36,6 @@ class ReportPolicy
             ($user->id === $report->observer_id)
             ||
             $user->can('report_view');
-
     }
        
     /**

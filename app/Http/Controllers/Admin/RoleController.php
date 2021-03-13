@@ -39,7 +39,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-         $permissions = Permission::all()->pluck('title', 'id');
+        $permissions = Permission::all()->pluck('title', 'id');
 
         $role->load('permissions');
 

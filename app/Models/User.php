@@ -79,7 +79,7 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'employee_id');
     }
 
-        public function reportAsObserver()
+    public function reportAsObserver()
     {
         return $this->hasMany(Report::class, 'observer_id');
     }

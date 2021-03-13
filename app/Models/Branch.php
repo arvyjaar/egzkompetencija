@@ -24,7 +24,8 @@ class Branch extends Model
         'deleted_at',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->hasMany('App\Models\User');
     }
 }
